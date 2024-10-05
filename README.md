@@ -98,9 +98,9 @@ The Sunday content covers advanced Julia programming techniques associated with 
 | 04. Radio Imaging |  |
 | 05. X-Ray Spectroscopy |  |
 | 06. Astronomy Packages |  |
-| 07. Calling Python |  |
-| 08. Using Macros |  |
-| 09. Optimizing Code |  |
-| 10. Parallel Computing |  |
-| 11. Creating Packages |  | 
+| 07. Calling Python | https://github.com/barrettp/AAS245Julia/blob/main/07-calling-python.jl |
+| 08. Using Macros | https://github.com/barrettp/AAS245Julia/blob/main/08-using-macros.jl |
+| 09. Optimizing Code | https://github.com/barrettp/AAS245Julia/blob/main/09-optimizing-code.jl |
+| 10. Parallel Computing | https://github.com/barrettp/AAS245Julia/blob/main/10-parallel-computing.jl |
+| 11. Creating Packages | https://github.com/barrettp/AAS245Julia/blob/main/07-creating-packages.jl | 
 | 12. Questions and Special Topics | |
