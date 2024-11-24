@@ -7,8 +7,11 @@ using InteractiveUtils
 # ╔═╡ c25ec42a-81aa-11ef-3780-0f7138e64b77
 import Pkg; Pkg.activate(Base.current_project())
 
-# ╔═╡ b7fa824f-72de-4763-ae60-1735bf3205cb
-using CSV, DataFrames
+# ╔═╡ 451ae1a0-1846-45dc-9517-6b78e7a81d4a
+using DataFrames
+
+# ╔═╡ c28cfbf4-d96f-4303-96e3-2d1a7debc1e8
+using CSV
 
 # ╔═╡ 177a8009-ea8b-46d4-bdfb-ef5e1e15ca0d
 using Downloads
@@ -19,15 +22,136 @@ using CairoMakie
 # ╔═╡ 78a5f27a-8de7-4705-b58f-1f88b50cada5
 import PlutoUI; PlutoUI.TableOfContents()
 
-# ╔═╡ 91573039-f052-4e15-a3b4-94f983b12d2a
-demo_df = DataFrame(A=1:2:1000, B=repeat(1:10, inner=50), C=1:500)
-
-# ╔═╡ 962f750e-5da3-4279-b391-71a3791aada6
-demo_df[!,:B] |> typeof
-
 # ╔═╡ 3ebfbc37-294d-4659-b3b8-7e41a4469e84
 md"""
 ## Basic structure
+"""
+
+# ╔═╡ 761da758-d32c-47d8-9dd7-330f46ecf784
+md"""
+DataFrames are similar to tables, they both hold rows of data where each column is a labeled field. The other popular library for dataframes is [pandas](https://pandas.pydata.org/), written for Python. [DataFrames.jl](https://dataframes.juliadata.org/stable/) provides a lot of the functionality that pandas does, but in a different way that feels like a breath of fresh air.
+"""
+
+# ╔═╡ f0d6895e-3928-4387-9627-29e195a0f050
+md"""
+Unlike pandas, DataFrames.jl does not create a special `Series` type. Each column of a DataFrame is a regular Julia vector, and you can even specify your own vector type to represent a column!
+"""
+
+# ╔═╡ 7f11873b-6367-4ab7-b5af-7221bac9d051
+md"""
+With all that said, let's create a DataFrame. One way to do it is by using a keyword constructor, where like Python, you specify each column you want as a name-value pair. Go ahead and create the following DataFrame, and feel free to add more columns! (Make sure that all the columns have the same length.)
+
+```julia
+demo_df = DataFrame(
+	A = 1:2:1000,
+	B = repeat(1:10, inner=50),
+	C = 1:500,
+	age = rand(18:49, 500),
+	admin = rand(Bool, 500),
+)
+```
+"""
+
+# ╔═╡ 91573039-f052-4e15-a3b4-94f983b12d2a
+demo_df = DataFrame(
+	A = 1:2:1000,
+	B = repeat(1:10, inner=50),
+	C = 1:500,
+	age = rand(18:49, 500),
+	admin = rand(Bool, 500),
+)
+
+# ╔═╡ 28f3291a-0715-4848-986b-5acf116721aa
+md"""
+To get a feel for how DataFrames arranges your data, go ahead and check the data type of one of the columns! (Don't worry, we'll talk about what's happening in the square brackets soon)
+
+```julia
+typeof(demo_df[!, :B])
+# select a different column by changing the name after the colon
+```
+"""
+
+# ╔═╡ 962f750e-5da3-4279-b391-71a3791aada6
+
+
+# ╔═╡ 69640f84-120b-4f5f-be3e-93a0bf4c18b4
+md"""
+## Indexing
+"""
+
+# ╔═╡ dbfaef6a-a866-4d25-a4bf-9bff552d6b54
+md"""
+Although DataFrames are best described as tables, an analogy to matrices can be helpful when learning about indexing. In Julia you can index into any collection with square brackets `[]`, and DataFrames requires two arguments when indexing. The rows, and the columns. This is almost exactly how matrices are indexed, except here the columns can also have names.
+
+```julia
+demo_df[1, :] # select the first row, and all columns
+
+demo_df[50:55, :] # select a range of rows
+
+demo_df[1:2:end, [:ages, :admin]] # select the age and admin status from every other row
+
+demo_df[:, [:A, :B]] # get all the A's and B's
+
+demo_df[:, Not(:admin, :age)] # get everything except admin status and age
+```
+"""
+
+# ╔═╡ 2091dff2-c5d0-4819-b8c9-bb4a3689cd04
+demo_df[:, Not(:admin, :age)]
+
+# ╔═╡ ef8cd520-e698-4bfb-a285-ddad7da93bbe
+
+
+# ╔═╡ 9590bcc0-ce77-4116-b220-ba86a77bb349
+md"""
+As you may have guessed, using `:` (colon) in place of an index just grabs every row or column of a DataFrame. However, there is another way to select rows, using the bang `!` character. Go ahead and try out these two examples. Can you notice a difference?
+
+```julia
+demo_df[:, :A]
+
+demo_df[!, :A]
+```
+"""
+
+# ╔═╡ 581d3e22-c933-453e-a449-6464e9f0bce8
+
+
+# ╔═╡ acdc56f4-6853-4113-ba01-c6c05ac5ed14
+md"""
+Don't worry if you didn't! Let's try a different experiment to see if we can figure out when to use bangs `!`
+
+```julia
+demo_df[:, :A] .= 3.0
+
+demo_df # check the DataFrame to see if anything's changed
+
+demo_df[!, :A] .= 4.0
+
+demo_df # check the DataFrame again to see if anything's changed
+```
+"""
+
+# ╔═╡ 7ef2964c-be80-4bf1-be60-7db02aaf5fb5
+
+
+# ╔═╡ e09b849d-02f9-4ffd-80ee-b79b7fc2394f
+md"""
+Aha! When we used the exclamation mark, the DataFrame itself changed! This tells us why we'd want to use `!` instead of a `:` to get the rows, because with a `:` we'd just be getting a copy!
+
+`!` returns a "view" of the underlying vector that's storing the column. So changing that changes the dataframe. Even when we're not changing the DataFrame, we may want to use `!` to select all the rows, because it's usually faster than making copies.
+
+You can also remember Julia's mutation conventions to remember what `!` does. Recall that functions that mutate the data, like `push!` and `take!` end with exclamation marks, so any time you see a `!` used in assignment, you can infer that it's probably mutating the DataFrame somehow.
+"""
+
+# ╔═╡ e9c697bb-605e-4fa2-847a-b0757ed3f0ee
+md"""
+If you're not familiar with creating and interacting with DataFrames, it can take some getting used to. There are a few things to keep in mind, however:
+
+- DataFrames are created columns at a time
+
+  Building a DataFrame row-by-row is possible, but gets expensive and slow. Instead, its simpler to read in all of the data, say, from a file, and then transform it into a DataFrame. If you find yourself calling `push!()` on a DataFrame repeatedly, take a step back and think if it can be approached differently.
+
+
 """
 
 # ╔═╡ 57d7fdba-97a1-4b26-94df-d2aaca2deb7a
@@ -36,6 +160,15 @@ Make look nicer
 - DataFrames are created columns at a time
 - Indexing into a column with view rather than slice is easier than for rows?
 - Each column is a simple vector, not a specific series type object made for dataframes
+"""
+
+# ╔═╡ 6a0a94a1-c0a8-4bd8-b0fd-e15e49c58441
+md"""
+What if you don't feel like scrolling? TODO rewrite
+
+```julia
+names(demo_df)
+```
 """
 
 # ╔═╡ d079e4d6-e8e2-4793-b892-f706dddbd2d9
@@ -154,14 +287,30 @@ except they're not really different?
 
 # ╔═╡ Cell order:
 # ╠═c25ec42a-81aa-11ef-3780-0f7138e64b77
-# ╠═b7fa824f-72de-4763-ae60-1735bf3205cb
 # ╟─78a5f27a-8de7-4705-b58f-1f88b50cada5
-# ╠═91573039-f052-4e15-a3b4-94f983b12d2a
-# ╠═962f750e-5da3-4279-b391-71a3791aada6
 # ╟─3ebfbc37-294d-4659-b3b8-7e41a4469e84
+# ╠═451ae1a0-1846-45dc-9517-6b78e7a81d4a
+# ╟─761da758-d32c-47d8-9dd7-330f46ecf784
+# ╟─f0d6895e-3928-4387-9627-29e195a0f050
+# ╟─7f11873b-6367-4ab7-b5af-7221bac9d051
+# ╠═91573039-f052-4e15-a3b4-94f983b12d2a
+# ╟─28f3291a-0715-4848-986b-5acf116721aa
+# ╠═962f750e-5da3-4279-b391-71a3791aada6
+# ╟─69640f84-120b-4f5f-be3e-93a0bf4c18b4
+# ╟─dbfaef6a-a866-4d25-a4bf-9bff552d6b54
+# ╠═2091dff2-c5d0-4819-b8c9-bb4a3689cd04
+# ╠═ef8cd520-e698-4bfb-a285-ddad7da93bbe
+# ╟─9590bcc0-ce77-4116-b220-ba86a77bb349
+# ╠═581d3e22-c933-453e-a449-6464e9f0bce8
+# ╟─acdc56f4-6853-4113-ba01-c6c05ac5ed14
+# ╠═7ef2964c-be80-4bf1-be60-7db02aaf5fb5
+# ╟─e09b849d-02f9-4ffd-80ee-b79b7fc2394f
+# ╠═e9c697bb-605e-4fa2-847a-b0757ed3f0ee
 # ╠═57d7fdba-97a1-4b26-94df-d2aaca2deb7a
-# ╠═d079e4d6-e8e2-4793-b892-f706dddbd2d9
+# ╠═6a0a94a1-c0a8-4bd8-b0fd-e15e49c58441
+# ╟─d079e4d6-e8e2-4793-b892-f706dddbd2d9
 # ╟─c65b63ad-9f94-4253-bfe1-d83e2769e630
+# ╠═c28cfbf4-d96f-4303-96e3-2d1a7debc1e8
 # ╠═599c9082-94ec-484e-82d4-2da504d7d7dd
 # ╠═177a8009-ea8b-46d4-bdfb-ef5e1e15ca0d
 # ╠═fb7e4415-4554-4a85-b453-49b4619714d2
