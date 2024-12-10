@@ -22,7 +22,7 @@ We will be using Julia and Pluto notebooks to make the installation process as e
 Note: Pluto notebooks are not compatible with Jupyter.
 
 ### Installing Julia
-Please [install the latest stable version of Julia](https://julialang.org/downloads/) (1.10.5 as of Oct, 2025) on you computer. Make sure to use the links on the official Julia website linked above, rather than any 3rd party package manager (e.g. homebrew, apt, nuget, etc.).
+Please [install the latest stable version of Julia](https://julialang.org/downloads/) (1.11.2 as of Dec 1, 2024) on you computer. Make sure to use the links on the official Julia website linked above, rather than any 3rd party package manager (e.g. homebrew, apt, nuget, etc.).
 
 For more advanced users, [JuliaUp](https://github.com/JuliaLang/juliaup) can be used to install, update, and switch between versions of Julia. 
 
