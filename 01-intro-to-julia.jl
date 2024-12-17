@@ -630,7 +630,7 @@ md"""    typeof(arg1) <: Integer"""
 
 
 # ╔═╡ 73be3ec3-2668-44a0-bed9-242796bf5f08
-md"""    typeof(arg1) <: ABstractFloat"""
+md"""    typeof(arg1) <: AbstractFloat"""
 
 # ╔═╡ a96dd069-09aa-4add-baba-99ffae36bfe8
 
