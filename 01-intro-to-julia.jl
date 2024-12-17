@@ -423,9 +423,9 @@ md"""
 
 ### Comments
 
-A comment string begins with a "#" and extends to the end of the line.
+A comment string begins with a "`#`" and extends to the end of the line.
 
-A comment block begins and ends with "###".
+A comment block begins with "`#=`" and ends with "`=#`".
 """
 
 # ╔═╡ 0d0c11c0-d39f-462c-9fb6-ab90ca98d230
