@@ -68,18 +68,20 @@ md"""
 
 Enter `julia` at the terminal prompt. Set the number of threads to `auto`. Threads will be discussed later in Parallel Computing.
 
-    > julia --threads=auto
-    
-                   _
-       _       _ _(_)_     |  Documentation: https://docs.julialang.org
-      (_)     | (_) (_)    |
-       _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
-      | | | | | | |/ _` |  |
-      | | |_| | | | (_| |  |  Version 1.10.0 (2023-12-25)
-     _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
-    |__/                   |
+```
+> julia --threads=auto
 
-    julia>
+                _
+    _       _ _(_)_     |  Documentation: https://docs.julialang.org
+    (_)     | (_) (_)    |
+    _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+    | | | | | | |/ _` |  |
+    | | |_| | | | (_| |  |  Version 1.10.0 (2023-12-25)
+    _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
+|__/                   |
+
+julia>
+```
 
 !!! tip
 
@@ -94,7 +96,9 @@ md"""
 
 To exit Julia, enter `<Ctrl-D>` or `exit()`
 
-    julia> <Ctrl-D>
+```julia-repl
+julia> <Ctrl-D>
+```
 
 !!! tip
     Don't do this now!
@@ -111,7 +115,9 @@ md"""
 md"""
 Our first command:
 
-    println("Hello World")
+```julia
+println("Hello World")
+```
 """
 
 # ╔═╡ 4a404280-2845-4deb-8eee-2dcdcb9aed27
@@ -124,20 +130,30 @@ md"""
 
 Our first calculation
 
-    a = 4
+```julia
+a = 4
+```
 """
 
 # ╔═╡ 6ac51e87-87a2-4ccc-9f08-0028700b3cda
 a = 4
 
 # ╔═╡ 27208179-35c3-43c1-9548-3620c8aa7680
-md"    b = 2"
+md"""
+```julia
+b = 2
+```
+"""
 
 # ╔═╡ 40d8d18c-3713-4e77-812d-9d77a4e1ac50
 b = 2 
 
 # ╔═╡ aa3e9db7-49d1-40f8-b745-6c4faa2197e1
-md"    a + b"
+md"""
+```julia
+a + b
+```
+"""
 
 # ╔═╡ 756d3f69-a5b2-4ee6-bae6-94c513baae6c
 a + b
@@ -151,28 +167,30 @@ md"""
 #### Help, '?'
 For help mode,
 
-    julia> ?
-    help?> println
-    search: println printstyled print sprint isprint
+```julia-repl
+julia> ?
+help?> println
+search: println printstyled print sprint isprint
 
-    println([io::IO], xs...)
-    
-    Print (using print) xs to io followed by a newline. If io is not supplied, prints to the default output stream stdout.
-    
-    See also printstyled to add colors etc
-    
-    Examples
-    ≡≡≡≡≡≡≡≡≡≡
-    
-    julia> println("Hello, world")
-    Hello, world
-    
-    julia> io = IOBuffer();
-    
-    julia> println(io, "Hello", ',', " world.")
-    
-    julia> String(take!(io))
-    "Hello, world.\n"
+println([io::IO], xs...)
+
+Print (using print) xs to io followed by a newline. If io is not supplied, prints to the default output stream stdout.
+
+See also printstyled to add colors etc
+
+Examples
+≡≡≡≡≡≡≡≡≡≡
+
+julia> println("Hello, world")
+Hello, world
+
+julia> io = IOBuffer();
+
+julia> println(io, "Hello", ',', " world.")
+
+julia> String(take!(io))
+"Hello, world.\n"
+```
 
 Enter 'delete' or 'backspace' to exit help"""
 
@@ -185,9 +203,11 @@ md"""
 
 For shell mode,
 
-    julia> ;
-    shell> pwd
-    /Users/myhomedir
+```julia-repl
+julia> ;
+shell> pwd
+/Users/myhomedir
+```
 
 Enter 'delete' or 'backspace' to exit shell
 """
@@ -200,26 +220,34 @@ Enter 'delete' or 'backspace' to exit shell
 md"""
 #### Package Manager, `]`
 
-    julia> ]
-    pkg> 
+```julia-repl
+julia> ]
+pkg>
+```
 
 For package manager help,
 
-    pkg> ? `return`
+```julia-repl
+pkg> ? `return`
+```
 
 Returns a brief summary of package commands
 
 To add a package,
 
-    pkg> add <package>
-    pkg> add <package1> <package2>
+```julia-repl
+pkg> add <package>
+pkg> add <package1> <package2>
+```
 
 When adding a package, the Julia on-line repository will be searched. The package and its dependencies will then be downloaded, compiled, and installed. This may take anywhere from a few seconds to a few minutes depending on the size of the package and its dependencies.
 
 To use or load a package (after it has been added),
 
-    julia> using <package>
-    julia> using <package1>, <package2>
+```julia-repl
+julia> using <package>
+julia> using <package1>, <package2>
+```
 
 A feature of the 'using' command is that it will add the package, if it hasn't alaredy been added.
 """
@@ -231,11 +259,13 @@ A feature of the 'using' command is that it will add the package, if it hasn't a
 md"""
 To check the manifest:
 
-    pkg> status
-
+```julia-repl
+pkg> status
+```
 or
-
-    pkg> st
+```julia-repl
+pkg> st
+```
 """
 
 # ╔═╡ 1a95f9e5-77a3-46d0-9d4d-b28fbb0abf26
@@ -245,19 +275,27 @@ or
 md"""
 To update a package in the manifest:
 
-    pkg> update <package>
+```julia-repl
+pkg> update <package>
+```
 
 or
 
-    pkg> up <package>
+```julia-repl
+pkg> up <package>
+```
 
 To update all packages in the manifest,
 
-    pkg> up
+```julia-repl
+pkg> up
+```
 
 To garbage collect packages not used for a significant time,
 
-    pkg> gc
+```julia-repl
+pkg> gc
+```
 """
 
 # ╔═╡ 563f07ad-6aed-495e-85fb-bae4a1755ac2
@@ -271,7 +309,9 @@ Let's add the Measurements package using the `using` statement.
 md"""
 Let's do some more calculations.
 
-    m1 = measurement(4.5, 0.1)
+```julia
+m1 = measurement(4.5, 0.1)
+```
 
 """
 
@@ -281,7 +321,9 @@ m1 = measurement(4.5, 0.1)
 # ╔═╡ 094b6f30-cbd6-46b1-8e0c-3fdb1ef18261
 md"""Typing 'measurements' is rather awkward. There must be a better way. How about the following?
 
-    m2 = 15 ± 0.3
+```julia
+m2 = 15 ± 0.3
+```
 
 where the plus-minus character is entered using LaTex syntax followed by tab, i.e., \pm<tab>.
 """
@@ -294,7 +336,9 @@ m2 = 15 ± 0.3
 md"""
 One of the features of Julia is that it understands unicode. For example, expressions in a printed document that contain greek characters can be entered as greek characters in your code. Let's calculate the following expression.
 
-    α = m1 + m2
+```julia
+α = m1 + m2
+```
 """
 
 # ╔═╡ 232cc444-03b7-442a-8737-8b7725b43421
@@ -313,9 +357,11 @@ Let's add another package called Unitful, which enables attaching units to varia
 md"""
 Now let's create two new values m3 and m4 with units attached, and then multiply them together to create a third variable β.
 
-    m3 = (32 ± 0.1)u"m/s"
-    m4 = (9.8 ± 0.3)u"s"
-    β = m3 * m4
+```julia
+m3 = (32 ± 0.1)u"m/s"
+m4 = (9.8 ± 0.3)u"s"
+β = m3 * m4
+```
 """
 
 # ╔═╡ 63a4b27a-5361-4d95-8787-ae31ca7987fe
@@ -336,7 +382,9 @@ The variable β's value now has an associated error and unit.
 
 Let's see if this works with one dimensional arrays or vectors.
 
-    γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
+```julia
+γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
+```
 
 Note the dot '.' before the multiplication character '\*'.  This means element-wise multiplication. Whereas the multiplication character '\*' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time.
 """
@@ -396,8 +444,10 @@ There are two primary reasons for type annotation:
 
 # ╔═╡ a02bbbbb-6b3f-47ef-a11f-1db9b802db6f
 md"""
-	(1+2)::Float32
-    (1+2)::Int
+```julia
+(1+2)::Float32
+(1+2)::Int
+```
 
 Let's see how this works. Try the above examples.
 """
@@ -416,13 +466,16 @@ md"""Julia has various categories of types within a type-hierarchy. The followin
 """
 
 # ╔═╡ 0ad9aa76-f6c7-4368-8ae4-58daa548e065
-md"""#### Abstract Types
+md"""
+#### Abstract Types
 
-"abstract type" declares a type that cannot be instantiated, and serves only as a node in the type graph, thereby describing sets of related concrete types.
+"`abstract type`" declares a type that cannot be instantiated, and serves only as a node in the type graph, thereby describing sets of related concrete types.
 
 Let's create an abstract type.
 
-    abstract type Widget end
+```julia
+abstract type Widget end
+```
 """
 
 # ╔═╡ 1bc3da9e-143c-489c-b8de-a29dc48f17cb
@@ -432,8 +485,10 @@ abstract type Widget end
 md"""
 And some Widget subtypes using the subtype operator "<:".
 
-    abstract type Round <: Widget end
-    abstract type Square <: Widget end
+```julia
+abstract type Round <: Widget end
+abstract type Square <: Widget end
+```
 """
 
 # ╔═╡ d308df6b-14ec-49ec-8270-a3b9efd88517
@@ -467,26 +522,37 @@ md"""
 """
 
 # ╔═╡ 3772a828-561d-4600-8e67-49a28cc6cf09
-md"""#### Primitive Types
+md"""
+#### Primitive Types
 
 A primitive type is a concrete type whose data consists of plain old bits. Classic examples of primitive types are integers and floating-point values. Unlike most languages, Julia lets you declare your own primitive types, rather than providing only a fixed set of built-in ones.
 
 Let's see what primitive types Integer and AbstractFloat contain.
 
-    subtypes(Integer)
+```julia
+subtypes(Integer)
+```
 """
 
 # ╔═╡ aa4a7ec0-a270-482b-abeb-7168de767938
 subtypes(Integer)
 
 # ╔═╡ b8e3b72a-e501-4164-b06c-cbb3282d9d11
-md"    subtypes(Signed)"
+md"""
+```julia
+subtypes(Signed)
+```
+"""
 
 # ╔═╡ d9aa9f5e-31b6-49a3-bae8-a9b149e6ab91
 subtypes(Signed)
 
 # ╔═╡ 15b0159b-9c8c-4327-b73d-d7e19decde2a
-md"    subtypes(AbstractFloat)"
+md"""
+```julia
+subtypes(AbstractFloat)
+```
+"""
 
 # ╔═╡ 5d5b1283-043b-437a-afda-75801808acc9
 subtypes(AbstractFloat)
@@ -496,11 +562,14 @@ md"""Theoretically, a primitive type can have any number of bits, e.g., 5 or 17.
 """
 
 # ╔═╡ 877faa74-7490-44a3-9e97-b36b36050796
-md"""#### Characters (' ') vs. Strings (" ")
+md"""
+#### Characters (' ') vs. Strings (" ")
 
 Unlike Python, single and double quotes have different meanings. Single quotes create characters. Double quotes create strings. The reason for this is Unicode.
 
-    'j'
+```julia
+'j'
+```
 """
 
 # ╔═╡ bba18435-d355-4fca-a6f5-10dacde17413
@@ -508,11 +577,15 @@ Unlike Python, single and double quotes have different meanings. Single quotes c
 
 # ╔═╡ d9e911a8-13f9-41e5-ac36-4aee3ec24c59
 md"""
-    Char(167)
+```julia
+Char(167)
+```
 
 Or
 
-    '\u00A7'
+```julia
+'\u00A7'
+```
 """
 
 # ╔═╡ 5f72777b-a174-453c-8b18-ebf1f4bebe0d
@@ -522,7 +595,11 @@ Char(167)
 '\u00A7'
 
 # ╔═╡ c349f7b8-bdf0-4b94-b412-06c5e7f3cbc5
-md"""    "This is a string" """
+md"""
+```julia
+"This is a string"
+```
+"""
 
 # ╔═╡ d8be9383-fb60-4938-9376-f91d59f21559
 
@@ -531,10 +608,12 @@ md"""    "This is a string" """
 md"""
 Triple quotes work the same as in Python.
 
-    \"""
-    This is line 1.
-    This is line 2.
-    \"""
+```julia
+\"""
+This is line 1.
+This is line 2.
+\"""
+```
 
 Try it.
 """
@@ -543,7 +622,8 @@ Try it.
 
 
 # ╔═╡ ea15815e-0ae3-4f22-9dce-a17cb3a0560b
-md"""#### Composite Types
+md"""
+#### Composite Types
 
 Composite types are called records, structs, or objects in various languages. A composite type is a collection of named fields, an instance of which can be treated as a single value.
 
@@ -551,14 +631,18 @@ In mainstream object oriented languages, such as C++, Java, Python and Ruby, com
 
 Composite types are defined using the "struct" keyword followed by a block of field names. They are immutable (for performance reasons), unless modified by the "mutable" keyword.
 
-    struct Longday
-        day::Int64
-        frac::Float64
-    end
+```julia
+struct Longday
+    day::Int64
+    frac::Float64
+end
+```
 
 An instance of Longday is created as follows.
 
-    day1 = Longday(1, 0.5)
+```julia
+day1 = Longday(1, 0.5)
+```
 
 Let's create a Longday type and an instance of it.
 
@@ -577,8 +661,10 @@ day1 = Longday(1, 0.5)
 md"""
 The field can be access using "dot" notation as follows:
 
-    day1.day
-    day1.frac
+```julia
+day1.day
+day1.frac
+```
 """
 
 # ╔═╡ f5596a05-04de-4955-9575-4c035e0f1495
@@ -588,11 +674,14 @@ day1.day
 day1.frac
 
 # ╔═╡ 3b8e773f-df6e-4b59-9f5d-e14366d02754
-md"""#### Type Union
+md"""
+#### Type Union
 
-A type union is an abstract type that includes all instances of any of its argument types. The empty union Union{} is the leaf node of all Julia types.
+A type union is an abstract type that includes all instances of any of its argument types. The empty union `Union{}` is the leaf node of all Julia types.
 
-    Union{Int, Nothing}
+```julia
+Union{Int, Nothing}
+```
 
 The variable "nothing" is the singleton instance of the type "Nothing".
 
@@ -609,8 +698,10 @@ A type used to represent identifiers in parsed Julia code, namely the Abstract S
 
 Symbols can be confusing when you first meet them in Julia code.
 
-    :symbol
-    typeof(:symbol)
+```julia
+:symbol
+typeof(:symbol)
+```
 """
 
 # ╔═╡ 7a8faa02-34b1-4416-beab-2909fb56c767
@@ -620,26 +711,37 @@ Symbols can be confusing when you first meet them in Julia code.
 typeof(:symbol)
 
 # ╔═╡ 05adfd23-c809-4706-9bf2-1a0a2445748b
-md"""#### Using Types
+md"""
+#### Using Types
 
 The type hierarchy allows variables and functions to be constrained to a particular set of types. Let's try a simple example.
 
 Enter the following expressions.
 
-    arg1::Float32 = 12.3
+```julia
+arg1::Float32 = 12.3
+```
 """
 
 # ╔═╡ 67a4ff9f-c75f-444c-9091-e9b5c17ee773
 
 
 # ╔═╡ 67ad1d30-498e-414a-83d5-12e020c92741
-md"""    typeof(arg1) <: Integer"""
+md"""
+```julia
+typeof(arg1) <: Integer
+```
+"""
 
 # ╔═╡ cfd93268-174f-4a7e-9f98-3d5787c9392c
 
 
 # ╔═╡ 73be3ec3-2668-44a0-bed9-242796bf5f08
-md"""    typeof(arg1) <: AbstractFloat"""
+md"""
+```julia
+typeof(arg1) <: AbstractFloat
+```
+"""
 
 # ╔═╡ a96dd069-09aa-4add-baba-99ffae36bfe8
 
@@ -671,17 +773,23 @@ There are three syntaxes for defining a function. The first two are named functi
 
 Standard function definition:
 
-    function myadd(x::Int, y::Int)
-        x + y
-    end
+```julia
+function myadd(x::Int, y::Int)
+    x + y
+end
+```
 
 One-line function definition:
 
-    myadd(x::Float64, y::Float64) = x + y
+```julia
+myadd(x::Float64, y::Float64) = x + y
+```
 
 Anonymous function definition:
 
-    x, y -> x + y
+```julia
+x, y -> x + y
+```
 
 Anonymous functions are often used when a function argument expects a function, e.g., the filter method that expects a Boolean comparison function.
 
@@ -731,7 +839,9 @@ md"""#### Optional Arguments
 
 Functions can often take sensible default values. Julia allows the default values to be defined in the function definition.
 
-    optargs(y::Int, m::Int=1, d::Int=1) = "$y-$m-$d"
+```julia
+optargs(y::Int, m::Int=1, d::Int=1) = "$y-$m-$d"
+```
 
 Define the above function and execute it with a variable number of arguments.
 
@@ -751,7 +861,9 @@ Some functions have a large number of arguments or a large number of behaviors. 
 
 Keyword arguments are listed after the required and optional arguments. They are delimited by a semicolon in the argument list.
 
-    kwfunc(arg1, arg2=1; kwd1="blue", kwd2="red")
+```julia
+kwfunc(arg1, arg2=1; kwd1="blue", kwd2="red")
+```
 
 !!! note
     Don't confuse keyword arguments and optional arguments. Optional arguments are positional arguments with default values. Keyword arguments are positionless arguments with default values.
@@ -762,21 +874,27 @@ md"""#### Functors
 
 Functors are anonymous functions that are defined only by their argument signature. They are synonymous with callable objects in Python.
 
-    struct Polynomial{R}
-        coeffs::Vector{R}
-    end
-    
-    function (p::Polynomial)(x)
-        v = p.coeffs[end]
-        for i = (length(p.coeffs)-1):-1:1
-           v = v*x + p.coeffs[i]
-        end
-        return v
-    end
+```julia
+struct Polynomial{R}
+    coeffs::Vector{R}
+end
 
-    p = Polynomial([1,10,100])
+function (p::Polynomial)(x)
+    v = p.coeffs[end]
+    for i = (length(p.coeffs)-1):-1:1
+        v = v*x + p.coeffs[i]
+    end
+    return v
+end
+```
 
-    p(5)
+```julia
+p = Polynomial([1,10,100])
+```
+
+```julia
+p(5)
+```
 
 Define the Polynomial type and the functor by placing the struct and function in a begin-end block.
 """
@@ -854,18 +972,21 @@ md"""
 
 There several ways to create and initialize a new array:
 
+```julia
+Array{T}(undef, dims...)    # an unitialized dense array
 
-    Array{T}(undef, dims...)    # an unitialized dense array
-
-    ones(T, dims...)            # an array of zeros
+ones(T, dims...)            # an array of zeros
+```
 
 where `T` signifies the array type, and `dims...` is a list of array dimensions.
 
-    [1, 2, 3]                   # an array literal
+```julia
+[1, 2, 3]                   # an array literal
 
-    [2*i + j for i=1:3, j=4:6]  # array comprehension
+[2*i + j for i=1:3, j=4:6]  # array comprehension
 
-    (2*i + j for i=1:3, j=4:6)  # generator expression
+(2*i + j for i=1:3, j=4:6)  # generator expression
+```
 
 !!! note
 
@@ -873,8 +994,9 @@ where `T` signifies the array type, and `dims...` is a list of array dimensions.
 
 Let's create some arrays. Create:
 
-    zeros(Int8, 2, 3)
-
+```julia
+zeros(Int8, 2, 3)
+```
 """
 
 # ╔═╡ 579259ef-3b67-4497-a8a3-5e6bed5b2ce0
@@ -886,7 +1008,9 @@ zeros(Int8, 2, 3)
 # ╔═╡ 76afc0a5-5da0-446d-afbd-1f202d84cf9a
 md"""Create 
 
-    zeros(Int8, (2,3))
+```julia
+zeros(Int8, (2,3))
+```
 """
 
 # ╔═╡ c92272d7-8729-468d-8bc5-f80f12a53856
@@ -899,8 +1023,9 @@ The array dimensons can be either a list or tuple.
 
 Now create an array without the type argument.
 
-    zeros((2, 3)
-
+```julia
+zeros((2, 3))
+```
 """
 
 # ╔═╡ 13e6db9b-8b75-4f30-b174-ce3623148169
@@ -916,9 +1041,10 @@ collect(1:10)
 [i for i=1:10]
 
 # ╔═╡ d41bcf68-f472-48d0-ad82-1883f1d8d8ae
-md"""#### Indexing
+md"""
+#### Indexing
 
-Indexes may be a scalar integer, an array of integers, or any other supported index. This includes Colon (:) to select all indices within the entire dimension, ranges of the form `begin:end` or `begin:step:end` to select contiguous or strided subsections, and arrays of booleans to select elements at their true indices. Slices in Julia are inclusive, meaning the beginning and ending indices are included in the slice.
+Indexes may be a scalar integer, an array of integers, or any other supported index. This includes Colon (`:`) to select all indices within the entire dimension, ranges of the form `begin:end` or `begin:step:end` to select contiguous or strided subsections, and arrays of booleans to select elements at their true indices. Slices in Julia are inclusive, meaning the beginning and ending indices are included in the slice.
 
 `begin` and `end` can be used to indicate the first and last index of a slice. So, `end-1` is the penultimate index.
 
@@ -927,9 +1053,11 @@ Indexes may be a scalar integer, an array of integers, or any other supported in
 
 One supported index that is commonly used is the "CartesianIndex". It is an index that represents a single multi-dimensional index.
 
-    A = reshape(1:32, 4, 4, 2)
-    A[3, 2, 1]
-    A[CartesianIndex(3, 2, 1)] == A[3, 2, 1] == 7
+```julia
+A = reshape(1:32, 4, 4, 2)
+A[3, 2, 1]
+A[CartesianIndex(3, 2, 1)] == A[3, 2, 1] == 7
+```
 
 Try the above example.
 """
@@ -948,12 +1076,14 @@ CartesianIndex(3, 2, 1)
 md"""
 An array of CartesionIndex is also supported. They help simplify manipulating arrays. For example, it enables accessing the diagonal elements from the first "page" of A from above:
 
-    page = A[:,:,1]
+```julia
+page = A[:,:,1]
 
-    page[CartesianIndex(1,1),
-         CartesianIndex(2,2),
-         CartesianIndex(3,3),
-         CartesianIndex(4,4)]
+page[CartesianIndex(1,1),
+     CartesianIndex(2,2),
+     CartesianIndex(3,3),
+     CartesianIndex(4,4)]
+```
 
 Try it.
 """
@@ -971,7 +1101,9 @@ page[[CartesianIndex(1,1),
 md"""
 This is expressed more simply using dot broadcasting and combining it with a normal integer index (instead of extracting the first page from A as a separate step).
 
-    A[CartesianIndex.(axes(A, 1), axes(A, 2)), 1]
+```julia
+A[CartesianIndex.(axes(A, 1), axes(A, 2)), 1]
+```
 
 Try this too.
 """
@@ -985,13 +1117,17 @@ md"""
 
 The preferred way of iterating over an array is:
 
-    for a in A
-        # Do something with the element a
-    end
+```julia
+for a in A
+    # Do something with the element a
+end
+```
 
-    for i in eachindex(A)
-        # Do something with i and/or A[i]
-    end
+```julia
+for i in eachindex(A)
+    # Do something with i and/or A[i]
+end
+```
 
 The first example returns the value and the second returns the index. These methods work with both dense and sparse arrays.
 """
