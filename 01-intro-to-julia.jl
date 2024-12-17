@@ -209,7 +209,7 @@ Returns a brief summary of package commands
 To add a package,
 
     pkg> add <package>
-    pkg> add <package1>, <package2>
+    pkg> add <package1> <package2>
 
 When adding a package, the Julia on-line repository will be searched. The package and its dependencies will then be downloaded, compiled, and installed. This may take anywhere from a few seconds to a few minutes depending on the size of the package and its dependencies.
 
