@@ -146,7 +146,7 @@ b = 2
 """
 
 # ╔═╡ 40d8d18c-3713-4e77-812d-9d77a4e1ac50
-b = 2 
+b = 2
 
 # ╔═╡ aa3e9db7-49d1-40f8-b745-6c4faa2197e1
 md"""
@@ -325,9 +325,8 @@ md"""Typing 'measurements' is rather awkward. There must be a better way. How ab
 m2 = 15 ± 0.3
 ```
 
-where the plus-minus character is entered using LaTex syntax followed by tab, i.e., \pm<tab>.
+where the plus-minus character is entered using LaTeX syntax followed by tab, i.e., \pm<tab>.
 """
-
 
 # ╔═╡ 7ba8dc19-e0ca-40de-a778-7583ca70978d
 m2 = 15 ± 0.3
@@ -386,7 +385,7 @@ Let's see if this works with one dimensional arrays or vectors.
 γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
 ```
 
-Note the dot '.' before the multiplication character '\*'.  This means element-wise multiplication. Whereas the multiplication character '\*' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time.
+Note the dot '`.`' before the multiplication character '`*`'.  This means element-wise multiplication. Whereas the multiplication character '`*`' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time.
 """
 
 # ╔═╡ fdba7211-e480-4948-8435-76a7608e7e63
@@ -791,7 +790,7 @@ Anonymous function definition:
 x, y -> x + y
 ```
 
-Anonymous functions are often used when a function argument expects a function, e.g., the filter method that expects a Boolean comparison function.
+Anonymous functions are often used when a function argument expects a function, e.g., the `filter` method that expects a Boolean comparison function.
 
 Let's define the above three functions.
 """
@@ -805,13 +804,15 @@ end
 myadd(x::Float64, y::Float64) = x + y
 
 # ╔═╡ c3b1713c-1207-427f-bc2b-7ff973f5e35e
-md"""Notice that the function "myadd" now has two methods; one for Ints and one for Float64s.
+md"""
+Notice that the function "myadd" now has two methods; one for Ints and one for Float64s.
 
 Try adding an Int and Float64 using the "myadd" function.
 """
 
 # ╔═╡ cc19d021-1f25-4469-8239-9924cc01f883
-md"""The compiler returns a MethodError because their is no method that adds a Int and Float64. We can fix this by defining a generic "myadd" function.
+md"""
+The compiler returns a MethodError because their is no method that adds a Int and Float64. We can fix this by defining a generic "myadd" function.
 """
 
 # ╔═╡ 43b6afe5-8c9d-412a-ae68-c190b93c74e6
@@ -916,20 +917,20 @@ md"""Evaluate the polynomial"""
 
 # ╔═╡ d7623ed3-42ef-4562-ae53-7cbbd26f7a07
 begin
-	struct Polynomial{R}
-    coeffs::Vector{R}
+    struct Polynomial{R}
+        coeffs::Vector{R}
     end
 
     function (p::Polynomial)(x)
-    v = p.coeffs[end]
-    for i = (length(p.coeffs)-1):-1:1
-       v = v*x + p.coeffs[i]
-    end
+        v = p.coeffs[end]
+        for i = (length(p.coeffs)-1):-1:1
+        v = v*x + p.coeffs[i]
+        end
     return v
     end
-p = Polynomial([1,10,100])
+    p = Polynomial([1,10,100])
 
-p(5)
+    p(5)
 end
 
 # ╔═╡ 7a35a96c-be9e-4e6e-ba70-7fb9b84a609f
