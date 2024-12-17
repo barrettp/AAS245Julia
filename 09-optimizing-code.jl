@@ -4,6 +4,9 @@
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ 1f443df9-619d-40c7-9e08-497ae1a08b5d
+import Pkg; Pkg.activate(Base.current_project(), io=devnull)
+
 # ╔═╡ 5d8d2585-5c04-4f33-b547-8f44b3336f96
 using PlutoUI; TableOfContents()
 
@@ -817,6 +820,7 @@ This is just the start of various performance tips in Julia. There exist many ot
 # ╔═╡ 97f7a295-5f33-483c-8a63-b74c8f79eef3
 
 # ╔═╡ Cell order:
+# ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─5d8d2585-5c04-4f33-b547-8f44b3336f96
 # ╟─a2680f00-7c9a-11ed-2dfe-d9cd445f2e57
 # ╠═b90d6694-b170-4646-b5a0-e477d4fe6f50

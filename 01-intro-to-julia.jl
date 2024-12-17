@@ -4,6 +4,9 @@
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ 1f443df9-619d-40c7-9e08-497ae1a08b5d
+import Pkg; Pkg.activate(Base.current_project(), io=devnull)
+
 # ╔═╡ 1e47e383-b735-4c57-a300-2afe8491b49a
 using PlutoUI; TableOfContents()
 
@@ -1004,6 +1007,7 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 """
 
 # ╔═╡ Cell order:
+# ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─1e47e383-b735-4c57-a300-2afe8491b49a
 # ╟─d1366a55-b4fc-4ddb-b5c2-5f3381c48b49
 # ╟─12b0d664-3182-4e79-bdd4-4f6d85c51e5f

@@ -4,6 +4,9 @@
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ 1f443df9-619d-40c7-9e08-497ae1a08b5d
+import Pkg; Pkg.activate(Base.current_project(), io=devnull)
+
 # ╔═╡ 3ba5672b-18ff-4320-a4d2-954e0b873d47
 using PlutoUI; TableOfContents()
 
@@ -233,6 +236,7 @@ Assuming you are using `CondaPkg.jl`, PythonCall uses it to automatically instal
 """
 
 # ╔═╡ Cell order:
+# ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─3ba5672b-18ff-4320-a4d2-954e0b873d47
 # ╟─4c788b44-77e1-11ed-0ce7-5914857ba421
 # ╟─f0c6b09d-8b64-4175-aacd-6b3ac72078f6
