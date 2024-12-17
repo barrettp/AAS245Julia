@@ -16,18 +16,27 @@ using Unitful
 # ╔═╡ d1366a55-b4fc-4ddb-b5c2-5f3381c48b49
 html"<button onclick='present()'>present</button>"
 
-# ╔═╡ 09193424-25b9-45ce-840f-f24bbcc46c9d
+# ╔═╡ 12b0d664-3182-4e79-bdd4-4f6d85c51e5f
 md"""
 ## Introduction
+"""
 
+# ╔═╡ 9186f984-7ab4-48b3-aef4-4d17505b9a74
+md"""
 ### Historical Context
 
 Twenty-six years ago at ADASS VI, Harrington and Barrett hosted a Birds-of-a-Feather session entitled "Interactive Data Analysis Environments". Based on their review of over a dozen interpreted programming languages such as Glish, GUILE, IDL, IRAF, Matlab, Perl, Python, and Tcl; they recommended that Python be considered the primary language for astronomical data analysis. The primary reasons were that the language was simple to learn, yet powerful; well supported by the programming community; and had FORTRAN-like arrays. However, for good performance, the multi-dimensional arrays needed to be written in a compiled language, namely C. So Numerical Python suffered from the "two language problem".
+"""
 
+# ╔═╡ 5b0d92aa-617e-48ae-8633-29c44bd809e0
+md"""
 ### Why Julia?
 
 In about 2009, four faculty members at MIT, who were not satisfied with the state of scientific computing, decided to develop a high performance, scientific programming language. After ten years of development, they release Julia Version 1.0 on August 8, 2018. Their aims were to create an open-source interpreted language that was concise, extensible, and high performance.
+"""
 
+# ╔═╡ 473d902f-3555-4306-b2c0-6fcddb6ecb59
+md"""
 ### What Differentiates Julia From Other Languages?
 
 * Julia is **composable**.
@@ -36,18 +45,17 @@ In about 2009, four faculty members at MIT, who were not satisfied with the stat
 * Julia is **productive**.
 * Julia is **easy to maintain**.
 * Julia is **free and open-source**.
+"""
 
+# ╔═╡ 09193424-25b9-45ce-840f-f24bbcc46c9d
+md"""
 ### Why Have I migrated to Julia?
 
 Although an early advocate and developer of Numerical Python, I knew its limitations, namely, the two language problem. Therefore, once a better scientific programming language came along, I was prepared to migrate to it. Julia is that language.
 """
 
 # ╔═╡ b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
-
 md"""## Getting Started"""
-
-
-
 
 # ╔═╡ 7f3357bc-4103-4a35-af21-9c86f5a0ec2f
 md"""
@@ -1000,6 +1008,10 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 # ╔═╡ Cell order:
 # ╟─1e47e383-b735-4c57-a300-2afe8491b49a
 # ╟─d1366a55-b4fc-4ddb-b5c2-5f3381c48b49
+# ╟─12b0d664-3182-4e79-bdd4-4f6d85c51e5f
+# ╟─9186f984-7ab4-48b3-aef4-4d17505b9a74
+# ╟─5b0d92aa-617e-48ae-8633-29c44bd809e0
+# ╟─473d902f-3555-4306-b2c0-6fcddb6ecb59
 # ╟─09193424-25b9-45ce-840f-f24bbcc46c9d
 # ╟─b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
 # ╟─7f3357bc-4103-4a35-af21-9c86f5a0ec2f
