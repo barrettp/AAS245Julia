@@ -92,9 +92,9 @@ md"""
 
 ### Stopping Julia
 
-To exit Julia, enter `<Ctl-D>` or `exit()`
+To exit Julia, enter `<Ctrl-D>` or `exit()`
 
-    julia> <Ctl-D>
+    julia> <Ctrl-D>
 
 !!! tip
     Don't do this now!
