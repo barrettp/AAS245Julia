@@ -252,8 +252,6 @@ To update all packages in the manifest,
 
     pkg> up
 
-    up
-
 To garbage collect packages not used for a significant time,
 
     pkg> gc
