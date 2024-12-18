@@ -1000,8 +1000,7 @@ addprocs(3)
     On HPC systems, you can also use [`ClusterManagers.jl`] (https://github.com/JuliaParallel/ClusterManagers.jl)
     to setup a distributed environment using different job queue systems, such as Slurm and SGE.
 
-This add 3 worker processors to the Julia process. To check the id's of the workers we
-can use the `workers` function
+This adds 3 worker processors to the Julia process. To check the id's of the workers we can use the `workers` function
 
 ````julia
 workers()
