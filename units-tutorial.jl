@@ -263,9 +263,9 @@ end
 
 # ╔═╡ 687b8ab2-27f4-4fbd-86ff-4ac8778df573
 md"""
-!!! warning "Makie & units"
+!!! note "Makie & units"
 
-    Due to a bug in Makie's rendering system, the units might not show up just as you expect, and only the first unit would be shown in the tick marks.
+    Due to some logic in Makie's rendering system, the units might not show up just as you expect, but with a different conversion.
 """
 
 # ╔═╡ a9d4d25d-042d-4a1e-bc2a-a1029aa322c4
