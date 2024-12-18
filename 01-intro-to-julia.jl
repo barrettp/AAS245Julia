@@ -904,7 +904,7 @@ kwfunc(arg1, arg2=1; kwd1="blue", kwd2="red")
 ```
 
 !!! note
-    Don't confuse keyword arguments and optional arguments. Optional arguments are positional arguments with default values. Keyword arguments are positionless arguments with default values.
+    Don't confuse keyword arguments and optional arguments. Optional arguments are positional arguments with default values. Keyword arguments are positionless arguments, which may or may not have default values.
 """
 
 # ╔═╡ f997567b-b403-4e21-a87f-063b59dcc5a6
