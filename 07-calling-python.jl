@@ -55,7 +55,8 @@ Here is another example using matplotlib.pyplot. The example uses the `pyimport_
 ```julia
 let
 plt = pyimport_conda("matplotlib.pyplot", "matplotlib")
-x = range(0; stop=2*pi, length=1000); y = sin.(3 .* x + 4 .* cos.(2. * x));
+x = range(0; stop=2pi, length=1000)
+y = sin.(3 .* x + 4 .* cos.(2. * x))
 plt.plot(x, y, color="red", linewidth=2.0, linestyle="--")
 plt.savefig("plt_example.png")
 LocalResource("plt_example.png")
