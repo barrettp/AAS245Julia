@@ -57,7 +57,7 @@ end
 
 # ╔═╡ 5ed407ea-4bba-4eaf-b47a-9ae95b28abba
 md"""
-Now let's check the performance of this function. To do this, we will use the excellent benchmarking package [`BenchmarTools.jl`](https://github.com/JuliaCI/BenchmarkTools.jl) and the macro `@benchmark`, which runs the function multiple times and outputs a histogram of the time it took to execute the function
+Now let's check the performance of this function. To do this, we will use the excellent benchmarking package [`BenchmarkTools.jl`](https://github.com/JuliaCI/BenchmarkTools.jl) and the macro `@benchmark`, which runs the function multiple times and outputs a histogram of the time it took to execute the function
 
 ```julia
 using BenchmarkTools
