@@ -48,7 +48,7 @@ compares how a serial instruction v.s. a vectorized instruction would be run on 
 # ╔═╡ c23fcdf1-4fd8-4859-abb3-8e08b4476046
 md"""
 !!! note
-	**CPU cycle**: Can be thought of the smallest unit of time on which a CPU behaves.
+    **CPU cycle**: Can be thought of the smallest unit of time on which a CPU behaves.
     In a single CPU cycle, the computer usually does a fetch-decode-execute step. Briefly,
     this means that you can think of the CPU doing a single simpler operation, like
     addition, multiplication, etc.
@@ -654,7 +654,7 @@ begin
 end
 ```
 
-For other GPU providers replace `cu` with 
+For other GPU providers replace `cu` with
 ```julia
 # AMD
 ROCArray(xlarge)
@@ -707,7 +707,7 @@ Running this on the gpu is then as simple as
 @benchmark bcast_add!($outlarge_gpu, $xlarge_gpu, $ylarge_gpu)
 ```
 
-!!! note 
+!!! note
 	This will work with any of the GPU packages mentioned above!
 """
 
@@ -796,10 +796,10 @@ For CUDA and AMD
 function gpu_kernel_all!(out, x, y)
     index = (blockIdx().x - 1) * blockDim().x + threadIdx().x
     stride = gridDim().x * blockDim().x
-	for i in index:stride:length(out)
-		out[i] = x[i] + y[i]
-	end
-	return nothing
+    for i in index:stride:length(out)
+        out[i] = x[i] + y[i]
+    end
+    return nothing
 end
 ```
 
@@ -879,9 +879,10 @@ be run across all the processors on the system. In practice it means that a prog
 
 ```julia
 if a > 1
-	# Do something
+    # Do something
 else
-	# Do something else
+    # Do something else
+end
 ```
 
 will potentially be slow. The reason is that, in this case, the GPU will actually compute
@@ -932,7 +933,6 @@ that if the computation on the CPU takes more than 1 ms, then moving it to the G
 
 # ╔═╡ b2eb604f-9180-4e48-9ae5-04162583fb33
 md"""
-
 ## Distributed Computing (Switch to the REPL here)
 
 Distributed computing differs from all other parallelization strategies we have used.
@@ -1108,7 +1108,6 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 - [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl): The Julia bindings to the MPI standard. The standard parallel workhorse in HPC.
 - [`Elemental.jl`](https://github.com/JuliaParallel/Elemental.jl) links to the C++ distributed linear algebra and optimization package.
 - [`DistributedArrays.jl`](https://github.com/JuliaParallel/DistributedArrays.jl)
-
 """
 
 # ╔═╡ Cell order:

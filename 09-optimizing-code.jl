@@ -93,7 +93,7 @@ md"""
 
 # ╔═╡ 2310c578-95d8-4af0-a572-d7596750dfcc
 md"""
-Looking at the histogram, we see that the minimum time is 122 μs to update a vector! We can get an idea of why this is happening by looking at the total number of allocations we made while updating the vector. Since we are updating the array in place, there should be no allocations. 
+Looking at the histogram, we see that the minimum time is 122 μs to update a vector! We can get an idea of why this is happening by looking at the total number of allocations we made while updating the vector. Since we are updating the array in place, there should be no allocations.
 
 To see what is happening here, Julia provides several code introspection tools.
 Here we will use `@code_warntype`
@@ -225,7 +225,7 @@ Analyzing this with `@code_warntype` shows a small type instability.
 
 # ╔═╡ 30e2be6c-f990-467a-85f9-a37f84f145ea
 md"""
-In this case, we see that Julia inserted a type instabilities since it could not determine the specific type of `s`. This is because when we initialized `s`, we used the value `0` which is an integer. Therefore, when we added xi to it, Julia determined that the type of `s` could either be an `Int` or `Float`. 
+In this case, we see that Julia inserted a type instabilities since it could not determine the specific type of `s`. This is because when we initialized `s`, we used the value `0` which is an integer. Therefore, when we added xi to it, Julia determined that the type of `s` could either be an `Int` or `Float`.
 
 !!! note
 	In Julia 1.8, the compiler is actually able to do something called [`union splitting`](https://julialang.org/blog/2018/08/union-splitting/), preventing this type instability from being a problem. However, it is still good practice to write more generic code.
@@ -264,7 +264,7 @@ Running `@code_warntype` we now get
 md"""
 `zero` is a generic function that will create a `0` element that matches the type of the elements of the vector `x`.
 
-One important thing to note is that while Julia uses types to optimize the code, using types in the function arguments does not impact performance at all. 
+One important thing to note is that while Julia uses types to optimize the code, using types in the function arguments does not impact performance at all.
 
 To see this let's look at an explicit version of `my_sum`
 ```julia
@@ -331,7 +331,7 @@ md"""
 
 # ╔═╡ f15013ed-b592-43f6-95ec-820480d804ef
 md"""
-Being overly specific with types in Julia is considered bad practice since it prevents composability with other libraries in Julia. For example, 
+Being overly specific with types in Julia is considered bad practice since it prevents composability with other libraries in Julia. For example,
 
 ```julia
 my_sum_explicit(Float32.(gl))
@@ -343,11 +343,11 @@ my_sum_explicit(Float32.(gl))
 
 # ╔═╡ 2861d873-6860-4d16-86af-3aebc57a9914
 md"""
-gives a method error because we told the compiler that the function could only accept `Float64`. In Julia, types are mostly used for `dispatch` i.e., selecting which function to use. However, there is one important instance where Julia requires that the types be specific. When defining a composite type or `struct`. 
+gives a method error because we told the compiler that the function could only accept `Float64`. In Julia, types are mostly used for `dispatch` i.e., selecting which function to use. However, there is one important instance where Julia requires that the types be specific. When defining a composite type or `struct`.
 
 For example
 ```julia
-begin 
+begin
 	struct MyType
 		a::AbstractArray
 	end
@@ -374,12 +374,12 @@ In this case, the `getindex` function is type unstable
 
 # ╔═╡ 7175833a-f7e3-4b83-9d5d-869b5ad2c78b
 md"""
-This is because Julia is not able to determine the type of `x.a` until runtime and so the compiler is unable to optimize the function.  This is because `AbstractArray` is an abstract type. 
+This is because Julia is not able to determine the type of `x.a` until runtime and so the compiler is unable to optimize the function.  This is because `AbstractArray` is an abstract type.
 
 !!! tip
 	For maximum performance only use concrete types as `struct` fields/properties.
 
-To fix this we can use *parametric types* 
+To fix this we can use *parametric types*
 
 ```julia
 begin
@@ -419,14 +419,14 @@ md"""
 In addition to `@code_warntype` Julia also has a number of other tools that can help diagnose type instabilities or performance problems:
   - [`Cthulhu.jl`](https://github.com/JuliaDebug/Cthulhu.jl): Recursively moves through a function and outputs the results of type inference.
   - [`JET.jl`](https://github.com/aviatesk/JET.jl): Employs Julia's type inference system to detect potential performance problems as well as bugs.
-  - [`ProfileView.jl`](https://github.com/timholy/ProfileView.jl) Julia profiler and flame graph for evaluating function performance. 
+  - [`ProfileView.jl`](https://github.com/timholy/ProfileView.jl) Julia profiler and flame graph for evaluating function performance.
 """
 
 # ╔═╡ 20eff914-5853-4993-85a2-dfb6a8e2c14d
 md"""
 ## Data Layout
 
-Besides ensuring your function is type stable, there are a number of other performance issues to keep in mind with using Julia. 
+Besides ensuring your function is type stable, there are a number of other performance issues to keep in mind with using Julia.
 
 When using higher-dimensional arrays like matrices, the programmer should remember that Julia uses a `column-major order`. This implies that indexing Julia arrays should be done so that the first index changes the fastest. For example
 
@@ -533,9 +533,9 @@ md"""
 
 # ╔═╡ 16b55184-b515-47c8-bbb3-f899a920e9f8
 md"""
-One of Julia's greatest strengths over python is surprisingly its ability to vectorize algorithms and **fuse** multiple algorithms together. 
+One of Julia's greatest strengths over python is surprisingly its ability to vectorize algorithms and **fuse** multiple algorithms together.
 
-In python to get speed you typically need to use numpy to vectorize operations. For example, to compute the operation `x*y + c^3` you would do 
+In python to get speed you typically need to use numpy to vectorize operations. For example, to compute the operation `x*y + c^3` you would do
 ```python
 python> x*y + c**3
 ```
@@ -545,7 +545,7 @@ python> a = x*y
 python> b = c**3
 python> out = a + b
 ```
-What this means is that python/numpy is not able to fuse multiple operations together. This essentially loops through the data twice and can lead to substantial overhead. 
+What this means is that python/numpy is not able to fuse multiple operations together. This essentially loops through the data twice and can lead to substantial overhead.
 
 To demonstrate this, let's first write the `numpy` version of this simple function
 """
@@ -571,7 +571,7 @@ First let's use PyCall and numpy to do the computation
 begin
 	py"""
 	def bench_np(x, y, c):
-		return x*y + c**3 
+		return x*y + c**3
 	"""
 	bench_np = py"bench_np"
 end
@@ -626,7 +626,7 @@ And right away, we have almost a factor of 4X speed increase in Julia compared t
 
 However, we can make this loop faster! Julia automatically checks the bounds of an array every loop iteration. This makes Julia memory safe but adds overhead to the loop.
 
-!!! warning 
+!!! warning
 	`@inbounds` used incorrectly can give wrong results or even cause Julia to  SEGFAULT
 
 ```julia
@@ -664,7 +664,7 @@ md"""
 
 # ╔═╡ db4ceb7c-4ded-4048-88db-fd15b3231a5c
 md"""
-That is starting to look better. Now we can do one more thing. Looking at the results we see that we are still allocating in this loop. We can fix this by explicitly passing the output buffer. 
+That is starting to look better. Now we can do one more thing. Looking at the results we see that we are still allocating in this loop. We can fix this by explicitly passing the output buffer.
 """
 
 # ╔═╡ 575d1656-0a0d-40ba-a190-74e36c354e8c
@@ -702,9 +702,9 @@ md"""
 
 # ╔═╡ c14acc67-dbb2-4a86-a811-de857769a472
 md"""
-With just two changes, we have sped up our original function by almost a factor of 2. However, compared to NumPy, we have had to write a lot more code. 
+With just two changes, we have sped up our original function by almost a factor of 2. However, compared to NumPy, we have had to write a lot more code.
 
-Fortunately, writing these explicit loops, while fast, is not required to achieve good performance in Julia. Julia provides its own *vectorization* procedure using the 
+Fortunately, writing these explicit loops, while fast, is not required to achieve good performance in Julia. Julia provides its own *vectorization* procedure using the
 `.` syntax. This is known as *broadcasting* and results in Julia being able to apply elementwise operations to a collection of objects.
 
 To demonstrate this, we can rewrite our optimized `serial_loop` function just as
@@ -763,7 +763,7 @@ md"""
 
 # ╔═╡ 587d98d8-f805-4c4f-bf2f-1887d86adf05
 md"""
-Both of our broadcasting functions perform identically to our hand-tuned for loops. How is this possible? The main reason is that Julia's elementwise operations or broadcasting automatically **fuses**. This means that Julia's compiler eventually compiles the broadcast expression to a single loop, preventing intermediate arrays from ever needing to be formed. 
+Both of our broadcasting functions perform identically to our hand-tuned for loops. How is this possible? The main reason is that Julia's elementwise operations or broadcasting automatically **fuses**. This means that Julia's compiler eventually compiles the broadcast expression to a single loop, preventing intermediate arrays from ever needing to be formed.
 """
 
 # ╔═╡ ea2e2140-b826-4a05-a84c-6309241da0e7
@@ -772,7 +772,7 @@ Julia's broadcasting interface is also generic and a lot more powerful than the 
 """
 
 # ╔═╡ e8c1c746-ce30-4bd9-a10f-c68e3823faac
-A = [rand(50,50) for _ in 1:50] 
+A = [rand(50,50) for _ in 1:50]
 
 # ╔═╡ e885bbe5-f7ec-4f6a-80fd-d6314179a3cd
 md"""

@@ -400,11 +400,11 @@ md"""
 
     What have we learned about the Julia command line and features?
 
-    * Julia has four command line modes: **REPL**, **help**, **shell**, and **package manager**. 
+    * Julia has four command line modes: **REPL**, **help**, **shell**, and **package manager**.
 
     * Julia understands **unicode**.
 
-    * Julia packages are **composable**. It means that independent packages are compatible and work together without modification, as demonstrated by the Measurements and Unitful packages. 
+    * Julia packages are **composable**. It means that independent packages are compatible and work together without modification, as demonstrated by the Measurements and Unitful packages.
 """
 
 # ╔═╡ 5cd072cb-5d71-4a08-8e41-4eaaa7faaa5c
@@ -516,7 +516,7 @@ typeof(1)
 md"""
 !!! note
     The "Any" type is at the top of the hierarchy. It is the union of all types. In other words, it is the root node.
-    
+
     When the type of an expression or variable cannot be inferred from the context, the type defaults to "Any".
 """
 
@@ -847,7 +847,7 @@ optargs(y::Int, m::Int=1, d::Int=1) = "$y-$m-$d"
 Define the above function and execute it with a variable number of arguments.
 
 Note how many methods are created when the function is defined.
-""" 
+"""
 
 # ╔═╡ 5639ea0c-c911-4e17-892d-2baf3613c682
 optargs(y::Int, m::Int=1, d::Int=1) = "$y-$m-$d"
@@ -942,7 +942,7 @@ md"""
     * Julia has two syntaxes for defining functions: one is for many-line functions and the other for one-line functions.
     * Julia has named functions and anonymous functions.
     * Julia function signatures have arguments and keywords. Arguments are required and listed first, but can have optional default values. Whereas, keywords are listed last and are optional.
-    * Julia has anonymous functions called "functors" that are defined by their argument signature. 
+    * Julia has anonymous functions called "functors" that are defined by their argument signature.
 
 """
 
@@ -1007,7 +1007,7 @@ zeros(Int8, 2, 3)
 [2*i + j for i=1:3 for j=4:6]
 
 # ╔═╡ 76afc0a5-5da0-446d-afbd-1f202d84cf9a
-md"""Create 
+md"""Create
 
 ```julia
 zeros(Int8, (2,3))
@@ -1140,7 +1140,7 @@ The first example returns the value and the second returns the index. These meth
 md"""
 #### Vectors and Matrices
 
-A vector and matrix are just aliases for one and two dimensional arrays. To perform matrix multiplication, use the matrix multiply operator `*`. 
+A vector and matrix are just aliases for one and two dimensional arrays. To perform matrix multiplication, use the matrix multiply operator `*`.
 """
 
 # ╔═╡ Cell order:

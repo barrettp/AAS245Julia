@@ -62,7 +62,7 @@ end
 f(2) != MyModA.f(x)
 ```
 
-This is separate from the concept of *methods*.  Here` f` and `MyModA.f` are two different functions that have different meanings. Two methods of the same function are different *implementations* of the same meaning. 
+This is separate from the concept of *methods*.  Here` f` and `MyModA.f` are two different functions that have different meanings. Two methods of the same function are different *implementations* of the same meaning.
 """
 
 # ╔═╡ 853c7f60-8445-4e5b-aa52-7560203b3a08
@@ -107,7 +107,7 @@ module BobsGeometryExtras
 	function Geometry.distance_from_origin(point::Point3D)
 		return sqrt(point.x^2 + point.y^2 + point.x^2)
 	end
-	
+
 end
 
 # ╔═╡ bd33ebc5-f4cc-4cf5-b8ba-3d4bf280749e
@@ -131,7 +131,7 @@ Now imagine that Bob wants to use Alice's package, and extend it to work with th
 # ╔═╡ c184cecc-cdad-4df1-a8b8-12e9cfdde48e
 md"""
 !!! note
-	The syntax `Module.function` should be used when adding a method to a function from another module. 
+	The syntax `Module.function` should be used when adding a method to a function from another module.
 """
 
 # ╔═╡ c7ccc1ff-9784-4cb1-a2cf-89a21d2c4ec3
@@ -210,7 +210,7 @@ Since we've defined the `+` function on the Point2D type, lots of new behaviour 
 # ╔═╡ 454ff2f3-fbe0-4125-a435-ef44b175c35d
 md"""
 !!! danger "Type Piracy"
-	**Type Piracy** is when you extend a function without at least one argument type that your module "owns". For example, it would be type piracy for Bob to extend Alice's distance_from_origin function with a method that takes two integers. 
+	**Type Piracy** is when you extend a function without at least one argument type that your module "owns". For example, it would be type piracy for Bob to extend Alice's distance_from_origin function with a method that takes two integers.
 
 	Though not enforced at the language level, type piracy must be avoided to prevent spooky action at a distance, where loading one module changes the behaviour of unrelated functionality in a separate module.
 """
@@ -271,7 +271,7 @@ FITSIO = "0.17.0"
 
 The keys on the left are the names of the packages, and the gobbledegook on the right is a unique machine readable identifier. This makes sure that even if people pick the same names for their packages, Julia won't get them confused.
 
-!!! note 
+!!! note
 	If you're planning on writing some scripts for a project, it's a very good idea to create an environment.
 
 You don't have to make Project.toml yourself. Just open the julia REPL, navigate to the folder you're working out of, and type `] activate .` to activate the current folder as an environment.
@@ -416,7 +416,6 @@ end
 
 !!! note
 	You can also use `include("file.jl")` to directly run a script from inside Julia.
-
 """
 
 # ╔═╡ 44b4a9f9-7740-4ea5-bb03-3fca9a48f220
@@ -433,7 +432,7 @@ This way you can edit your package as you go, adding functions, fixing bugs, etc
 md"""
 ### Sharing Packages
 
-The easiest way to share a Julia package is to put it on GitHub. 
+The easiest way to share a Julia package is to put it on GitHub.
 
 * Create a repository with same name as your package (include the `.jl`) and push your folder to it.
 * Other people can install your package by running `] add https://github.com/yourname/MyPackage.jl.git`
@@ -451,7 +450,7 @@ You can even hook up these tests to GitHub so that they run everytime you change
 
 
 ### Documentation
-You can add documentation to your package in the `docs` folder. 
+You can add documentation to your package in the `docs` folder.
 Read about how here: [documenter.juliadocs.org](https://documenter.juliadocs.org/stable/). You can set GitHub up to automatically convert your docs into a hosted webpage.
 """
 
@@ -463,7 +462,7 @@ In these excercises, we will create our own package. This can be just a simple "
 
 ### Part 1
 * Come up with a name for your package.
-* Create a folder structure with the right names. 
+* Create a folder structure with the right names.
 * Using a text editor of your choiceCreate Project.toml with the package name and a unique identifier
 
 ### Part 2
@@ -471,7 +470,7 @@ In these excercises, we will create our own package. This can be just a simple "
 * If you need to use a function defined in another Julia package, use `] add OtherPackage` to install and add it to `Project.toml` automatically.
 
 ### Part 3
-* Share it with the group! 
+* Share it with the group!
 
 """
 
@@ -484,7 +483,7 @@ One common situtation where this is useful is when writing a package is that you
 
 In these situations, one typically wants the new type to behave just like the object it wraps (the matrix in this example) in several ways, but not in others.
 
-Let's see how this may look. 
+Let's see how this may look.
 """
 
 # ╔═╡ c16ec715-7adc-4fde-9021-8b44746ae6ff
@@ -516,7 +515,7 @@ This is an example of *metaprogramming*: a program that writes a program.
 
 We loop over the variable names Base.getindex, Base.setindex!, etc.
 Inside the loop body, we create a quoted expression where some function \$f is defined against a MetaArray.
-Then, we evaluate that expression, replacing \$f with the function in question. 
+Then, we evaluate that expression, replacing \$f with the function in question.
 
 """
 

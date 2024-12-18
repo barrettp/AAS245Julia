@@ -173,7 +173,7 @@ Try it.
 md"""
 #### Wrapper Types
 
-A wrapper is a Julia type that wraps a Python object, but gives it Julia semantics. For example, the PyList type wraps Python's list object. 
+A wrapper is a Julia type that wraps a Python object, but gives it Julia semantics. For example, the PyList type wraps Python's list object.
 
 ```julia
 begin
