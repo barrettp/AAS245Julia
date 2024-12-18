@@ -26,16 +26,21 @@ using CUDA
 # ╔═╡ e6020e3a-77c7-11ed-2be9-e987cee1edf0
 md"""
 # Parallel Computing in Julia.
+"""
 
+# ╔═╡ 902614a2-8e81-408b-ae97-f4058f4bacb2
+md"""
 Julia is particularly able to exploit various types of parallelism to accelerate the performance of a program.
 In this tutorial, we will overview how to enable parallelism in various Julia programs.
 """
 
 # ╔═╡ fb75265d-b154-4913-8714-ee68959682b4
 md"""
-Julia has a strong parallel computing infrastructure that enable HPC using vectorization,
-threading, distributed computing, and even GPU acceleration.
+Julia has a strong parallel computing infrastructure that enable HPC using vectorization, threading, distributed computing, and even GPU acceleration.
+"""
 
+# ╔═╡ 05b2078a-a7bf-4f54-84a2-f675149edc42
+md"""
 ## Single Processor Parallelism (SIMD)
 
 To get started, we will discuss low-level parallelism related to a single core called
@@ -157,7 +162,10 @@ similar to
 ```
 
 This means that for each addition clock, we are simultaneously adding four elements of the array together. As a sanity check, this means that I have a 19/4 = 4.8 GHz processor which is roughly in line with the Ryzen 7950x reported speed.
+"""
 
+# ╔═╡ 3de353d3-ef0c-4e25-b52c-189061adac12
+md"""
 ### Vectorizing Julia Code with Packages
 
 Proving that a program can SIMD however can be difficult, and sometimes the compiler
@@ -373,7 +381,10 @@ Now test the threading example
 md"""
 Now, we are starting to see the benefits of threading for large enough vectors.
 To determine whether threading is useful, a user should benchmark the code. Additionally, memory bandwidth limitations are often important and so multi-threaded code should also do as few allocations as possible.
+"""
 
+# ╔═╡ 614b38ea-397a-4db7-8f66-e1c0184726b6
+md"""
 ### Low-Level Multi-Theading
 """
 
@@ -529,7 +540,10 @@ md"""
 # ╔═╡ dfa50bc7-2250-4326-b7a6-724a975c4928
 md"""
 The atomic solution is substantially slower than the manual solution. In fact, atomics should only be used if absolutely necessary. Otherwise the programmer should try to find a more manual solution.
+"""
 
+# ╔═╡ 40fbf241-6c38-4ed0-81e2-b44462baaf52
+md"""
 ### Using Higher-Level Threading Packages
 
 In general multi-threading programming can be quite difficult and error prone. Luckily there are a number of packages in Julia that can make this much simpler. The [`JuliaFolds`](https://github.com/JuliaFolds) ecosystem has a large number of packages, for instance, the [`FLoops.jl`](https://github.com/JuliaFolds/FLoops.jl). FLoops.jl provides two macros that enable a simple for-loop to be used for a variety of different execution mechanisms. For instance, every previous version of apply_sum can be written as
@@ -599,10 +613,13 @@ md"""
 is almost as fast as our hand-written example, but requires less understanding of race-conditions in threading.
 """
 
-# ╔═╡ e7163af8-3534-44fc-8e8f-ef1c692c972e
+# ╔═╡ 48905030-e373-4998-a8bc-2c7acdd529ad
 md"""
 ## GPU Acceleration
+"""
 
+# ╔═╡ dc8d70b5-0a0e-4547-b165-fd1d2a6f440d
+md"""
 ### Introduction
 
 GPUs are in some sense, opposite to CPUs. The typical CPU is characterized by a small
@@ -617,8 +634,10 @@ To get started with GPUs in Julia you need to load the correct package one of
 4. [Metal.jl](https://github.com/JuliaGPU/Metal.jl): Mac GPUs. Work in progress. Expect bugs and it is open to pull-requests.
 
 For this tutorial I will be using mostly be using the CUDA library. However, we will try to include code for other GPUs as well.
+"""
 
-
+# ╔═╡ e7163af8-3534-44fc-8e8f-ef1c692c972e
+md"""
 ### Getting Started with GPU computing
 
 CUDA.jl provides a complete suite of GPU tools in Julia from low-level kernel writing to
@@ -697,7 +716,7 @@ end
 # ╔═╡ 891a9803-7fd0-4a83-95ab-58b9bd44f8f2
 md"""
 !!! note
-	Pay special attention to the `.=`. This ensures that not intermediate array is created on the GPU.
+	Pay special attention to the `.=`. This ensures that no intermediate array is created on the GPU.
 """
 
 # ╔═╡ 7ce8025e-16be-47e0-988d-85947cc4e359
@@ -867,10 +886,13 @@ md"""
 And there you go, you just wrote your first native CUDA kernel within Julia! Unlike other programming languages, we can use native Julia code to write our own CUDA kernels and do not have to go to a lower-level language like C.
 """
 
-# ╔═╡ 6be7f9a4-7c80-4c2b-8dfb-080609f716e8
+# ╔═╡ 2fccb79d-fa93-406c-9dad-1b24af9b1259
 md"""
 ### GPU caveats
+"""
 
+# ╔═╡ 4dfcca95-58ce-43cc-abb6-3fab0170b7b7
+md"""
 #### Dynamic Control Flow
 GPUs, in general, are more similar to SIMD than any other style of parallelism mentioned in
 this tutorial. That is, GPUs follow the **Single Program Multiple Data** paradigm. What this
@@ -891,7 +913,10 @@ generally try to limit this kind of dynamic control flow. You may have noticed t
 using JAX. JAX tries to restrict the user to static computation graphs
 (no dynamic control flow) as much as possible for this exact reason. GPUs are not good with
 dynamical control flow.
+"""
 
+# ╔═╡ 6be7f9a4-7c80-4c2b-8dfb-080609f716e8
+md"""
 #### GPU memory
 Another important consideration is the time it takes to move memory on and off of the GPU.
 To see how long this takes let's benchmark the cu function which move memory from the CPU to the GPU.
@@ -949,7 +974,10 @@ processor memory together to parallelize the computation.
 
 Julia has a number of different distributed computing facilities, but we will focus on Distributed.jl
 the one supported in the standard library [`Distributed.jl`](https://tdocs.julialang.org/en/v1/manual/distributed-computing/).
+"""
 
+# ╔═╡ 2d05b052-3619-4129-b0da-b2f371402590
+md"""
 ### Distributed.jl (Manager-Worker parallelism)
 
 Distributed's multiprocessing uses the **manager-worker** paradigm. This is where the programmer
@@ -1005,7 +1033,10 @@ f2 = @spawnat :any rand(4, 4)
 
 This call does the same thing as the `remotecall` function above but the first argument is the worker id which we
 set to any to let Julia itself decide which processor to run it on.
+"""
 
+# ╔═╡ 29520e13-df3b-4b7a-80b8-d6ace0fe6368
+md"""
 ### Loading modules on a Distributed system
 Since Julia uses a manager-worker workflow, we need to manually ensure that every process has access to all the required data. For instance, suppose we wanted to compute the mean of a vector. Typically, we would do
 
@@ -1041,6 +1072,10 @@ provides the `@everywhere` macro
 @everywhere using Statistics
 ````
 which loads the module Statistics on every Julia worker and manager processor.
+"""
+
+# ╔═╡ 2eb4edd6-7f1b-4c33-a054-d7d3db5572e0
+md"""
 
 ### Distributed computation
 While remotecall and `spawnat` provide granular control of multi-processor parallelism often
@@ -1096,7 +1131,10 @@ However, for cheaper operations
 ````
 
 we find that `@distributed` is faster since it has less communication overhead. Therefore, the general recommendation is to use `@distributed` when reducing over cheap and consistent function, and to use `pmap` when the function is expensive.
+"""
 
+# ╔═╡ 3aae32a9-72f8-456a-b719-0c04b9933593
+md"""
 ## Conclusion
 
 In this tutorial we have shown how Julia provides an extensive library of parallel computing facilities. From single-core SIMD, to multi-threading, GPU computing, and distributed computation. Each of these can be used independently or together.
@@ -1114,7 +1152,9 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─e17b15bd-337d-4809-8b6c-2ed0f3701a9e
 # ╟─e6020e3a-77c7-11ed-2be9-e987cee1edf0
+# ╟─902614a2-8e81-408b-ae97-f4058f4bacb2
 # ╟─fb75265d-b154-4913-8714-ee68959682b4
+# ╟─05b2078a-a7bf-4f54-84a2-f675149edc42
 # ╟─c23fcdf1-4fd8-4859-abb3-8e08b4476046
 # ╟─766c47e4-f8ff-4d5b-868a-d13b52a8a1c1
 # ╟─b8e1a548-9c4d-40f1-baf3-c833151e7eba
@@ -1133,6 +1173,7 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─34ad1196-a1d7-4118-b4da-426af6826c7d
 # ╠═7623b88a-ba60-450e-86fb-8890354f7a94
 # ╟─a872cf65-a11e-4371-9d4d-41ea92c55369
+# ╟─3de353d3-ef0c-4e25-b52c-189061adac12
 # ╠═547df3f2-b2fe-4f22-a0ac-3ba6bdd3171c
 # ╟─57bd871d-06fc-4050-9024-aaaf52297d0a
 # ╠═f51bd7cb-97fd-4d5e-bcac-a114f19abe7d
@@ -1163,6 +1204,7 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─07eddd9c-c53f-49e7-9d61-2f5d54711a1c
 # ╠═b5666e45-dcf6-4ea8-9e83-7609f2091f83
 # ╟─45639208-ec9f-4aef-adb0-7a2c4467353a
+# ╟─614b38ea-397a-4db7-8f66-e1c0184726b6
 # ╟─bd78505c-904c-4e65-9160-6b3ebf02c21e
 # ╠═1ee1af8c-191c-4677-84fc-2cdeac39607c
 # ╟─32068e63-5ad5-4d0d-bee6-205597db610b
@@ -1186,6 +1228,7 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─4768f5c4-b37b-4667-9b42-d0352c8b5dde
 # ╠═f82d29b5-4d18-4c66-9703-9445b205d1ff
 # ╟─dfa50bc7-2250-4326-b7a6-724a975c4928
+# ╟─40fbf241-6c38-4ed0-81e2-b44462baaf52
 # ╠═463eab77-8c30-4071-bf84-a1aad685c21e
 # ╟─c8b7983f-295d-4ca4-9810-e0f130c5e92c
 # ╠═7912e780-59cd-46d6-8a3a-a1eb47b6f9cf
@@ -1197,6 +1240,8 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─df842625-04af-43d0-b802-3e4a9841c172
 # ╠═4f23d7c3-6d85-4d03-8d05-dd0719ebcbe3
 # ╟─529f73c3-b8ba-4b4b-bab1-7aa84c2a3a29
+# ╟─48905030-e373-4998-a8bc-2c7acdd529ad
+# ╟─dc8d70b5-0a0e-4547-b165-fd1d2a6f440d
 # ╟─e7163af8-3534-44fc-8e8f-ef1c692c972e
 # ╟─9d9d3fff-37d8-4773-816f-411fb79679f5
 # ╠═72cd207c-7a63-4e29-a6d8-110bcf65ecdc
@@ -1229,6 +1274,8 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─c6436555-0cb9-4738-af64-8d3fbd1c07c0
 # ╠═3f4daf38-704e-41b0-94f1-d10043d8fb5b
 # ╟─32d560e6-c5de-4740-81ba-dccc717d9677
+# ╟─2fccb79d-fa93-406c-9dad-1b24af9b1259
+# ╟─4dfcca95-58ce-43cc-abb6-3fab0170b7b7
 # ╟─6be7f9a4-7c80-4c2b-8dfb-080609f716e8
 # ╟─56a8891c-8993-43f9-bfff-81b520b10b88
 # ╠═3522798d-7e38-4db6-91b6-474e5d8d9119
@@ -1236,3 +1283,7 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╠═d9a844e5-de7b-4266-85ea-01f27f2932c2
 # ╟─8d6d2117-3513-470f-87e1-8f00dd340172
 # ╟─b2eb604f-9180-4e48-9ae5-04162583fb33
+# ╟─2d05b052-3619-4129-b0da-b2f371402590
+# ╟─29520e13-df3b-4b7a-80b8-d6ace0fe6368
+# ╟─2eb4edd6-7f1b-4c33-a054-d7d3db5572e0
+# ╟─3aae32a9-72f8-456a-b719-0c04b9933593

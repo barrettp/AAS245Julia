@@ -120,10 +120,13 @@ To use Julia's Python distribution, set the path to an empty string, i.e., `""`
     Usually, the necessary libraries are installed along with Python, but pyenv on  MacOS requires you to install it with env `PYTHON_CONFIGURE_OPTS="--enable-framework"` pyenv install 3.4.3. The Enthought Canopy Python distribution is currently not supported. As a general rule, we tend to recommend the Anaconda Python distribution on MacOS and Windows, or using the Julia Conda package, in order to minimize headaches.
 """
 
-# ╔═╡ 87b3ca0e-93d3-41d3-aa6d-e06ab0fbac26
+# ╔═╡ ac1d7b07-27b7-4d81-90f0-73d43fb1285f
 md"""
 ### PythonCall & JuliaCall
+"""
 
+# ╔═╡ 87b3ca0e-93d3-41d3-aa6d-e06ab0fbac26
+md"""
 #### Getting Started
 
 PyCall and PythonCall can be used in the same Julia session on Unix (Linux, OS X, etc.) as long the same interpreter is used for both. On Windows, it appears separate interpreters can be used. Let's ensure the same interpreter is used for both.
@@ -211,14 +214,20 @@ Try this example too.
 # ╔═╡ adb77392-c109-4e90-917e-75a23e7f21a9
 
 
-# ╔═╡ aa641087-0617-45ce-9ad1-69128fd155e9
+# ╔═╡ 0fa9edbb-7f84-437a-b8ae-cda0927ae258
 md"""
 PyArray directly wraps the underlying data buffer, so array operations such as indexing are about as fast as an ordinary Array.
+"""
 
+# ╔═╡ 7535b82b-67f2-4ef2-9b91-d8151e0bce16
+md"""
 #### Configuration
 
 By default, PythonCall uses CondaPkg.jl to manage its dependencies. This will install Conda and use it to create a Conda environment specific to your current Julia project.
+"""
 
+# ╔═╡ 9b3ed163-8d75-4e7e-b407-246a41f6b44d
+md"""
 #### Using your current Python installation
 
 ```julia
@@ -232,7 +241,10 @@ By setting the CondaPkg backend to Null, no Conda packages will be installed. Py
 If Python is not in your `PATH`, you will need to set the `JULIA_PYHTHONCALL_EXE` environment variable to include it in your path.
 
 If you also use PyCall, you can set the `JULIA_PYTHONCALL_EXE` environment variable to use the same interpreter.
+"""
 
+# ╔═╡ 8336af8f-782a-49b9-a662-a3abb985fa4b
+md"""
 #### Using your current Conda environment
 
 ```julia
@@ -243,7 +255,10 @@ ENV["JULIA_CONDAPKG_EXE"] = "/path/to/conda"   # optional
 Note that this configuration will still install any required Conda packages into your Conda envirnment.
 
 If `conda`, `mamba`, and `micromamba` are not in your `PATH` you will need to set `JULIA_CONDAPKG_EXE` to include them.
+"""
 
+# ╔═╡ 5cb95cc8-475a-4ffa-a28f-e20153644780
+md"""
 #### Using your current Conda, Mamba, and MicroMamba environment
 
 ```julia
@@ -252,7 +267,10 @@ ENV["JULIA_CONDAPKG_EXE"] = "/path/to/conda"   # optional
 ```
 
 The System backend will use your preinstalled Conda environment.
+"""
 
+# ╔═╡ aa641087-0617-45ce-9ad1-69128fd155e9
+md"""
 #### Installing Python packages
 
 Assuming you are using `CondaPkg.jl`, PythonCall uses it to automatically install any Python packages. For example,
@@ -282,6 +300,7 @@ pkg> conda add some_package
 # ╟─f790ac60-d874-4e95-8d34-252f44ff32b1
 # ╠═90c8b0db-f94b-440c-b05a-72e3f6483051
 # ╟─5d883d2b-515f-4286-a2ab-15127ac6b5ea
+# ╟─ac1d7b07-27b7-4d81-90f0-73d43fb1285f
 # ╟─87b3ca0e-93d3-41d3-aa6d-e06ab0fbac26
 # ╠═0db12101-fcf9-48a3-a337-ad53a4713f6d
 # ╟─93e945de-7ceb-4124-b3db-f6b64e2e46bb
@@ -292,4 +311,9 @@ pkg> conda add some_package
 # ╠═966da8a4-6cee-47c3-bca1-a90460218f3f
 # ╟─4adcd9bb-40dc-47dc-941d-66d34465b218
 # ╠═adb77392-c109-4e90-917e-75a23e7f21a9
+# ╟─0fa9edbb-7f84-437a-b8ae-cda0927ae258
+# ╟─7535b82b-67f2-4ef2-9b91-d8151e0bce16
+# ╟─9b3ed163-8d75-4e7e-b407-246a41f6b44d
+# ╟─8336af8f-782a-49b9-a662-a3abb985fa4b
+# ╟─5cb95cc8-475a-4ffa-a28f-e20153644780
 # ╟─aa641087-0617-45ce-9ad1-69128fd155e9

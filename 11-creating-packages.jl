@@ -387,9 +387,15 @@ end
 That's it! You can now load your package by typing `] activate MyPackage` and then `using MyPackage`.
 
 If you want your package accessible to other code, activate your other environment and, from inside, run `] develop /home/path-to/MyPackage`. This will add it to that environment's Project.toml.
+"""
 
+# ╔═╡ e120cf73-9eb2-4618-aa7f-215c6d9ccbbf
+md"""
 ------
+"""
 
+# ╔═╡ 42ca97fc-57dc-4f24-9919-8d6a823ae151
+md"""
 Notice how we had to put `module MyPackage` at the top of MyPackage.jl? Unlike in Python, modules != files. You can create multiple, nested modules inside the same file (you should rarely want to do this):
 ```julia
 module MyPackage
@@ -440,15 +446,20 @@ The easiest way to share a Julia package is to put it on GitHub.
 Once you're happy with your package, you can "register" it with the Julia General Registry so that people can install it by just typing `] add MyPackage`.
 
 There are lots more things you can add to your package over time.
+"""
 
+# ╔═╡ ea74763f-ece3-4a4c-ae76-39d1ac5ca2dd
+md"""
 ### Tests
 You can add tests in a file called `tests/runtests.jl`. Then, you can run `] test MyPackage` to get a test report.
 
 If your package is registered, the Julia developers will run your package tests against new versions of Julia to make sure everything works as expected.
 
 You can even hook up these tests to GitHub so that they run everytime you change the code. This is a great way to make sure everything stays working the way it should!
+"""
 
-
+# ╔═╡ cf62edf6-59e7-4880-9c51-897c29c1233c
+md"""
 ### Documentation
 You can add documentation to your package in the `docs` folder.
 Read about how here: [documenter.juliadocs.org](https://documenter.juliadocs.org/stable/). You can set GitHub up to automatically convert your docs into a hosted webpage.
@@ -535,7 +546,7 @@ v = view(arr, 1:2, 1:2)
 
 # ╔═╡ Cell order:
 # ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
-# ╠═cfebe185-8871-4fe5-ac55-20c7803a0457
+# ╟─cfebe185-8871-4fe5-ac55-20c7803a0457
 # ╟─2b2adba9-fc0d-4f59-95a5-8d14d1c067f4
 # ╟─35e08843-8dde-495c-ab4f-bbb43ed75395
 # ╠═49bac5a6-51ee-4150-bb4f-3934bd8e4fb2
@@ -570,8 +581,12 @@ v = view(arr, 1:2, 1:2)
 # ╠═9d08cba7-90e1-4fe0-842b-757d3df36a32
 # ╠═a413ec8f-0787-4d77-a04c-acffdf305b7a
 # ╟─9238dcf9-3722-45a1-ad4b-af2a39d24626
+# ╟─e120cf73-9eb2-4618-aa7f-215c6d9ccbbf
+# ╟─42ca97fc-57dc-4f24-9919-8d6a823ae151
 # ╟─44b4a9f9-7740-4ea5-bb03-3fca9a48f220
 # ╟─7dbb9c09-5b7a-4a5a-b6b1-8946b0cf962e
+# ╟─ea74763f-ece3-4a4c-ae76-39d1ac5ca2dd
+# ╟─cf62edf6-59e7-4880-9c51-897c29c1233c
 # ╟─575703f0-efec-4092-b067-8eaf5600bd69
 # ╟─7b6689b3-75d3-4245-87ef-b46d93249414
 # ╠═c16ec715-7adc-4fde-9021-8b44746ae6ff
