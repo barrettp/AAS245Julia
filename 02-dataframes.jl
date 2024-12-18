@@ -195,7 +195,7 @@ For this workshop, we've chosen the [HYG database](https://astronexus.com/hyg), 
 """
 
 # ╔═╡ 242b3f41-5b88-42d5-a20d-86f07d413f20
-url = "https://www.astronexus.com/downloads/catalogs/hyglike_from_athyg_24.csv.gz";
+url = "https://astronexus.com/downloads/catalogs/hygdata_v41.csv.gz";
 
 # ╔═╡ abbfd16c-46d7-4d88-8b1c-a9abe44a7266
 filename = Downloads.download(url)
