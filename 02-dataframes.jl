@@ -142,7 +142,8 @@ As you may have guessed, using `:` (colon) in place of an index just grabs every
 
 ```julia
 demo_df[:, :A]
-
+```
+```julia
 demo_df[!, :A]
 ```
 """
@@ -229,7 +230,7 @@ hyg_df = CSV.read(filename, DataFrame)
 """
 
 # ╔═╡ aa184c54-a026-4349-b75c-f19f5323819e
-hyg_df = CSV.read(filename, DataFrame)
+
 
 # ╔═╡ c0441fbb-801e-4c1f-a384-f6f9d66d94b9
 md"""

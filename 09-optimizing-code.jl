@@ -17,7 +17,7 @@ using PyCall
 using LinearAlgebra
 
 # ╔═╡ b83ba8db-b9b3-4921-8a93-cf0733cec7aa
-using CUDA
+
 
 # ╔═╡ 76073161-c983-4dfb-945c-27164e50f8ae
 md"""
@@ -48,15 +48,7 @@ end
 """
 
 # ╔═╡ b90d6694-b170-4646-b5a0-e477d4fe6f50
-begin
-	gl = rand(1000)
 
-	function global_update()
-		for i in eachindex(gl)
-			gl[i] += 1
-		end
-	end
-end
 
 # ╔═╡ 5ed407ea-4bba-4eaf-b47a-9ae95b28abba
 md"""
@@ -586,7 +578,7 @@ md"""
 """
 
 # ╔═╡ a0c8660c-3ddb-4795-b3c9-a63cc64c8c00
-@benchmark bench_np($x, $y, $c)
+
 
 # ╔═╡ cb3bb128-49d3-4996-84e2-5154e13bbfbd
 md"""
@@ -604,13 +596,7 @@ end
 """
 
 # ╔═╡ 924d11a7-5161-4b13-a1f6-a1a8530736da
-function serial_loop(x, y, c)
-	out = similar(x)
-	for i in eachindex(x, y, c)
-		out[i] = x[i]*y[i] + c[i]^3
-	end
-	return out
-end
+
 
 # ╔═╡ 40381501-952a-48a5-9a28-ee4bf1c65fd4
 md"""
@@ -620,7 +606,7 @@ md"""
 """
 
 # ╔═╡ 0be6a2d0-f470-436c-bbd7-8bab3635a34d
-@benchmark serial_loop($x, $y, $c)
+
 
 # ╔═╡ 7fad0fc0-1a6a-437a-a1c2-ce2c70d41acf
 md"""
@@ -646,13 +632,7 @@ end
 """
 
 # ╔═╡ 54a92a14-405a-45d1-ad3a-5f42e4ce8789
-function serial_loop_inbounds(x, y, c)
-	out = similar(x)
-	@inbounds for i in eachindex(x, y, c)
-		out[i] = x[i]*y[i] + c[i]^3
-	end
-	return out
-end
+
 
 # ╔═╡ 946da67e-5aff-4de9-ba15-715a05264c4d
 md"""
@@ -662,7 +642,7 @@ md"""
 """
 
 # ╔═╡ 4da9796c-5102-44e7-8af3-dadbdabcce73
-@benchmark serial_loop_inbounds($x, $y, $c)
+
 
 # ╔═╡ db4ceb7c-4ded-4048-88db-fd15b3231a5c
 md"""
@@ -682,12 +662,7 @@ end
 """
 
 # ╔═╡ fc2351f5-f808-499d-8251-d12c93a2be0e
-function serial_loop!(out, x, y, c)
-	@inbounds for i in eachindex(x, y, c)
-		out[i] = x[i]*y[i] + c[i]^3
-	end
-	return out
-end
+
 
 # ╔═╡ 2bd7d41e-f2c9-47cd-8d5b-a2cfef84a830
 out = similar(x)
@@ -700,7 +675,7 @@ md"""
 """
 
 # ╔═╡ f5ecdd06-addb-4913-996b-164e337853c2
-@benchmark serial_loop!(out, x, y, c)
+
 
 # ╔═╡ c14acc67-dbb2-4a86-a811-de857769a472
 md"""
@@ -720,10 +695,7 @@ end
 """
 
 # ╔═╡ f9a938d8-dce9-4ef0-967e-5b3d5384ca9b
-function bcast_loop(x, y, c)
-	return x.*y .+ c.^3
-	# or @. x*y + c^3
-end
+
 
 # ╔═╡ 38bafb52-14f0-4a42-8e73-de1ada31c87e
 md"""
@@ -733,7 +705,7 @@ md"""
 """
 
 # ╔═╡ 785a379a-e6aa-4919-9c94-99e277b57844
-@benchmark bcast_loop($x, $y, $c)
+
 
 # ╔═╡ 232cd259-5ff4-42d2-8ae1-cb6823114635
 md"""
@@ -748,10 +720,7 @@ end
 """
 
 # ╔═╡ 168aee22-6769-4077-a9da-a27689e6bb32
-function bcast_loop!(out, x, y, c)
-	out .= x.*y .+ c.^3
-	# or @. out = x*y + c^3
-end
+
 
 # ╔═╡ 985cd6ec-bd2d-4dd9-bfbe-0bb066036150
 md"""
@@ -761,7 +730,7 @@ md"""
 """
 
 # ╔═╡ 6acbaed4-6ff3-45be-9b28-595213206218
-@benchmark bcast_loop!($out, $x, $y, $c)
+
 
 # ╔═╡ 587d98d8-f805-4c4f-bf2f-1887d86adf05
 md"""
@@ -784,11 +753,14 @@ eigen.(A)
 """
 
 # ╔═╡ 90bd7f7b-3cc1-43ab-8f78-c1e8339a79bf
-eigen.(A)
+
 
 # ╔═╡ 608a3a98-924f-45ef-aeca-bc5899dd8c7b
 md"""
 Finally as a bonus we note that Julia's broadcasting interface also automatically works on the GPU.
+```julia
+using CUDA
+```
 """
 
 # ╔═╡ cc1e5b9f-c5b4-47c0-b886-369767f6ca4b

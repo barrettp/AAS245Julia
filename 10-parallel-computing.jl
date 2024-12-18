@@ -21,7 +21,7 @@ using LoopVectorization
 using FLoops
 
 # ╔═╡ 72cd207c-7a63-4e29-a6d8-110bcf65ecdc
-using CUDA
+
 
 # ╔═╡ e6020e3a-77c7-11ed-2be9-e987cee1edf0
 md"""
@@ -657,6 +657,8 @@ using oneAPI        # For intel (linux only)
 ```julia
 using Metal         # For M1 Mac
 ```
+```julia
+using CUDA          # For nVidia
 ```
 """
 

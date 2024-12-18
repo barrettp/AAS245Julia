@@ -121,7 +121,7 @@ println("Hello World")
 """
 
 # ╔═╡ 4a404280-2845-4deb-8eee-2dcdcb9aed27
-println("Hello, World")
+
 
 # ╔═╡ 7813824a-cae9-4b97-ac90-e542fbd630d5
 md"""
@@ -136,7 +136,7 @@ a = 4
 """
 
 # ╔═╡ 6ac51e87-87a2-4ccc-9f08-0028700b3cda
-a = 4
+
 
 # ╔═╡ 27208179-35c3-43c1-9548-3620c8aa7680
 md"""
@@ -146,7 +146,7 @@ b = 2
 """
 
 # ╔═╡ 40d8d18c-3713-4e77-812d-9d77a4e1ac50
-b = 2
+
 
 # ╔═╡ aa3e9db7-49d1-40f8-b745-6c4faa2197e1
 md"""
@@ -156,7 +156,7 @@ a + b
 """
 
 # ╔═╡ 756d3f69-a5b2-4ee6-bae6-94c513baae6c
-a + b
+
 
 # ╔═╡ 419a6dec-1db0-477f-911f-049223b5674f
 md"""
@@ -316,7 +316,7 @@ m1 = measurement(4.5, 0.1)
 """
 
 # ╔═╡ 8f016c75-7768-4418-8c57-100db3073c85
-m1 = measurement(4.5, 0.1)
+
 
 # ╔═╡ 094b6f30-cbd6-46b1-8e0c-3fdb1ef18261
 md"""Typing 'measurements' is rather awkward. There must be a better way. How about the following?
@@ -329,7 +329,7 @@ where the plus-minus character is entered using LaTeX syntax followed by tab, i.
 """
 
 # ╔═╡ 7ba8dc19-e0ca-40de-a778-7583ca70978d
-m2 = 15 ± 0.3
+
 
 # ╔═╡ 668abc35-fdc3-430f-8c90-de3c2c2cd77b
 md"""
@@ -341,7 +341,7 @@ One of the features of Julia is that it understands unicode. For example, expres
 """
 
 # ╔═╡ 232cc444-03b7-442a-8737-8b7725b43421
-α = m1 + m2
+
 
 # ╔═╡ d2a2d0bc-e883-439f-8e34-166e2369caef
 md"""
@@ -354,30 +354,34 @@ Let's add another package called Unitful, which enables attaching units to varia
 
 # ╔═╡ c24f1ddd-5e31-4073-a627-86cedb1d44c2
 md"""
-Now let's create two new values m3 and m4 with units attached, and then multiply them together to create a third variable β.
+Now let's create two new values `m3` and `m4` with units attached, and then multiply them together to create a third variable `β`.
 
 ```julia
 m3 = (32 ± 0.1)u"m/s"
+```
+```julia
 m4 = (9.8 ± 0.3)u"s"
+```
+```julia
 β = m3 * m4
 ```
 """
 
 # ╔═╡ 63a4b27a-5361-4d95-8787-ae31ca7987fe
-m3 = (32 ± 0.1)u"m/s"
+
 
 # ╔═╡ 15674bb0-2fe1-40b1-a6c0-3a5a64a6a5c3
-m4 = (9.8 ± 0.3)u"s"
+
 
 # ╔═╡ 70f08712-002c-4adc-84b1-73a8655d8a44
-β = m3 * m4
+
 
 # ╔═╡ 3fa06ac2-20f3-4df4-8ce3-b0e1c21ca842
 2pi
 
 # ╔═╡ cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
 md"""
-The variable β's value now has an associated error and unit.
+The variable `β`'s value now has an associated error and unit.
 
 Let's see if this works with one dimensional arrays or vectors.
 
@@ -387,9 +391,6 @@ Let's see if this works with one dimensional arrays or vectors.
 
 Note the dot '`.`' before the multiplication character '`*`'.  This means element-wise multiplication. Whereas the multiplication character '`*`' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time.
 """
-
-# ╔═╡ fdba7211-e480-4948-8435-76a7608e7e63
-γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
 
 # ╔═╡ e00b826d-1bbb-4413-a907-eb181369526b
 
@@ -445,6 +446,8 @@ There are two primary reasons for type annotation:
 md"""
 ```julia
 (1+2)::Float32
+```
+```julia
 (1+2)::Int
 ```
 
@@ -452,10 +455,10 @@ Let's see how this works. Try the above examples.
 """
 
 # ╔═╡ 2262c860-c06c-4293-8e6d-b616228cb301
-(1+2)::Float32
+
 
 # ╔═╡ 68e64f74-8a6b-403e-a404-52fb9cdea54b
-(1+2)::Int
+
 
 # ╔═╡ 0887eca0-6760-4d9b-b44e-d1a14059aede
 md"""Julia has various categories of types within a type-hierarchy. The following are some of the more common types.
@@ -478,11 +481,11 @@ abstract type Widget end
 """
 
 # ╔═╡ 1bc3da9e-143c-489c-b8de-a29dc48f17cb
-abstract type Widget end
+
 
 # ╔═╡ f00dd72a-8705-426b-9eb4-b91cf1ea95d4
 md"""
-And some Widget subtypes using the subtype operator "<:".
+And some Widget subtypes using the subtype operator "`<:`".
 
 ```julia
 abstract type Round <: Widget end
@@ -491,10 +494,10 @@ abstract type Square <: Widget end
 """
 
 # ╔═╡ d308df6b-14ec-49ec-8270-a3b9efd88517
-abstract type Round <: Widget end
+
 
 # ╔═╡ 01805f02-f9f6-4e3e-8e93-a0628753130f
-abstract type Square <: Widget end
+
 
 # ╔═╡ a90b9011-714e-41d1-b7a3-fb3eb9dc56da
 md"""
@@ -503,11 +506,25 @@ The subtype and supertype of a type can be shown using the functions "subtype" a
 Show the supertype and subtypes of Widget.
 """
 
-# ╔═╡ b8325403-9744-4a9d-ae64-be88671da89b
+# ╔═╡ 5f19b06a-1fe5-45d7-9996-b073394c91af
+md"""
+```julia
 supertype(Round)
+```
+"""
+
+# ╔═╡ b8325403-9744-4a9d-ae64-be88671da89b
+
+
+# ╔═╡ dd9d05aa-9150-4a3a-9336-86aa74ee6e39
+md"""
+```julia
+subtypes(Widget)
+```
+"""
 
 # ╔═╡ 4879dae5-442e-4dc6-90c9-366ff76912bb
-subtypes(Widget)
+
 
 # ╔═╡ e2e57f49-f848-468a-a6f5-482b6e1ad4ba
 typeof(1)
@@ -534,7 +551,7 @@ subtypes(Integer)
 """
 
 # ╔═╡ aa4a7ec0-a270-482b-abeb-7168de767938
-subtypes(Integer)
+
 
 # ╔═╡ b8e3b72a-e501-4164-b06c-cbb3282d9d11
 md"""
@@ -544,7 +561,7 @@ subtypes(Signed)
 """
 
 # ╔═╡ d9aa9f5e-31b6-49a3-bae8-a9b149e6ab91
-subtypes(Signed)
+
 
 # ╔═╡ 15b0159b-9c8c-4327-b73d-d7e19decde2a
 md"""
@@ -554,7 +571,7 @@ subtypes(AbstractFloat)
 """
 
 # ╔═╡ 5d5b1283-043b-437a-afda-75801808acc9
-subtypes(AbstractFloat)
+
 
 # ╔═╡ 6a6b2a0a-6bb6-4a67-b4c1-46631503918d
 md"""Theoretically, a primitive type can have any number of bits, e.g., 5 or 17. Practically, the number of bits is constrained to multiples of 8. This is a limitation of the LLVM compiler, not Julia. So the Bool type is 8 bits, not 1 bit.
@@ -562,7 +579,7 @@ md"""Theoretically, a primitive type can have any number of bits, e.g., 5 or 17.
 
 # ╔═╡ 877faa74-7490-44a3-9e97-b36b36050796
 md"""
-#### Characters (' ') vs. Strings (" ")
+#### Characters (`' '`) vs. Strings (`" "`)
 
 Unlike Python, single and double quotes have different meanings. Single quotes create characters. Double quotes create strings. The reason for this is Unicode.
 
@@ -572,7 +589,7 @@ Unlike Python, single and double quotes have different meanings. Single quotes c
 """
 
 # ╔═╡ bba18435-d355-4fca-a6f5-10dacde17413
-'j'
+
 
 # ╔═╡ d9e911a8-13f9-41e5-ac36-4aee3ec24c59
 md"""
@@ -588,10 +605,10 @@ Or
 """
 
 # ╔═╡ 5f72777b-a174-453c-8b18-ebf1f4bebe0d
-Char(167)
+
 
 # ╔═╡ 734a4185-4001-410f-affc-71b33e339339
-'\u00A7'
+
 
 # ╔═╡ c349f7b8-bdf0-4b94-b412-06c5e7f3cbc5
 md"""
@@ -648,13 +665,10 @@ Let's create a Longday type and an instance of it.
 """
 
 # ╔═╡ be09f5d0-daea-4f47-8dc8-33c875fca843
-struct Longday
-    day::Int64
-    frac::Float64
-end
+
 
 # ╔═╡ 10ec3b0d-1add-4f92-8f4c-b594ab3f0e68
-day1 = Longday(1, 0.5)
+
 
 # ╔═╡ 6ee4665d-c5b9-4881-ad65-15c6a8229f3f
 md"""
@@ -662,15 +676,17 @@ The field can be access using "dot" notation as follows:
 
 ```julia
 day1.day
+```
+```julia
 day1.frac
 ```
 """
 
 # ╔═╡ f5596a05-04de-4955-9575-4c035e0f1495
-day1.day
+
 
 # ╔═╡ a1b4f7bb-8238-40d6-81cb-6d5e6c737134
-day1.frac
+
 
 # ╔═╡ 3b8e773f-df6e-4b59-9f5d-e14366d02754
 md"""
@@ -707,10 +723,10 @@ typeof(:symbol)
 """
 
 # ╔═╡ 7a8faa02-34b1-4416-beab-2909fb56c767
-:symbol
+
 
 # ╔═╡ 6e1a3b46-05f0-487d-933a-6ff0d9d43a2b
-typeof(:symbol)
+
 
 # ╔═╡ 05adfd23-c809-4706-9bf2-1a0a2445748b
 md"""
@@ -811,33 +827,39 @@ Let's define the above `myadd` function.
 """
 
 # ╔═╡ 771dee9c-1615-435a-884f-7d274172191c
-function myadd(x::Int, y::Int)
-    x + y
-end
+
 
 # ╔═╡ c0c8fde0-1526-4e8a-896a-67c226b0badf
-myadd(x::Float64, y::Float64) = x + y
+
 
 # ╔═╡ c3b1713c-1207-427f-bc2b-7ff973f5e35e
 md"""
 Notice that the function "myadd" now has two methods; one for Ints and one for Float64s.
 
 Try adding an Int and Float64 using the "myadd" function.
+
+```julia
+myadd(2, 3.1)
+```
 """
+
+# ╔═╡ c7b43469-232a-46a0-8bb6-c7a928e6d2f2
+
 
 # ╔═╡ cc19d021-1f25-4469-8239-9924cc01f883
 md"""
 The compiler returns a MethodError because their is no method that adds a Int and Float64. We can fix this by defining a generic "myadd" function.
-"""
 
-# ╔═╡ 43b6afe5-8c9d-412a-ae68-c190b93c74e6
+```julia
 myadd(x, y) = x + y
-
-# ╔═╡ c7b43469-232a-46a0-8bb6-c7a928e6d2f2
-myadd(2, 3.1)
+```
+"""
 
 # ╔═╡ e967114e-14ef-42e4-a1cd-dcfda5f19ca3
 myadd
+
+# ╔═╡ 43b6afe5-8c9d-412a-ae68-c190b93c74e6
+
 
 # ╔═╡ 02296dd4-ddca-4acb-929f-61ef5d9f755f
 md"""
@@ -891,6 +913,7 @@ md"""#### Functors
 Functors are anonymous functions that are defined only by their argument signature. They are synonymous with callable objects in Python.
 
 ```julia
+begin
 struct Polynomial{R}
     coeffs::Vector{R}
 end
@@ -901,6 +924,7 @@ function (p::Polynomial)(x)
         v = v*x + p.coeffs[i]
     end
     return v
+end
 end
 ```
 
@@ -929,24 +953,6 @@ md"""Evaluate the polynomial"""
 
 # ╔═╡ fad1263d-6a0a-435e-a6b5-2e2d394307be
 
-
-# ╔═╡ d7623ed3-42ef-4562-ae53-7cbbd26f7a07
-begin
-    struct Polynomial{R}
-        coeffs::Vector{R}
-    end
-
-    function (p::Polynomial)(x)
-        v = p.coeffs[end]
-        for i = (length(p.coeffs)-1):-1:1
-        v = v*x + p.coeffs[i]
-        end
-    return v
-    end
-    p = Polynomial([1,10,100])
-
-    p(5)
-end
 
 # ╔═╡ 7a35a96c-be9e-4e6e-ba70-7fb9b84a609f
 md"""
@@ -1019,7 +1025,7 @@ zeros(Int8, 2, 3)
 """
 
 # ╔═╡ 579259ef-3b67-4497-a8a3-5e6bed5b2ce0
-zeros(Int8, 2, 3)
+
 
 # ╔═╡ 897da563-60db-446d-88cc-b23eec8fd7e5
 [2*i + j for i=1:3 for j=4:6]
@@ -1033,7 +1039,7 @@ zeros(Int8, (2,3))
 """
 
 # ╔═╡ c92272d7-8729-468d-8bc5-f80f12a53856
-zeros(Int8, (2,3))
+
 
 # ╔═╡ e87c1b53-da8e-4747-92ea-b8299b9107b7
 md"""
@@ -1048,7 +1054,7 @@ zeros((2, 3))
 """
 
 # ╔═╡ 13e6db9b-8b75-4f30-b174-ce3623148169
-zeros((2, 3))
+
 
 # ╔═╡ cd46d32e-84e0-4d29-892f-b30db3fdcf8a
 md"""The type defaults to Float64"""
@@ -1086,11 +1092,7 @@ Try the above example.
 """
 
 # ╔═╡ 8aa1bee5-c3f3-425c-8c33-5fed56866342
-begin
-A = reshape(1:32, 4, 4, 2)
-A[3, 2, 1]
-A[CartesianIndex(3, 2, 1)] == A[3, 2, 1] == 7
-end
+
 
 # ╔═╡ b0ef4e74-1a13-4877-846f-f49155f3297c
 CartesianIndex(3, 2, 1)
@@ -1113,13 +1115,10 @@ Try it.
 """
 
 # ╔═╡ d98ad311-6bf5-4f39-8e92-167fb4eea9a5
-page = A[:,:,1]
+
 
 # ╔═╡ c5e2c91c-3e4f-434e-9c35-d3e8933d28f4
-page[[CartesianIndex(1,1),
-     CartesianIndex(2,2),
-     CartesianIndex(3,3),
-     CartesianIndex(4,4)]]
+
 
 # ╔═╡ cc9eae6f-4cef-4160-9d1d-08f53e0681f6
 md"""
@@ -1133,7 +1132,7 @@ Try this too.
 """
 
 # ╔═╡ 2793ca45-024c-4289-8075-c48c02acb971
-A[CartesianIndex.(axes(A, 1), axes(A, 2)), 1]
+
 
 # ╔═╡ a15b5f47-1be5-42ae-91c0-b868382d7e9b
 md"""
@@ -1212,7 +1211,6 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 # ╠═70f08712-002c-4adc-84b1-73a8655d8a44
 # ╠═3fa06ac2-20f3-4df4-8ce3-b0e1c21ca842
 # ╟─cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
-# ╠═fdba7211-e480-4948-8435-76a7608e7e63
 # ╠═e00b826d-1bbb-4413-a907-eb181369526b
 # ╟─b56255c6-9d3b-4e2f-a9a0-c6fe69990f3d
 # ╟─5cd072cb-5d71-4a08-8e41-4eaaa7faaa5c
@@ -1228,7 +1226,9 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 # ╠═d308df6b-14ec-49ec-8270-a3b9efd88517
 # ╠═01805f02-f9f6-4e3e-8e93-a0628753130f
 # ╟─a90b9011-714e-41d1-b7a3-fb3eb9dc56da
+# ╟─5f19b06a-1fe5-45d7-9996-b073394c91af
 # ╠═b8325403-9744-4a9d-ae64-be88671da89b
+# ╟─dd9d05aa-9150-4a3a-9336-86aa74ee6e39
 # ╠═4879dae5-442e-4dc6-90c9-366ff76912bb
 # ╠═e2e57f49-f848-468a-a6f5-482b6e1ad4ba
 # ╟─4c278c5a-3324-4245-8ddf-f5390167168f
@@ -1267,6 +1267,10 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 # ╠═a96dd069-09aa-4add-baba-99ffae36bfe8
 # ╟─8a3aa0d3-1ade-4961-975d-b39899731ffe
 # ╟─62edc512-89e6-4b29-b96e-f43b253654b9
+# ╟─178be175-bc41-4f15-a56b-18b22ea429ba
+# ╟─c696f779-ff9f-42c3-b22d-77ffc56b0bd9
+# ╟─e5db3490-9574-4a76-99ed-c8c37af7c1f4
+# ╟─2e2ce11c-70ab-4c32-9f99-29dfe96f2ddb
 # ╠═771dee9c-1615-435a-884f-7d274172191c
 # ╠═c0c8fde0-1526-4e8a-896a-67c226b0badf
 # ╟─c3b1713c-1207-427f-bc2b-7ff973f5e35e
@@ -1285,10 +1289,10 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 # ╠═1e8b04e8-ea02-41d1-94e1-42b02bbafdcc
 # ╟─3ffc37d1-8fd2-4436-bb8d-4bd82291c174
 # ╠═fad1263d-6a0a-435e-a6b5-2e2d394307be
-# ╠═d7623ed3-42ef-4562-ae53-7cbbd26f7a07
 # ╟─7a35a96c-be9e-4e6e-ba70-7fb9b84a609f
 # ╟─33105044-e651-40a5-b928-592032c68e42
 # ╟─b3c2831f-1de1-47f4-ba4a-1cc30c30d510
+# ╟─3b3b7944-214b-4dd4-b150-590aaa359fe1
 # ╠═579259ef-3b67-4497-a8a3-5e6bed5b2ce0
 # ╠═897da563-60db-446d-88cc-b23eec8fd7e5
 # ╟─76afc0a5-5da0-446d-afbd-1f202d84cf9a
