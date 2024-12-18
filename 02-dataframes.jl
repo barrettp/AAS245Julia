@@ -17,7 +17,7 @@ macro bind(def, element)
 end
 
 # ╔═╡ c25ec42a-81aa-11ef-3780-0f7138e64b77
-import Pkg; Pkg.activate(Base.current_project())
+import Pkg; Pkg.activate(Base.current_project(), io=devnull)
 
 # ╔═╡ 451ae1a0-1846-45dc-9517-6b78e7a81d4a
 using DataFrames
@@ -530,7 +530,7 @@ And that concludes the workshop on DataFrames! Feel free to ask questions, and y
 """
 
 # ╔═╡ Cell order:
-# ╠═c25ec42a-81aa-11ef-3780-0f7138e64b77
+# ╟─c25ec42a-81aa-11ef-3780-0f7138e64b77
 # ╟─78a5f27a-8de7-4705-b58f-1f88b50cada5
 # ╟─3ebfbc37-294d-4659-b3b8-7e41a4469e84
 # ╠═451ae1a0-1846-45dc-9517-6b78e7a81d4a
