@@ -117,7 +117,7 @@ Pkg.build("PyCall")
 To use Julia's Python distribution, set the path to an empty string, i.e., `""`
 
 !!! note
-    Usually, the necessary libraries are installed along with Python, but pyenv on  MacOS requires you to install it with env PYTHON\_CONFIGURE\_OPTS="--enable-framework" pyenv install 3.4.3. The Enthought Canopy Python distribution is currently not supported. As a general rule, we tend to recommend the Anaconda Python distribution on MacOS and Windows, or using the Julia Conda package, in order to minimize headaches.
+    Usually, the necessary libraries are installed along with Python, but pyenv on  MacOS requires you to install it with env `PYTHON_CONFIGURE_OPTS="--enable-framework"` pyenv install 3.4.3. The Enthought Canopy Python distribution is currently not supported. As a general rule, we tend to recommend the Anaconda Python distribution on MacOS and Windows, or using the Julia Conda package, in order to minimize headaches.
 """
 
 # ╔═╡ 87b3ca0e-93d3-41d3-aa6d-e06ab0fbac26

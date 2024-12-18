@@ -441,7 +441,7 @@ function row_major_matrix!(a::AbstractMatrix)
 end
 ```
 !!! note
-	We use the bang symbol !. This is stardard Julia convention and signals that the function is mutating.
+	We use the bang symbol `!`. This is stardard Julia convention and signals that the function is mutating.
 
 """
 
@@ -471,7 +471,7 @@ md"""
 This is very slow! This is because Julia uses column-major ordering. Computers typically store memory sequentially. That means that the most efficient way to access parts of a vector is to do it in order. For 1D arrays there is no ambiguity. However, for higher dimensional arrays a language must make a choice. Julia follows Matlab and Fortrans conventions and uses column-major ordering. This means that matrices are stored column-wise. In a for-loop this means that the inner index should change the fastest.
 
 !!! note
-	For a more complete introduction to computere memory and Julia see [https://book.sciml.ai/notes/02-Optimizing_Serial_Code/]()
+	For a more complete introduction to computere memory and Julia see <https://book.sciml.ai/notes/02-Optimizing_Serial_Code/>
 
 ```julia
 function column_major_matrix!(a::AbstractMatrix)
@@ -820,6 +820,7 @@ This is just the start of various performance tips in Julia. There exist many ot
 """
 
 # ╔═╡ 97f7a295-5f33-483c-8a63-b74c8f79eef3
+
 
 # ╔═╡ Cell order:
 # ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
