@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
@@ -61,9 +61,11 @@ Now let's check the performance of this function. To do this, we will use the ex
 
 ```julia
 using BenchmarkTools
-
+```
+```julia
 @benchmark global_update()
-
+```
+```
 BenchmarkTools.Trial: 10000 samples with 1 evaluation.
  Range (min … max):   96.743 μs …   8.838 ms  ┊ GC (min … max): 0.00% … 97.79%
  Time  (median):     105.987 μs               ┊ GC (median):    0.00%

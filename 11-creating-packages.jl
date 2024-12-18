@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
@@ -25,7 +25,6 @@ A module is created using a `module` block like this one:
 
 ```julia
 module MyModA
-
 	y = 1
 	f(x) = 2x^2
 end
@@ -152,36 +151,33 @@ Finally, let's take a look at how we can add methods to Julia's built in functio
 Add the following to the `BobsGeometryExtras` module from earlier:
 
 ```julia
+using LinearAlgebra
 
-	using LinearAlgebra
+function Base.abs(point::Point3D)
+	return Point3D(abs(point.x), abs(point.y), abs(point.z))
+end
 
-	function Base.abs(point::Point3D)
-		return Point3D(abs(point.x), abs(point.y), abs(point.z))
-	end
+function Base.:(+)(a::Point3D, b::Point3D)
+	return Point3D(a.x + b.x, a.y + b.y, a.z + b.z)
+end
 
-	function Base.:(+)(a::Point3D, b::Point3D)
-		return Point3D(a.x + b.x, a.y + b.y, a.z + b.z)
-	end
-
-	# Define Point3D multiplication as the cross product
-	function Base.:(*)(a::Point3D, b::Point3D)
-		return Point3D(
-			a.z*b.z - a.z*b.y,
-			a.z*b.x - a.x*b.z,
-            a.x*b.y - a.y*b.x
-		)
-	end
+# Define Point3D multiplication as the cross product
+function Base.:(*)(a::Point3D, b::Point3D)
+	return Point3D(
+		a.z*b.z - a.z*b.y,
+		a.z*b.x - a.x*b.z,
+		a.x*b.y - a.y*b.x
+	)
+end
 ```
 
 Once you've done that, try the following examples:
 ```julia
-
 p1 = BobsGeometryExtras.Point3D(1,1,1)
 p2 = BobsGeometryExtras.Point3D(1,-1,1)
 p3 = p1 + p2
 
 p4 = p1 * p2
-
 ```
 """
 
@@ -507,11 +503,11 @@ arr.meta.c
 for f in [
 	:(Base.getindex),
 	:(Base.setindex!),
-    :(Base.adjoint),
-    :(Base.transpose),
-    :(Base.view),
+	:(Base.adjoint),
+	:(Base.transpose),
+	:(Base.view),
 ]
-    @eval ($f)(arr::MetaArray, args...) = MetaArray($f(arr.array, args...), arr.meta)
+	@eval ($f)(arr::MetaArray, args...) = MetaArray($f(arr.array, args...), arr.meta)
 end
 
 # ╔═╡ 8df360a9-df72-4da8-82a4-7f09b347c7cb

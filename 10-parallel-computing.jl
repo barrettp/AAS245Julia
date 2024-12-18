@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
@@ -630,12 +630,14 @@ addition example above to the GPU by first moving the data to the GPU and using 
 # ╔═╡ 9d9d3fff-37d8-4773-816f-411fb79679f5
 md"""
 ```julia
-# For AMD
-using AMDGPU
-# For intel (linux only)
-using oneAPI
-# For M1 Mac
-using Metal
+using AMDGPU        # For AMD
+```
+```julia
+using oneAPI        # For intel (linux only)
+```
+```julia
+using Metal         # For M1 Mac
+```
 ```
 """
 

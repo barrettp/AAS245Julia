@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
@@ -20,11 +20,13 @@ Preprocessor "macro" systems, like that of C/C++, work at the source code level 
 
 ### The Abstract Syntax Tree
 
-    begin
-    str1 = "3 * 4 + 5"
-    ex1 = Meta.parse(str1)
-    println(typeof(ex1))
-    end
+```julia
+begin
+str1 = "3 * 4 + 5"
+ex1 = Meta.parse(str1)
+println(typeof(ex1))
+end
+```
 
 Try it.
 """
@@ -36,7 +38,9 @@ Try it.
 md"""
 Note that the parsed expression is an `Expr` type.
 
-    dump(ex1)
+```julia
+dump(ex1)
+```
 
 Show or dump the abstract syntax tree (AST) of the expression.
 """
@@ -50,11 +54,13 @@ The `Expr` type has two fields, a `head` and an `args`. The `head` declares the 
 
 Note that the expression `ex1` can be written directly in AST syntax.
 
-    begin
-    ex2 = Expr(:call, :+, Expr(:call, :*, 3, 4), 5)
-    dump(ex2)
-    println(ex1 == ex2)
-	end
+```julia
+begin
+ex2 = Expr(:call, :+, Expr(:call, :*, 3, 4), 5)
+dump(ex2)
+println(ex1 == ex2)
+end
+```
 
 Try it.
 """
@@ -78,11 +84,13 @@ The `:` character has two syntatic purposes in Julia. It signifies a `Symbol` or
 
 A `Symbol` is an interned string used as a building-block of an expression.
 
-    begin
-    sym = :foo
-    println(typeof(sym))
-    println(sym == Symbol("foo"))
-    end
+```julia
+begin
+sym = :foo
+println(typeof(sym))
+println(sym == Symbol("foo"))
+end
+```
 
 Try it.
 """
@@ -94,7 +102,9 @@ Try it.
 md"""
 The `Symbol` constructor takes a variable number of arguments and concatenates them together to create a `Symbol` string.
 
-    Symbol("func", 10)
+```julia
+Symbol("func", 10)
+```
 
 Try this.
 """
@@ -110,11 +120,13 @@ In the context of expressions, symbols are used to indicate access to variables.
 
 The second purpose of the `:` character is to create expression objects without using the explicit `Expr` constructor. This is referred to as *quoting*.
 
-    begin
-    ex3 = :(3 * 4 + 5)
-    dump(ex3)
-    println(ex1 == ex2 == ex3)
-    end
+```julia
+begin
+ex3 = :(3 * 4 + 5)
+dump(ex3)
+println(ex1 == ex2 == ex3)
+end
+```
 
 Try this example.
 """
@@ -130,14 +142,16 @@ There is a second syntatic form of quoting, called a `quote` block (i.e. `quote 
 
 Try the following example.
 
-    begin
-    ex4 = quote
-        x = 1
-        y = 2
-        x + y
-    end
-    println(typeof(ex4))
-    end
+```julia
+begin
+ex4 = quote
+    x = 1
+    y = 2
+    x + y
+end
+println(typeof(ex4))
+end
+```
 """
 
 # ╔═╡ c47eb25e-ff42-47a0-9949-11228e3c0535
@@ -149,11 +163,13 @@ md"""
 
 Julia allows *interpolation* of literals or expressions into quoted expressions by prefixing a variable with the `$` character. For example.
 
-    begin
-    a = 1;
-    ex5 = :($a + b)
-    dump(ex5)
-    end
+```julia
+begin
+a = 1;
+ex5 = :($a + b)
+dump(ex5)
+end
+```
 
 Try it.
 """
@@ -165,10 +181,12 @@ Try it.
 md"""
 Splatting is also possible.
 
-    begin
-    args = [:x, :y, :x];
-    dump(:(f(1, $(args...))))
-    end
+```julia
+begin
+args = [:x, :y, :x];
+dump(:(f(1, $(args...))))
+end
+```
 
 And this too.
 """
@@ -182,7 +200,9 @@ md"""
 
 Julia will evalution an expression in the global scope using `eval`.
 
-    println(eval(ex1))
+```julia
+println(eval(ex1))
+```
 """
 
 # ╔═╡ ade3dfbb-23bb-4ca6-8a33-3ec16dbed523
@@ -196,9 +216,11 @@ md"""
 
 Defining a macro is like defining a function. For example,
 
-    macro sayhello(name)
-        return :( println("Hello", $name))
-    end
+```julia
+macro sayhello(name)
+    return :( println("Hello", $name))
+end
+```
 """
 
 # ╔═╡ f1ba0108-fbb7-4128-98f7-89c4f1e25790
@@ -208,7 +230,9 @@ Defining a macro is like defining a function. For example,
 md"""
 Now invoke the `@sayhello` macro.
 
-    @sayhello("world")
+```julia
+@sayhello("world")
+```
 """
 
 # ╔═╡ 6e6829b6-1d2a-46e8-bee2-dd4e116d4b3d
@@ -218,7 +242,9 @@ Now invoke the `@sayhello` macro.
 md"""
 Parentheses around the arguments are optional.
 
-    @sayhello "world"
+```julia
+@sayhello "world"
+```
 """
 
 # ╔═╡ 3f9fcacd-05e6-4dd7-ba01-491750f3940d
@@ -238,9 +264,11 @@ Macros can be used for many tasks such as performing operations on blocks of cod
 
 Consider the following example.
 
-    struct MyNumber
-        x::Float64
-    end
+```julia
+struct MyNumber
+    x::Float64
+end
+```
 """
 
 # ╔═╡ bcce9741-7e63-4609-9529-0e9323b8eb21
@@ -250,15 +278,17 @@ Consider the following example.
 md"""
 We want to add a various methods to it. This can be done programmatically using a loop.
 
-    begin
-    println(length(methods(sin)))
-    for op = (:sin, :tan, :log, :exp)
-        eval(quote
-            Base.$op(a::MyNumber) = MyNumber($op(a.x))
-        end)
-    end
-    println(length(methods(sin)))
-    end
+```julia
+begin
+println(length(methods(sin)))
+for op = (:sin, :tan, :log, :exp)
+    eval(quote
+        Base.$op(a::MyNumber) = MyNumber($op(a.x))
+    end)
+end
+println(length(methods(sin)))
+end
+```
 
 Try this example.
 """
@@ -270,21 +300,27 @@ Try this example.
 md"""
 A slightly shorter version of the above code generator that use the `:` prefix is:
 
-    for op = (:sin, :cos, :tan, :log, :exp)
-        eval(:(Base.$op(a::MyNumber) = MyNumber($op(a.x))))
-    end
+```julia
+for op = (:sin, :cos, :tan, :log, :exp)
+    eval(:(Base.$op(a::MyNumber) = MyNumber($op(a.x))))
+end
+```
 
 An even shorter version of the code uses the `@eval` macro.
 
-    for op = (:sin, :cos, :tan, :log, :exp)
-        @eval Base.$op(a::MyNumber) = MyNumber($op(a.x))
-    end
+```julia
+for op = (:sin, :cos, :tan, :log, :exp)
+    @eval Base.$op(a::MyNumber) = MyNumber($op(a.x))
+end
+```
 
 For longer blocks of generated code, the `@eval` macro can proceed a code `block`:
 
-    @eval begin
-        # multiple lines
-    end
+```julia
+@eval begin
+    # multiple lines
+end
+```
 
 ### Generated Functions
 
@@ -292,10 +328,12 @@ A special macro is `@generated`. It defines so-called *generated functions*. The
 
 Here is an example.
 
-    @generated function foo(x)
-        Core.println(x)
-        return :(x * x)
-    end
+```julia
+@generated function foo(x)
+    Core.println(x)
+    return :(x * x)
+end
+```
 """
 
 # ╔═╡ 1fbdea1e-ef3a-4ace-ae76-1ccda2273087
@@ -303,10 +341,12 @@ Here is an example.
 
 # ╔═╡ 1522314b-4982-439e-ab97-933869a5f307
 md"""
-    begin
-    x = foo(2)
-    x
-    end
+```julia
+begin
+x = foo(2)
+x
+end
+```
 
 !!! note
     The result of the function call is the return type, not the return value.
@@ -317,10 +357,12 @@ md"""
 
 # ╔═╡ 3de9644d-b66a-45b8-945d-6e000319f2b9
 md"""
-    begin
-    y = foo("bar")
-    y
-    end
+```julia
+begin
+y = foo("bar")
+y
+end
+```
 """
 
 # ╔═╡ 28487c59-7df4-41b9-859a-79438b1d3b06
