@@ -19,14 +19,17 @@ using LinearAlgebra
 # ╔═╡ b83ba8db-b9b3-4921-8a93-cf0733cec7aa
 using CUDA
 
-# ╔═╡ a2680f00-7c9a-11ed-2dfe-d9cd445f2e57
+# ╔═╡ 76073161-c983-4dfb-945c-27164e50f8ae
 md"""
 # Optimization of Algorithms
 
 Julia is a high-performance language. However, like any computer language, certain constructs are faster and use your computer's resources more efficiently. This tutorial will overview how you can use Julia and some of its unique features to enable blazing-fast performance.
 
 However, to achieve good performance, there are a couple of things to keep in mind.
+"""
 
+# ╔═╡ a2680f00-7c9a-11ed-2dfe-d9cd445f2e57
+md"""
 ## Global Variables and Type Instabilities
 
 First global variables in Julia are almost always a bad idea. First, from a coding standpoint, they are very hard to reason about since they could change at any moment. However, for Julia, they are also a performance bottleneck. Let's consider a simple function that updates a global array to demonstrate the issue of global arrays.
@@ -413,13 +416,12 @@ and now because the exact layout `MyType2` is concrete, Julia is able to efficie
 
 # ╔═╡ a8c622c8-2eaf-4792-94fd-e18d622c3b23
 md"""
-
 ### Additional Tools
 
 In addition to `@code_warntype` Julia also has a number of other tools that can help diagnose type instabilities or performance problems:
-  - [`Cthulhu.jl`](https://github.com/JuliaDebug/Cthulhu.jl): Recursively moves through a function and outputs the results of type inference.
-  - [`JET.jl`](https://github.com/aviatesk/JET.jl): Employs Julia's type inference system to detect potential performance problems as well as bugs.
-  - [`ProfileView.jl`](https://github.com/timholy/ProfileView.jl) Julia profiler and flame graph for evaluating function performance.
+- [`Cthulhu.jl`](https://github.com/JuliaDebug/Cthulhu.jl): Recursively moves through a function and outputs the results of type inference.
+- [`JET.jl`](https://github.com/aviatesk/JET.jl): Employs Julia's type inference system to detect potential performance problems as well as bugs.
+- [`ProfileView.jl`](https://github.com/timholy/ProfileView.jl) Julia profiler and flame graph for evaluating function performance.
 """
 
 # ╔═╡ 20eff914-5853-4993-85a2-dfb6a8e2c14d
@@ -812,11 +814,11 @@ md"""
 md"""
 # Conclusion
 This is just the start of various performance tips in Julia. There exist many other interesting packages/resources when optimizing Julia code. These resources include:
-  - Julia's [`performance tips`](https://docs.julialang.org/en/v1/manual/performance-tips/) section is excellent reading for more information about the various optimization mentioned here and many more.
-  - [`StaticArrays.jl`](https://github.com/JuliaArrays/StaticArrays.jl): Provides a fixed size array that enables aggressive SIMD and optimization for small vector operations.
-  - [`StructArrays.jl`](https://github.com/JuliaArrays/StructArrays.jl): Provides an interface that acts like an array whose elements are a struct but actually stores each field/property of the struct as an independent array.
-  - [`LoopVectorization.jl`](https://github.com/JuliaSIMD/LoopVectorization.jl) specifically the `@turbo` macro that can rewrite loops to make extra use of SIMD.
-  - [`Tulio.jl`](https://github.com/mcabbott/Tullio.jl): A package that enables Einstein summation-style summations or tensor operations and automatically uses multi-threading and other array optimization.
+- Julia's [`performance tips`](https://docs.julialang.org/en/v1/manual/performance-tips/) section is excellent reading for more information about the various optimization mentioned here and many more.
+- [`StaticArrays.jl`](https://github.com/JuliaArrays/StaticArrays.jl): Provides a fixed size array that enables aggressive SIMD and optimization for small vector operations.
+- [`StructArrays.jl`](https://github.com/JuliaArrays/StructArrays.jl): Provides an interface that acts like an array whose elements are a struct but actually stores each field/property of the struct as an independent array.
+- [`LoopVectorization.jl`](https://github.com/JuliaSIMD/LoopVectorization.jl) specifically the `@turbo` macro that can rewrite loops to make extra use of SIMD.
+- [`Tulio.jl`](https://github.com/mcabbott/Tullio.jl): A package that enables Einstein summation-style summations or tensor operations and automatically uses multi-threading and other array optimization.
 """
 
 # ╔═╡ 97f7a295-5f33-483c-8a63-b74c8f79eef3
@@ -825,6 +827,7 @@ This is just the start of various performance tips in Julia. There exist many ot
 # ╔═╡ Cell order:
 # ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─5d8d2585-5c04-4f33-b547-8f44b3336f96
+# ╟─76073161-c983-4dfb-945c-27164e50f8ae
 # ╟─a2680f00-7c9a-11ed-2dfe-d9cd445f2e57
 # ╠═b90d6694-b170-4646-b5a0-e477d4fe6f50
 # ╟─5ed407ea-4bba-4eaf-b47a-9ae95b28abba

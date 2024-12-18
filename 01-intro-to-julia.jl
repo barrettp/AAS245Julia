@@ -691,7 +691,8 @@ Try it.
 
 
 # ╔═╡ a631464d-e08a-4a89-8c47-fd5a7b2dee16
-md"""#### Symbol Type
+md"""
+#### Symbol Type
 
 A type used to represent identifiers in parsed Julia code, namely the Abstract Syntax Trees (ASTs). Also often used as a name or label to identify an entity (e.g., as a dictionary key). Symbols are created using the colon prefix operator ":".
 
@@ -699,6 +700,8 @@ Symbols can be confusing when you first meet them in Julia code.
 
 ```julia
 :symbol
+```
+```julia
 typeof(:symbol)
 ```
 """
@@ -769,7 +772,10 @@ md"""
 In Julia, a function is an object that maps a tuple of argument values to a return value.
 
 There are three syntaxes for defining a function. The first two are named functions and the third is an anonymous function. If the return value is the last statement, then the "return" keyword is optional.
+"""
 
+# ╔═╡ 178be175-bc41-4f15-a56b-18b22ea429ba
+md"""
 Standard function definition:
 
 ```julia
@@ -777,13 +783,19 @@ function myadd(x::Int, y::Int)
     x + y
 end
 ```
+"""
 
+# ╔═╡ c696f779-ff9f-42c3-b22d-77ffc56b0bd9
+md"""
 One-line function definition:
 
 ```julia
 myadd(x::Float64, y::Float64) = x + y
 ```
+"""
 
+# ╔═╡ e5db3490-9574-4a76-99ed-c8c37af7c1f4
+md"""
 Anonymous function definition:
 
 ```julia
@@ -791,8 +803,11 @@ x, y -> x + y
 ```
 
 Anonymous functions are often used when a function argument expects a function, e.g., the `filter` method that expects a Boolean comparison function.
+"""
 
-Let's define the above three functions.
+# ╔═╡ 2e2ce11c-70ab-4c32-9f99-29dfe96f2ddb
+md"""
+Let's define the above `myadd` function.
 """
 
 # ╔═╡ 771dee9c-1615-435a-884f-7d274172191c
@@ -992,7 +1007,10 @@ where `T` signifies the array type, and `dims...` is a list of array dimensions.
 !!! note
 
     A generator expression doesn't create an array, it produces a value on demand.
+"""
 
+# ╔═╡ 3b3b7944-214b-4dd4-b150-590aaa359fe1
+md"""
 Let's create some arrays. Create:
 
 ```julia
@@ -1056,7 +1074,11 @@ One supported index that is commonly used is the "CartesianIndex". It is an inde
 
 ```julia
 A = reshape(1:32, 4, 4, 2)
+```
+```julia
 A[3, 2, 1]
+```
+```julia
 A[CartesianIndex(3, 2, 1)] == A[3, 2, 1] == 7
 ```
 
@@ -1079,7 +1101,8 @@ An array of CartesionIndex is also supported. They help simplify manipulating ar
 
 ```julia
 page = A[:,:,1]
-
+```
+```julia
 page[CartesianIndex(1,1),
      CartesianIndex(2,2),
      CartesianIndex(3,3),

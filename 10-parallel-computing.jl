@@ -1004,7 +1004,10 @@ can use the `workers` function
 ````julia
 workers()
 ````
+"""
 
+# ╔═╡ 7a215b3e-e944-47aa-bd79-70e963d9109b
+md"""
 We see that there are three workers with id's 2, 3, 4. The manager worker is always given the first id `1` and corresponds to the current Julia session. To see this we can use the `myid()` function
 
 ````julia
@@ -1076,7 +1079,6 @@ which loads the module Statistics on every Julia worker and manager processor.
 
 # ╔═╡ 2eb4edd6-7f1b-4c33-a054-d7d3db5572e0
 md"""
-
 ### Distributed computation
 While remotecall and `spawnat` provide granular control of multi-processor parallelism often
 we are interested in loop or map-reduce based parallelism. For instance, suppose we consider
@@ -1093,11 +1095,11 @@ d = randn(1_000_000)
 using BenchmarkTools
 @benchmark distributed_apply_sum($(x->exp(-x)), $d)
 ````
+"""
 
-!!! note
-    We did not have to define
-
-One important thing to note is that the distributed macro uses Julia's static scheduler. This means that the for loop is automatically split evenly among all workers. For the above calculation this make sense since `f` is a cheap variable. However, suppose that `f` is extremely expensive and its run time varies greatly depending on its argument. A trivial example of this would be
+# ╔═╡ 3080bb48-8a13-409f-9f85-57946d3a2dc0
+md"""
+One important thing to note is that the `@distributed` macro uses Julia's static scheduler. This means that the for loop is automatically split evenly among all workers. For the above calculation this make sense since `f` is a cheap variable. However, suppose that `f` is extremely expensive and its run time varies greatly depending on its argument. A trivial example of this would be
 
 ````julia
 @everywhere function dynamic_f(x)
@@ -1109,7 +1111,10 @@ One important thing to note is that the distributed macro uses Julia's static sc
     end
 end
 ````
+"""
 
+# ╔═╡ 1a0a7500-846d-4a56-9208-bb5429a330dd
+md"""
 In this case, rather than equally splitting the run-time across all processes, it makes sense to assign work to processors as they finish their current task. This is known as a **dynamic scheduler** and is provided in julia by `pmap`
 
 ````julia
@@ -1122,7 +1127,10 @@ which is 2x faster than using the usual distributed function
 ````julia
 @time out = distributed_apply_sum(dynamic_f, x)
 ````
+"""
 
+# ╔═╡ 2fb3c234-76d8-44ee-9381-a9fe26fbe576
+md"""
 However, for cheaper operations
 
 ````julia
@@ -1284,6 +1292,10 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 # ╟─8d6d2117-3513-470f-87e1-8f00dd340172
 # ╟─b2eb604f-9180-4e48-9ae5-04162583fb33
 # ╟─2d05b052-3619-4129-b0da-b2f371402590
+# ╟─7a215b3e-e944-47aa-bd79-70e963d9109b
 # ╟─29520e13-df3b-4b7a-80b8-d6ace0fe6368
 # ╟─2eb4edd6-7f1b-4c33-a054-d7d3db5572e0
+# ╟─3080bb48-8a13-409f-9f85-57946d3a2dc0
+# ╟─1a0a7500-846d-4a56-9208-bb5429a330dd
+# ╟─2fb3c234-76d8-44ee-9381-a9fe26fbe576
 # ╟─3aae32a9-72f8-456a-b719-0c04b9933593

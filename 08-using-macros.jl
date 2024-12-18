@@ -10,14 +10,20 @@ import Pkg; Pkg.activate(Base.current_project(), io=devnull)
 # ╔═╡ 53265062-78c7-434a-8d96-089cdd758bf0
 using PlutoUI; TableOfContents()
 
-# ╔═╡ 07c96535-102c-4581-bba7-50f37bd766f9
+# ╔═╡ 61ba1a79-3f3f-4d4f-a43e-e3d8883787e8
 md"""
 ## Using Macros
+"""
 
+# ╔═╡ 07c96535-102c-4581-bba7-50f37bd766f9
+md"""
 Unlike Matlab, Python, and R, Julia has macros. They are a very powerful programming construct. Macros change existing source code or generate entirely new code. In essence, they simplify programming by automating mundane coding tasks.
 
 Preprocessor "macro" systems, like that of C/C++, work at the source code level by perform textual manipulation and substitution before any parsing or interpretation is done. Whereas, Julia macros work at the level of the abstract syntax tree after parsing, but before compilation is done.
+"""
 
+# ╔═╡ 2b1abe2e-fc7a-4d3a-9f65-b820eaff70ea
+md"""
 ### The Abstract Syntax Tree
 
 ```julia
@@ -68,18 +74,23 @@ Try it.
 # ╔═╡ 06f3afb2-869a-4e2b-af58-4366b27d0a65
 
 
-# ╔═╡ 3f2aef09-55c0-40c3-a50d-7081e66c60ed
+# ╔═╡ fb032b39-250b-486d-b0b7-0d21c8556562
 md"""
-
 !!! note
     If you prefer writing code as an AST, you can do so in Julia.
 
     However, you may not be popular with other coders.
+"""
 
+# ╔═╡ bc66ff75-77ce-4487-ab2e-72800331839b
+md"""
 ### The `:` character
 
 The `:` character has two syntatic purposes in Julia. It signifies a `Symbol` or a `Quote`.
+"""
 
+# ╔═╡ 3f2aef09-55c0-40c3-a50d-7081e66c60ed
+md"""
 #### Symbols
 
 A `Symbol` is an interned string used as a building-block of an expression.
@@ -112,10 +123,13 @@ Try this.
 # ╔═╡ 8863cbcc-4ff6-4714-b7d8-c39373af384e
 
 
-# ╔═╡ 90538e89-e592-4536-99cb-7378ec320b8d
+# ╔═╡ cf199e64-8fb6-4cd1-b2ea-8db5826c5be1
 md"""
 In the context of expressions, symbols are used to indicate access to variables. When an expression is evaluated, a symbol is replaced with the value bound to that symbol in the appropriate scope.
+"""
 
+# ╔═╡ 90538e89-e592-4536-99cb-7378ec320b8d
+md"""
 #### Quoting
 
 The second purpose of the `:` character is to create expression objects without using the explicit `Expr` constructor. This is referred to as *quoting*.
@@ -208,9 +222,13 @@ println(eval(ex1))
 # ╔═╡ ade3dfbb-23bb-4ca6-8a33-3ec16dbed523
 
 
-# ╔═╡ c8c898a7-7ec5-4b3f-8875-5901e0ef12fc
+# ╔═╡ 3be5ecc9-58cf-457a-a5d4-c9ff6114ba01
 md"""
 ### Macros
+"""
+
+# ╔═╡ c8c898a7-7ec5-4b3f-8875-5901e0ef12fc
+md"""
 
 #### Basics
 
@@ -321,7 +339,10 @@ For longer blocks of generated code, the `@eval` macro can proceed a code `block
     # multiple lines
 end
 ```
+"""
 
+# ╔═╡ d41b3124-0987-42d5-bd24-28a4c79cfe82
+md"""
 ### Generated Functions
 
 A special macro is `@generated`. It defines so-called *generated functions*. They have the capability to generate specialized code depending on the types of their arguments with more flexibility and/or less code than what can be done with multiple dispatch. Macros work with expressions at the AST level and cannot acces the input types. Whereas, generated functions are expanded at the time when the argument types are known, but before the function is compiled.
@@ -382,16 +403,21 @@ Generated functions differ from regular functions in five ways. They:
 # ╔═╡ Cell order:
 # ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─53265062-78c7-434a-8d96-089cdd758bf0
+# ╟─61ba1a79-3f3f-4d4f-a43e-e3d8883787e8
 # ╟─07c96535-102c-4581-bba7-50f37bd766f9
+# ╟─2b1abe2e-fc7a-4d3a-9f65-b820eaff70ea
 # ╠═9c45b534-cd6c-4b3d-9ff4-d035347c87e5
 # ╟─6bc277f1-3ab6-4e12-92fc-65e6288af2c1
 # ╠═f09d458f-7846-46a5-a814-b51771bf91b7
 # ╟─41a9007c-e9a1-4228-be45-55becfffa944
 # ╠═06f3afb2-869a-4e2b-af58-4366b27d0a65
+# ╟─fb032b39-250b-486d-b0b7-0d21c8556562
+# ╟─bc66ff75-77ce-4487-ab2e-72800331839b
 # ╟─3f2aef09-55c0-40c3-a50d-7081e66c60ed
 # ╠═bc5709bd-8c44-4d58-82cc-e14eef20cfe6
 # ╟─c1e446d9-63e9-4b9d-a0da-c1321c7f0a38
 # ╠═8863cbcc-4ff6-4714-b7d8-c39373af384e
+# ╟─cf199e64-8fb6-4cd1-b2ea-8db5826c5be1
 # ╟─90538e89-e592-4536-99cb-7378ec320b8d
 # ╠═611e0640-dc39-4846-89c9-172bc001e994
 # ╟─e7934544-0344-48d3-8046-c3796874e5b3
@@ -402,6 +428,7 @@ Generated functions differ from regular functions in five ways. They:
 # ╠═9de33d97-b08d-4a5a-b53a-862c0bfd2cb0
 # ╟─2e45c794-62f0-4a1b-a346-da291e4c8469
 # ╠═ade3dfbb-23bb-4ca6-8a33-3ec16dbed523
+# ╟─3be5ecc9-58cf-457a-a5d4-c9ff6114ba01
 # ╟─c8c898a7-7ec5-4b3f-8875-5901e0ef12fc
 # ╠═f1ba0108-fbb7-4128-98f7-89c4f1e25790
 # ╟─8bbe63e8-6a6e-4f96-8025-bbae25983a7e
@@ -414,6 +441,7 @@ Generated functions differ from regular functions in five ways. They:
 # ╟─a278e94d-1f4c-422c-9ac7-c950750a6ef9
 # ╠═386c7942-700d-4486-bede-853a6c2ef811
 # ╟─1751fb54-938c-4222-a41a-17ce97f800bc
+# ╟─d41b3124-0987-42d5-bd24-28a4c79cfe82
 # ╠═1fbdea1e-ef3a-4ace-ae76-1ccda2273087
 # ╟─1522314b-4982-439e-ab97-933869a5f307
 # ╠═63ed8db8-2104-4370-8a75-e9348c50cdf8

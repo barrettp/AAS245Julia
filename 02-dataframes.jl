@@ -94,18 +94,34 @@ Although DataFrames are best described as tables, an analogy to matrices can be 
 
 ```julia
 demo_df[1, :] # select the first row, and all columns
-
+```
+```julia
 demo_df[50:55, :] # select a range of rows
-
+```
+```julia
 demo_df[1:2:end, [:ages, :admin]] # select the age and admin status from every other row
-
+```
+```julia
 demo_df[:, [:A, :B]] # get all the A's and B's
-
+```
+```julia
 demo_df[:, Not(:admin, :age)] # get everything except admin status and age
 ```
 """
 
 # ╔═╡ ef8cd520-e698-4bfb-a285-ddad7da93bbe
+
+
+# ╔═╡ 0e42a56a-5148-47fe-841b-1043973e5d13
+
+
+# ╔═╡ c515b32a-3576-4fde-b9d2-c2ba717f9f57
+
+
+# ╔═╡ fece6ba5-7a2c-4720-85b2-3b072fb0dcb4
+
+
+# ╔═╡ 4c57db5f-e15e-43bb-b3d6-746ea200784b
 
 
 # ╔═╡ 6a0a94a1-c0a8-4bd8-b0fd-e15e49c58441
@@ -203,10 +219,11 @@ filename = Downloads.download(url)
 # ╔═╡ 0b362414-fa67-4f26-96c5-db02d5459b07
 md"""
 The database is published as a .csv file, so we'll use the CSV.jl package to read it. It'll take care of the .gz compression, and even store the data in a DataFrame!
+"""
 
+# ╔═╡ bc2550c8-f4f3-492c-ad39-5a3b7ab03c7b
+md"""
 ```julia
-using CSV
-
 hyg_df = CSV.read(filename, DataFrame)
 ```
 """
@@ -525,6 +542,10 @@ And that concludes the workshop on DataFrames! Feel free to ask questions, and y
 # ╟─69640f84-120b-4f5f-be3e-93a0bf4c18b4
 # ╟─dbfaef6a-a866-4d25-a4bf-9bff552d6b54
 # ╠═ef8cd520-e698-4bfb-a285-ddad7da93bbe
+# ╠═0e42a56a-5148-47fe-841b-1043973e5d13
+# ╠═c515b32a-3576-4fde-b9d2-c2ba717f9f57
+# ╠═fece6ba5-7a2c-4720-85b2-3b072fb0dcb4
+# ╠═4c57db5f-e15e-43bb-b3d6-746ea200784b
 # ╟─6a0a94a1-c0a8-4bd8-b0fd-e15e49c58441
 # ╠═92fb9204-ea5c-4a36-be2c-ebb24dceac90
 # ╟─9590bcc0-ce77-4116-b220-ba86a77bb349
@@ -542,6 +563,7 @@ And that concludes the workshop on DataFrames! Feel free to ask questions, and y
 # ╠═abbfd16c-46d7-4d88-8b1c-a9abe44a7266
 # ╟─0b362414-fa67-4f26-96c5-db02d5459b07
 # ╠═c28cfbf4-d96f-4303-96e3-2d1a7debc1e8
+# ╟─bc2550c8-f4f3-492c-ad39-5a3b7ab03c7b
 # ╠═aa184c54-a026-4349-b75c-f19f5323819e
 # ╟─c0441fbb-801e-4c1f-a384-f6f9d66d94b9
 # ╠═517de886-f681-4b69-9e67-afaaa0965bed
