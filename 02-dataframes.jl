@@ -22,14 +22,8 @@ import Pkg; Pkg.activate(Base.current_project(), io=devnull)
 # ╔═╡ 451ae1a0-1846-45dc-9517-6b78e7a81d4a
 using DataFrames
 
-# ╔═╡ 177a8009-ea8b-46d4-bdfb-ef5e1e15ca0d
-using Downloads
-
-# ╔═╡ c28cfbf4-d96f-4303-96e3-2d1a7debc1e8
-using CSV
-
 # ╔═╡ ecea514a-c138-4607-9172-1609ab347e81
-using CairoMakie
+using CairoMakie # import the plotting library
 
 # ╔═╡ b61550b7-e0fa-462d-b724-9375e2f488e9
 using PlutoUI
@@ -209,25 +203,37 @@ Hmmm... creating our own DataFrame was instructive and all, but it's not really 
 # ╔═╡ fb7e4415-4554-4a85-b453-49b4619714d2
 md"""
 For this workshop, we've chosen the [HYG database](https://astronexus.com/hyg), which catalogs distances, brightnesses, speeds, and spectra of various information. Since the full catalog is quite large, we're using a subset with ~100,000 stars. We'll use the Downloads module to make a local copy of the file to work on.
+
+```julia
+using Downloads
+```
+
+```julia
+url = "https://astronexus.com/downloads/catalogs/hygdata_v41.csv.gz";
+```
+
+```julia
+filename = Downloads.download(url)
+```
 """
 
-# ╔═╡ 242b3f41-5b88-42d5-a20d-86f07d413f20
-url = "https://astronexus.com/downloads/catalogs/hygdata_v41.csv.gz";
-
 # ╔═╡ abbfd16c-46d7-4d88-8b1c-a9abe44a7266
-filename = Downloads.download(url)
+
 
 # ╔═╡ 0b362414-fa67-4f26-96c5-db02d5459b07
 md"""
 The database is published as a .csv file, so we'll use the CSV.jl package to read it. It'll take care of the .gz compression, and even store the data in a DataFrame!
-"""
 
-# ╔═╡ bc2550c8-f4f3-492c-ad39-5a3b7ab03c7b
-md"""
+```julia
+using CSV
+```
 ```julia
 hyg_df = CSV.read(filename, DataFrame)
 ```
 """
+
+# ╔═╡ c28cfbf4-d96f-4303-96e3-2d1a7debc1e8
+
 
 # ╔═╡ aa184c54-a026-4349-b75c-f19f5323819e
 
@@ -316,7 +322,7 @@ We get quite a few columns, so we can just drop all of them. Columns `hr`, `bf`,
 
 # ╔═╡ 7bef4815-4cc6-41f3-b111-f57a20daf5ec
 md"""
-To drop columns, DataFrames doesn't have a `drop!` function, but a `select!()` (in-place version of `select()`) function, where we can use the `Not` function to select everything _but_ the columns we're dropping.
+To drop columns, DataFrames doesn't have a `drop!` function, but a `select!` (in-place version of `select`) function, where we can use the `Not` function to select everything _but_ the columns we're dropping.
 
 ```julia
 select!(hyg_df, Not(:base, :lum, :var, :var_min, :var_max))
@@ -342,7 +348,7 @@ We're using the `collect()` function to force the results back to an array, so w
 
 # ╔═╡ b599837f-7e47-412f-af2f-f5cb6cae9c0d
 md"""
-Well... that got rid of the missing entries, but there are sitll a lot of blanks. We should probably use make our own filter to get rid of them too. This is going to be super easy, because we can just use the builtin `!` (not) and `isempty` to get what we want!
+Well... that got rid of the missing entries, but there are sitll a lot of blanks. We should probably use our own filter to get rid of them too. This is going to be super easy, because we can just use the builtin `!` (not) and `isempty` to get what we want!
 
 ```julia
 skipmissing(hyg_df[!, :proper]) |> filter(!isempty)
@@ -473,8 +479,6 @@ md"""
 Finally! It's time for the exciting stuff. We get to plot all of the data we've been cleaning up using Makie.jl. Let's make a color-magnitude diagram.
 
 ```julia
-using CairoMakie
-
 plot(
 	hyg_df.color_index, hyg_df.absolute_mag, # use dot notation to get columns
 	axis = (;
@@ -484,6 +488,9 @@ plot(
 )
 ```
 """
+
+# ╔═╡ fbfa0d11-c741-4914-b49a-2002b6736442
+
 
 # ╔═╡ ba098300-a096-49d9-9814-0765738decb9
 md"""
@@ -559,12 +566,9 @@ And that concludes the workshop on DataFrames! Feel free to ask questions, and y
 # ╟─c65b63ad-9f94-4253-bfe1-d83e2769e630
 # ╟─599c9082-94ec-484e-82d4-2da504d7d7dd
 # ╟─fb7e4415-4554-4a85-b453-49b4619714d2
-# ╠═177a8009-ea8b-46d4-bdfb-ef5e1e15ca0d
-# ╠═242b3f41-5b88-42d5-a20d-86f07d413f20
 # ╠═abbfd16c-46d7-4d88-8b1c-a9abe44a7266
 # ╟─0b362414-fa67-4f26-96c5-db02d5459b07
 # ╠═c28cfbf4-d96f-4303-96e3-2d1a7debc1e8
-# ╟─bc2550c8-f4f3-492c-ad39-5a3b7ab03c7b
 # ╠═aa184c54-a026-4349-b75c-f19f5323819e
 # ╟─c0441fbb-801e-4c1f-a384-f6f9d66d94b9
 # ╠═517de886-f681-4b69-9e67-afaaa0965bed
@@ -603,11 +607,12 @@ And that concludes the workshop on DataFrames! Feel free to ask questions, and y
 # ╟─3765d8d0-f256-4896-92bb-fa89823db786
 # ╟─6b926ec7-5804-47a4-a034-7c93cd74179a
 # ╠═ecea514a-c138-4607-9172-1609ab347e81
+# ╠═fbfa0d11-c741-4914-b49a-2002b6736442
 # ╟─ba098300-a096-49d9-9814-0765738decb9
 # ╠═6e495c42-5b7a-4515-9e70-8c5ba28e2684
-# ╠═16a55fcb-915a-40d6-a41d-b4b5dbf46f9b
+# ╟─16a55fcb-915a-40d6-a41d-b4b5dbf46f9b
 # ╟─123ab662-a4ab-4428-8115-3cfdb2a8ebe4
-# ╠═b61550b7-e0fa-462d-b724-9375e2f488e9
-# ╠═bb4ba286-f90e-4b68-88b7-41b96730fa0f
-# ╠═2b978aed-5e66-49e3-be67-f547db0d87e3
+# ╟─b61550b7-e0fa-462d-b724-9375e2f488e9
+# ╟─bb4ba286-f90e-4b68-88b7-41b96730fa0f
+# ╟─2b978aed-5e66-49e3-be67-f547db0d87e3
 # ╟─2b5f4d3c-6384-4852-885b-511b27a9be56
