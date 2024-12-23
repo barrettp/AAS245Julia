@@ -35,7 +35,7 @@ If you have a new mac with an M1 processor, make sure to select the "M-series Pr
 <summary>Windows Instructions</summary>
 This <a href="https://www.microsoft.com/store/apps/9NJNWW8PVKMN">Microsoft Store</a> link can also be used to install JuliaUp.
 
-We strongly recomend you use the Windows Terminal included in Windows 11 or downloadable from this <a href="https://aka.ms/terminal">Microsoft Store link</a>. Windows Terminal has improved font and math symbol rendering compared to the antiquated `cmd.exe`.
+We strongly recomend you use the [Windows Terminal](https://en.wikipedia.org/wiki/Windows_Terminal) included in Windows 11 or downloadable from this <a href="https://aka.ms/terminal">Microsoft Store link</a>. Windows Terminal has improved font and math symbol rendering compared to the antiquated [Windows console/`cmd.exe`](https://en.wikipedia.org/wiki/Windows_Console).
 </details>
 
 <details>
