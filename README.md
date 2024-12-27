@@ -103,7 +103,7 @@ The Sunday content covers advanced Julia programming techniques associated with 
 | 02. Dataframes | https://github.com/barrettp/AAS245Julia/raw/main/02-dataframes.jl |
 | 03. Exoplanets |  |
 | 04. Radio Imaging |  |
-| 05. X-Ray Spectroscopy |  |
+| 05. X-Ray Spectroscopy | https://github.com/barrettp/AAS245Julia/blob/main/05-X-ray-spectroscopy.jl |
 | 06. Astronomy Packages |  |
 | 07. Calling Python | https://github.com/barrettp/AAS245Julia/blob/main/07-calling-python.jl |
 | 08. Using Macros | https://github.com/barrettp/AAS245Julia/blob/main/08-using-macros.jl |
