@@ -8,7 +8,10 @@ using InteractiveUtils
 using PlutoUI; TableOfContents()
 
 # ╔═╡ d1366a55-b4fc-4ddb-b5c2-5f3381c48b49
+# ╠═╡ disabled = true
+#=╠═╡
 html"<button onclick='present()'>present</button>"
+  ╠═╡ =#
 
 # ╔═╡ 09193424-25b9-45ce-840f-f24bbcc46c9d
 md"""
@@ -16,24 +19,27 @@ md"""
 
 ### Historical Context
 
-Twenty-six years ago at ADASS VI, Harrington and Barrett hosted a Birds-of-a-Feather session entitled "Interactive Data Analysis Environments". Based on their review of over a dozen interpreted programming languages such as Glish, GUILE, IDL, IRAF, Matlab, Perl, Python, and Tcl; they recommended that Python be considered the primary language for astronomical data analysis. The primary reasons were that the language was simple to learn, yet powerful; well supported by the programming community; and had FORTRAN-like arrays. However, for good performance, the multi-dimensional arrays needed to be written in a compiled language, namely C. So Numerical Python suffered from the "two language problem".
+Twenty-eight years ago at the Astronomical Data Analysis Software and Systems (ADASS) VI meeting, Harrington and Barrett hosted a Birds-of-a-Feather session entitled [Interactive Data Analysis Environments](https://www.cv.nrao.edu/adass/adassVI/harringtonj.html). Based on their review of [21 interpreted programming languages](https://htmlpreview.github.io/?https://github.com/barrettp/AAS245Julia/blob/main/Interactive%20Data%20Analysis%20Environments.html) such as Glish, GUILE, IDL, IRAF, Matlab, Perl, Python, and Tcl; they recommended that Python be considered the primary language for astronomical data analysis. The primary reasons were that the language was simple to learn, yet powerful; well supported by the programming community; and had FORTRAN-like arrays. However, for good performance, the multi-dimensional arrays needed to be written in a compiled language, namely C. So Numerical Python suffered from the "two language problem".
 
 ### Why Julia?
 
-In about 2009, four faculty members at MIT, who were not satisfied with the state of scientific computing, decided to develop a high performance, scientific programming language. After ten years of development, they release Julia Version 1.0 on August 8, 2018. Their aims were to create an open-source interpreted language that was concise, extensible, and high performance.
+In 2009, four faculty members[^1] at MIT, who were not satisfied with the state of scientific computing, decided to develop a general purpose, high performance, scientific programming language. After ten years of development, they release Julia Version 1.0 on August 8, 2018. Their aims were to create an open-source interpreted language that was concise, extensible, and high performance.
 
 ### What Differentiates Julia From Other Languages?
 
 * Julia is **composable**.
 * Julia is **concise**.
-* Julia is **high performance**.
+* Julia is **highly performant**.
 * Julia is **productive**.
 * Julia is **easy to maintain**.
 * Julia is **free and open-source**.
 
 ### Why Have I migrated to Julia?
 
-Although an early advocate and developer of Numerical Python, I knew its limitations, namely, the two language problem. Therefore, once a better scientific programming language came along, I was prepared to migrate to it. Julia is that language.
+Although an early advocate and developer of Numerical Python (now NumPy), Matplotlib, and PyFits (now astropy.io.fits); I knew its limitations, namely, the two language problem. Therefore, once a better scientific programming language came along, I was prepared to migrate to that language. **Julia is that language.**
+
+[^1]:
+[Alan Edelman](https://math.mit.edu/~edelman/), Professor of Applied Mathematics and Computer Science, MIT; [Jeff Bezanson](https://en.wikipedia.org/wiki/Jeff_Bezanson), Chief Technology Officer (CTO), JuliaHub; [Viral B. Shah](https://en.wikipedia.org/wiki/Viral_B._Shah), Chief Executive Officer (CEO), JuliaHub; [Stefen Karpinski](https://karpinski.org/), Computer Scientist, JuliaHub and NYU 
 """
 
 # ╔═╡ b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
