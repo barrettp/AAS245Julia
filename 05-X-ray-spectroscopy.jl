@@ -8,9 +8,13 @@ using InteractiveUtils
 begin
 	import Pkg
 	Pkg.Registry.add(url="https://github.com/astro-group-bristol/AstroRegistry")
-	using SpectralFitting, XSPECModels, Plots
-	using Downloads, CodecZlib, Tar
 end
+
+# ╔═╡ 7b3b8d55-85b7-4ccf-af69-a9709049d832
+using SpectralFitting, XSPECModels, Plots
+
+# ╔═╡ 90b1a6eb-e101-4e29-a536-10293f8ad6e7
+using Downloads, CodecZlib, Tar
 
 # ╔═╡ f6746346-2510-42e9-a551-f0fc3ad13311
 using StatsPlots, Turing
@@ -34,9 +38,14 @@ Begin by installing SpectralFitting, XSPECModels, and Plots:
 begin
 	import Pkg
 	Pkg.Registry.add(url="https://github.com/astro-group-bristol/AstroRegistry")
-	using SpectralFitting, XSPECModels, Plots
-	using Downloads, CodecZlib, Tar
 end
+```
+
+```julia
+using SpectralFitting, XSPECModels, Plots
+```
+```julia
+using Downloads, CodecZlib, Tar
 ```
 """
 
@@ -3622,6 +3631,8 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╟─ab2fc214-e958-4075-9132-49b86a8ccc15
 # ╠═24ed10e8-aa86-11ef-1455-4944c38e57ec
+# ╠═7b3b8d55-85b7-4ccf-af69-a9709049d832
+# ╠═90b1a6eb-e101-4e29-a536-10293f8ad6e7
 # ╟─d06acb32-2dad-491d-8283-5238d2b1c17c
 # ╠═28fd9267-db54-4187-ada1-96e23ad36987
 # ╟─66cd0225-31bf-4800-b0c7-accba53f83ee
