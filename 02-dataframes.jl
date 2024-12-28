@@ -526,7 +526,12 @@ Much better. Now, we can pick and choose any constellation we want and make an H
 """
 
 # ╔═╡ bb4ba286-f90e-4b68-88b7-41b96730fa0f
-@bind plotcon Select(levels(hyg_df[!, :constellation]))
+md"""
+Select a constellation:
+$(
+	@bind plotcon Select(levels(hyg_df[!, :constellation]))
+)
+"""
 
 # ╔═╡ 2b978aed-5e66-49e3-be67-f547db0d87e3
 let constellation_df = hyg_groupeddf[(; constellation = plotcon)]
