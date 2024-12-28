@@ -49,6 +49,9 @@ using Downloads, CodecZlib, Tar
 ```
 """
 
+# ╔═╡ 22008395-3cbf-4a11-ac2e-2a5aa71a3588
+SpectralFitting.download_all_model_data()
+
 # ╔═╡ d06acb32-2dad-491d-8283-5238d2b1c17c
 md"""
 The first thing we want to do is load our datasets. Unlike in XSPEC, we have no requirement of being in the same directory as the data, or even that all of the response, ancillary, and spectral files be in the same place. For simplicity, we'll assume they are:
@@ -3643,6 +3646,7 @@ version = "1.4.1+2"
 # ╠═24ed10e8-aa86-11ef-1455-4944c38e57ec
 # ╠═7b3b8d55-85b7-4ccf-af69-a9709049d832
 # ╠═90b1a6eb-e101-4e29-a536-10293f8ad6e7
+# ╠═22008395-3cbf-4a11-ac2e-2a5aa71a3588
 # ╟─d06acb32-2dad-491d-8283-5238d2b1c17c
 # ╠═28fd9267-db54-4187-ada1-96e23ad36987
 # ╟─66cd0225-31bf-4800-b0c7-accba53f83ee
