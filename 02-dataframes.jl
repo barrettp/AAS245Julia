@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.3
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
@@ -23,7 +23,7 @@ import Pkg; Pkg.activate(Base.current_project(), io=devnull)
 using DataFrames
 
 # ╔═╡ ecea514a-c138-4607-9172-1609ab347e81
-using CairoMakie # import the plotting library
+using Plots
 
 # ╔═╡ b61550b7-e0fa-462d-b724-9375e2f488e9
 using PlutoUI
@@ -476,15 +476,16 @@ md"""
 
 # ╔═╡ 6b926ec7-5804-47a4-a034-7c93cd74179a
 md"""
-Finally! It's time for the exciting stuff. We get to plot all of the data we've been cleaning up using Makie.jl. Let's make a color-magnitude diagram.
+Finally! It's time for the exciting stuff. We get to plot all of the data we've been cleaning up using Plots.jl. Let's make a color-magnitude diagram.
 
 ```julia
-plot(
+scatter(
 	hyg_df.color_index, hyg_df.absolute_mag, # use dot notation to get columns
-	axis = (;
-		yreversed = true, # magnitude is upside-down
-		xlabel = "B-V color", ylabel = "Magnitude",
-	)
+	yflip = true, # magnitude is upside-down
+	xlabel = "B-V color", ylabel = "Magnitude",
+	label = false,
+	markersize = 3,
+	markerstrokewidth = 0.5,
 )
 ```
 """
@@ -498,9 +499,11 @@ That's not very informative. Maybe we can try plotting one constellation instead
 
 ```julia
 let df = hyg_groupeddf[(; constellation = "Ari")]
-	plot(
-		df.color_index, df.absolute_mag,
-		axis = axis_properties,
+	presentidx = collect(eachindex(skipmissing(df.color_index)))
+	colors = disallowmissing(df.color_index[presentidx])
+	scatter(
+		colors, df.absolute_mag[presentidx];
+		axis_properties...,
 	)
 end
 ```
@@ -510,7 +513,12 @@ end
 
 
 # ╔═╡ 16a55fcb-915a-40d6-a41d-b4b5dbf46f9b
-axis_properties = (; yreversed = true, xlabel = "B-V color", ylabel = "Magnitude");
+axis_properties = (;
+	label = false,
+	xlabel = "B-V color", ylabel = "Magnitude",
+	yflip = true,
+	markersize = 3, markerstrokewidth = 0.4,
+);
 
 # ╔═╡ 123ab662-a4ab-4428-8115-3cfdb2a8ebe4
 md"""
@@ -522,12 +530,12 @@ Much better. Now, we can pick and choose any constellation we want and make an H
 
 # ╔═╡ 2b978aed-5e66-49e3-be67-f547db0d87e3
 let constellation_df = hyg_groupeddf[(; constellation = plotcon)]
+	presentidx = collect(eachindex(skipmissing(constellation_df.color_index)))
+	colors = disallowmissing(constellation_df.color_index[presentidx])
 	scatter(
-		constellation_df[!, :color_index], constellation_df[!, :absolute_mag],
-		axis = (;
-			axis_properties...,
-			title = "Color-mangitude diagram of constellation $plotcon",
-		)
+		colors, constellation_df.absolute_mag[presentidx];
+		title = "Constellation $plotcon: color-magnitude diagram",
+		axis_properties...,
 	)
 end
 
