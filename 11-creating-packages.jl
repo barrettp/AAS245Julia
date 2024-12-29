@@ -4,9 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 1f443df9-619d-40c7-9e08-497ae1a08b5d
-import Pkg; Pkg.activate(Base.current_project(), io=devnull)
-
 # ╔═╡ cfebe185-8871-4fe5-ac55-20c7803a0457
 using PlutoUI; TableOfContents()
 
@@ -545,7 +542,6 @@ arr'
 v = view(arr, 1:2, 1:2)
 
 # ╔═╡ Cell order:
-# ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─cfebe185-8871-4fe5-ac55-20c7803a0457
 # ╟─2b2adba9-fc0d-4f59-95a5-8d14d1c067f4
 # ╟─35e08843-8dde-495c-ab4f-bbb43ed75395

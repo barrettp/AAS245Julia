@@ -4,9 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 1f443df9-619d-40c7-9e08-497ae1a08b5d
-import Pkg; Pkg.activate(Base.current_project(), io=devnull)
-
 # ╔═╡ 53265062-78c7-434a-8d96-089cdd758bf0
 using PlutoUI; TableOfContents()
 
@@ -401,7 +398,6 @@ Generated functions differ from regular functions in five ways. They:
 """
 
 # ╔═╡ Cell order:
-# ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─53265062-78c7-434a-8d96-089cdd758bf0
 # ╟─61ba1a79-3f3f-4d4f-a43e-e3d8883787e8
 # ╟─07c96535-102c-4581-bba7-50f37bd766f9

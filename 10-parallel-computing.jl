@@ -4,9 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 1f443df9-619d-40c7-9e08-497ae1a08b5d
-import Pkg; Pkg.activate(Base.current_project(), io=devnull)
-
 # ╔═╡ e17b15bd-337d-4809-8b6c-2ed0f3701a9e
 using PlutoUI; TableOfContents()
 
@@ -1158,7 +1155,6 @@ potential parallel processing packages in the Julia ecosystem. Some of these are
 """
 
 # ╔═╡ Cell order:
-# ╟─1f443df9-619d-40c7-9e08-497ae1a08b5d
 # ╟─e17b15bd-337d-4809-8b6c-2ed0f3701a9e
 # ╟─e6020e3a-77c7-11ed-2be9-e987cee1edf0
 # ╟─902614a2-8e81-408b-ae97-f4058f4bacb2

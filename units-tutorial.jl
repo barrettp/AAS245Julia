@@ -4,9 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ f38cfc06-81aa-11ef-3139-af52386aa47a
-import Pkg; Pkg.activate(Base.current_project())
-
 # ╔═╡ e7981cc7-882f-4edb-a2a8-df6f1bf05a2a
 using Unitful, UnitfulAstro
 
@@ -311,7 +308,6 @@ md"""
 """
 
 # ╔═╡ Cell order:
-# ╠═f38cfc06-81aa-11ef-3139-af52386aa47a
 # ╠═e7981cc7-882f-4edb-a2a8-df6f1bf05a2a
 # ╟─dc38f2b1-635b-4331-8b21-2a22f06974a6
 # ╟─13f0294c-8f0a-4be4-b167-00b0beb1604a
