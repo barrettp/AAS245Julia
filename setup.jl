@@ -46,7 +46,11 @@ import Plots
 import PlutoUI
 
 # ╔═╡ 4d7f6651-d60e-4ffb-be36-2c656942bc68
-import PyCall, PythonCall
+begin
+	import PyCall
+	ENV["JULIA_PYTHONCALL_EXE"] = "@PyCall"
+	import PythonCall
+end
 
 # ╔═╡ 8b19061b-f877-4971-b33d-88465e26c350
 import SpectralFitting, XSPECModels
