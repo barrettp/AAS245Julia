@@ -50,6 +50,10 @@ end
 ```julia
 using SpectralFitting, XSPECModels, Plots
 ```
+
+```julia
+SpectralFitting.download_all_model_data()
+```
 """
 
 # ╔═╡ 22008395-3cbf-4a11-ac2e-2a5aa71a3588
