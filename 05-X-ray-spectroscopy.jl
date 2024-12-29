@@ -10,6 +10,9 @@ begin
 	Pkg.Registry.add(url="https://github.com/astro-group-bristol/AstroRegistry")
 end
 
+# ╔═╡ a2947b42-a36c-4d8e-a4e4-4f9bcbb54126
+using PlutoUI; TableOfContents()
+
 # ╔═╡ 7b3b8d55-85b7-4ccf-af69-a9709049d832
 using SpectralFitting, XSPECModels, Plots
 
