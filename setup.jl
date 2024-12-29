@@ -72,7 +72,7 @@ using XSPECModels
 
 # ╔═╡ 1d172390-c561-11ef-127e-b3b5a71867b4
 md"""
-The intent of this notebook is only to set up all the packages in the environemnt.
+The intent of this notebook is only to set up all the packages in the environment.
 """
 
 # ╔═╡ f0176dfe-b7b3-41d6-93b4-5334d7b74619
