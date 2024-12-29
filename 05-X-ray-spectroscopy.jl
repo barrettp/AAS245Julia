@@ -767,7 +767,7 @@ md"""
 
 # ╔═╡ 6ecd81a8-bf93-4980-a4b4-d5a04559131a
 md"""
-We can use libraries like [Pidgeons.jl](https://pigeons.run/dev/) or [Turing.jl](https://turinglang.org/) to perform Bayesian inference on our paramters. SpectralFitting.jl is designed with BYOO (Bring Your Own Optimizer) in mind, and so makes it relatively easy to get at the core fitting functions to be used with other packages.
+We can use libraries like [Pigeons.jl](https://pigeons.run/dev/) or [Turing.jl](https://turinglang.org/) to perform Bayesian inference on our paramters. SpectralFitting.jl is designed with BYOO (Bring Your Own Optimizer) in mind, and so makes it relatively easy to get at the core fitting functions to be used with other packages.
 """
 
 # ╔═╡ c7bef432-ed76-4fdd-9944-7e98d0adf163
