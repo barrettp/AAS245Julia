@@ -138,13 +138,14 @@ Next we want to specify a model to fit to this data. Models that are prefixed wi
 
 !!! note
 	To see information about a model, use (1) the Live Docs' in Pluto, or (2) the ? in the Julia REPL:
-```julia
-	julia> ?PowerLaw
-	XS_PowerLaw(K, a)
 
-    •  K: Normalisation.
+```julia-repl
+julia> ?PowerLaw
+PowerLaw(K, a)
 
-    •  a: Photon index.
+•  K: Normalisation.
+
+•  a: Photon index.
 
 Example
 ≡≡≡≡≡≡≡
@@ -176,7 +177,7 @@ md"""
 If we want to specify paramters of our model at instantiation, we can do that with:
 
 ```julia
-	example = PhotoelectricAbsorption() * PowerLaw(a = FitParam(3.0))
+example = PhotoelectricAbsorption() * PowerLaw(a = FitParam(3.0))
 ```
 """
 
@@ -188,7 +189,7 @@ md"""
 SpectralFitting.jl adopts the SciML problem-solver abstraction, so to fit a model to data we specify a FittingProblem:
 
 ```julia
-	prob = FittingProblem(model1 => data)
+prob = FittingProblem(model1 => data)
 ```
 """
 
@@ -203,7 +204,7 @@ md"""
 SpectralFitting.jl makes a huge wealth of optimizers availble from [Optimizations.jl](https://github.com/SciML/Optimization.jl), and others from further afield. For consistency with XSPEC, we'll use here a delayed-gratification least-squares algorithm from [LsqFit.jl](https://github.com/JuliaNLSolvers/LsqFit.jl):
 
 ```julia
-	result0 = SpectralFitting.fit(prob, LevenbergMarquadt())
+result0 = SpectralFitting.fit(prob, LevenbergMarquadt())
 ```
 """
 
@@ -749,7 +750,7 @@ We can use libraries like [Pidgeons.jl](https://pigeons.run/dev/) or [Turing.jl]
 Let's use Turing.jl here, which means we'll also want to use StatsPlots.jl to plot our walker chains.
 
 ```julia
-	using StatsPlots, Turing
+using StatsPlots, Turing
 ```
 """
 
@@ -811,9 +812,8 @@ end
 ```
 
 !!! note
-	\_f\_objective returns a function used to evaluate and fold the model through the data
+	`_f_objective` returns a function used to evaluate and fold the model through the data
 """
-
 
 # ╔═╡ 61a0827c-ccd3-459b-a981-4f6406be37d2
 begin
