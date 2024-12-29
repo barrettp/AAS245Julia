@@ -24,7 +24,7 @@ using StatsPlots, Turing
 
 # ╔═╡ ab2fc214-e958-4075-9132-49b86a8ccc15
 md"""
-### X-ray Spectral Analysis Using SpectralFitting
+# X-ray Spectral Analysis Using SpectralFitting
 
 SpectralFitting.jl is an X-ray spectral fitting package like **jaxspec**, **sherpa**, **spex**, and **Xspec**.
 
@@ -742,7 +742,7 @@ plot!(bbpl_result2, label="Blackbody+Powerlaw: χ² = $(round(bbpl_result2.χ2))
 
 # ╔═╡ 6ecd81a8-bf93-4980-a4b4-d5a04559131a
 md"""
-### Markov Chain Monte Carlo (MCMC)
+## Markov Chain Monte Carlo (MCMC)
 
 We can use libraries like [Pidgeons.jl](https://pigeons.run/dev/) or [Turing.jl](https://turinglang.org/) to perform Bayesian inference on our paramters. SpectralFitting.jl is designed with BYOO (Bring Your Own Optimizer) in mind, and so makes it relatively easy to get at the core fitting functions to be used with other packages.
 
