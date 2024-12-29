@@ -131,26 +131,26 @@ We start by defining a probabilistic model with priors:
 
 # ╔═╡ c0a54835-9c4b-4154-8a95-1eba560c5714
 @planet b RadialVelocityOrbit begin
-    e = 0.0
-    ω = 0.0
+	e = 0.0
+	ω = 0.0
 
-    # We set a prior on period in years
-    P ~ Uniform((61.1057 - 5)/Octofitter.julian_year, (61.1057 + 5)/Octofitter.julian_year)
-    a = cbrt(system.M * b.P^2)
+	# We set a prior on period in years
+	P ~ Uniform((61.1057 - 5)/Octofitter.julian_year, (61.1057 + 5)/Octofitter.julian_year)
+	a = cbrt(system.M * b.P^2)
 
-    τ ~ Uniform(0,2pi)
-    tp = b.τ*b.P*365.256360417 + 55000 # reference epoch for τ. Choose an MJD date near your data.
+	τ ~ Uniform(0,2pi)
+	tp = b.τ*b.P*365.256360417 + 55000 # reference epoch for τ. Choose an MJD date near your data.
 
-    # minimum planet mass [jupiter masses]. really m*sin(i)
-    mass ~ LogUniform(0.001, 10)
+	# minimum planet mass [jupiter masses]. really m*sin(i)
+	mass ~ LogUniform(0.001, 10)
 end;
 
 # ╔═╡ 5e20862a-a040-410d-b33f-2c9904de2d9a
 @system GL876_one_planet begin
-    # total mass [solar masses]
-    M ~ truncated(Normal(0.346,0.007),lower=0.1)
+	# total mass [solar masses]
+	M ~ truncated(Normal(0.346,0.007),lower=0.1)
 
-    jit1 ~ LogUniform(0.1, 100)
+	jit1 ~ LogUniform(0.1, 100)
 end rv_likelihood b;
 
 # ╔═╡ 5be8f2fb-a1b2-40fb-8033-45f8c3db94d4
