@@ -63,7 +63,7 @@ We can plot the data using Makie
 
 # ╔═╡ 927b96f2-7e7a-4078-8d39-5ccaa3298dfe
 begin
-	fig= Figure()
+	fig = Figure()
 	ax = Axis(fig[1,1], xlabel="epoch [MJD]", ylabel="RV [m/s]")
 	scatter!(ax, df.epoch, df.rv, df.σ_rv)
 	fig
