@@ -109,7 +109,7 @@ end
 md"""
 ## Orbit Model (1 planet)
 
-We now fit a one-planet model to the data. 
+We now fit a one-planet model to the data.
 """
 
 # ╔═╡ c814f151-9dc4-4c19-a515-5592d8487d8d
@@ -140,7 +140,7 @@ We start by defining a probabilistic model with priors:
 
     τ ~ Uniform(0,2pi)
     tp = b.τ*b.P*365.256360417 + 55000 # reference epoch for τ. Choose an MJD date near your data.
-    
+
     # minimum planet mass [jupiter masses]. really m*sin(i)
     mass ~ LogUniform(0.001, 10)
 end;
@@ -187,26 +187,26 @@ There is still quite a bit of variance in that data. Maybe a second planet can e
 
 # ╔═╡ 0a83fb2b-5a65-4d90-ae5e-c8b1f19e2af5
 @planet c RadialVelocityOrbit begin
-    e ~ Uniform(0, 0.7)
-    ω ~ Uniform(0, 2pi)
+	e ~ Uniform(0, 0.7)
+	ω ~ Uniform(0, 2pi)
 
-    # We set a prior on period in years
-    P ~ Uniform((30 - 5)/Octofitter.julian_year, (30 + 5)/Octofitter.julian_year)
-    a = cbrt(system.M * c.P^2) # note the equals sign. 
+	# We set a prior on period in years
+	P ~ Uniform((30 - 5)/Octofitter.julian_year, (30 + 5)/Octofitter.julian_year)
+	a = cbrt(system.M * c.P^2) # note the equals sign.
 
-    τ ~ Uniform(0,2pi)
-    tp = c.τ*c.P*365.256360417 + 55000 
-    
-    # minimum planet mass [jupiter masses]. really m*sin(i)
-    mass ~ LogUniform(0.001, 10)
+	τ ~ Uniform(0,2pi)
+	tp = c.τ*c.P*365.256360417 + 55000
+
+	# minimum planet mass [jupiter masses]. really m*sin(i)
+	mass ~ LogUniform(0.001, 10)
 end;
 
 # ╔═╡ fcfb377a-e2b7-4b4a-ab80-fa5dd8cc0c28
 @system GL876_two_planet begin
-    # total mass [solar masses]
-    M ~ truncated(Normal(0.346,0.007),lower=0.1)
+	# total mass [solar masses]
+	M ~ truncated(Normal(0.346,0.007),lower=0.1)
 
-    jit1 ~ LogUniform(0.1, 100)
+	jit1 ~ LogUniform(0.1, 100)
 end rv_likelihood b c;
 
 # ╔═╡ 3da46010-85cb-401e-8311-e6f5f3b9a651

@@ -178,7 +178,7 @@ That mostly covers what you need to know about indexing. There is one special th
 
 !!! note "DataFrames are created columns at a time"
 
-    Building a DataFrame row-by-row is possible, but gets expensive and slow. Instead, its simpler to read in all of the data, say, from a file, and then transform it into a DataFrame. If you find yourself calling `push!()` on a DataFrame repeatedly, take a step back and think if it can be approached differently.
+	Building a DataFrame row-by-row is possible, but gets expensive and slow. Instead, its simpler to read in all of the data, say, from a file, and then transform it into a DataFrame. If you find yourself calling `push!()` on a DataFrame repeatedly, take a step back and think if it can be approached differently.
 
 """
 

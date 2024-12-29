@@ -221,9 +221,9 @@ Here we can see the parameter vector, the estimated error on each parameter, and
 ```julia
 begin
 	plot(data,
-    	ylims = (0.001, 2.0),
-    	xscale = :log10,
-    	yscale = :log10,
+		ylims = (0.001, 2.0),
+		xscale = :log10,
+		yscale = :log10,
 		label = "1E 1048.1-5937"
 	)
 	plot!(result0, label = "Powerlaw: χ² = $(round(result0.χ2))")
@@ -254,9 +254,9 @@ md"""
 ```julia
 begin
 	plot(data,
-    	ylims = (0.001, 2.0),
-    	xscale = :log10,
-    	yscale = :log10,
+		ylims = (0.001, 2.0),
+		xscale = :log10,
+		yscale = :log10,
 		label = "1E 1048.1-5937"
 	)
 	plot!(result1, label = "PowerLaw")
@@ -384,9 +384,9 @@ flux_result1 = SpectralFitting.fit(flux_problem, LevenbergMarquadt());
 ```julia
 begin
 	plot(data,
-    	ylims = (0.001, 2.0),
-    	xscale = :log10,
-    	yscale = :log10,
+		ylims = (0.001, 2.0),
+		xscale = :log10,
+		yscale = :log10,
 		label = "1E 1048.1-5937"
 	)
 	plot!(flux_result1, label = "powerlaw")
@@ -420,7 +420,7 @@ We fit in the same way as before:
 ```julia
 begin
 	prob2 = FittingProblem(model2 => data)
- 	result2 = SpectralFitting.fit!(prob2, LevenbergMarquadt())
+	result2 = SpectralFitting.fit!(prob2, LevenbergMarquadt())
 end
 ```
 """
@@ -435,10 +435,10 @@ Let's overplot this result against our power law result:
 ```julia
 begin
 	dp = plot(data,
-    	ylims = (0.001, 2.0),
-    	xscale = :log10,
-    	yscale = :log10,
-    	legend = :bottomleft,
+		ylims = (0.001, 2.0),
+		xscale = :log10,
+		yscale = :log10,
+		legend = :bottomleft,
 		label = "1E 1048.1-5937"
 	)
 	plot!(dp, result1, label = "PowerLaw: χ² = $(round(result1.χ2))")
@@ -598,10 +598,10 @@ Let's plot the result:
 ```julia
 begin
 	plot(data,
-    	ylims = (0.001, 2.0),
-   	 	xscale = :log10,
-    	yscale = :log10,
-    	legend = :bottomleft,
+		ylims = (0.001, 2.0),
+		xscale = :log10,
+		yscale = :log10,
+		legend = :bottomleft,
 	)
 	plot!(bbpl_result, label="Blackbody+Powerlaw: χ² = $(round(bbpl_result.χ2))")
 end
@@ -635,8 +635,8 @@ Fitting:
 
 ```julia
 bbpl_result2 = SpectralFitting.fit(
-    FittingProblem(bbpl_model => data),
-    LevenbergMarquadt()
+	FittingProblem(bbpl_model => data),
+	LevenbergMarquadt()
 )
 ```
 """
@@ -695,11 +695,11 @@ This gave a pretty good fit but the errors on our paramters are not well defined
 
 ```julia
 @model function mcmc_model(domain, objective, variance, f)
-    K ~ Normal(20.0, 1.0)
-    a ~ Normal(2.2, 0.3)
-    ηH ~ truncated(Normal(0.5, 0.1); lower = 0)
-    pred = f(domain, [K, a, ηH])
-    return objective ~ MvNormal(pred, sqrt.(variance))
+	K ~ Normal(20.0, 1.0)
+	a ~ Normal(2.2, 0.3)
+	ηH ~ truncated(Normal(0.5, 0.1); lower = 0)
+	pred = f(domain, [K, a, ηH])
+	return objective ~ MvNormal(pred, sqrt.(variance))
 end
 ```
 """
