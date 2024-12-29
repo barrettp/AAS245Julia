@@ -37,7 +37,10 @@ SpectalFitting has implemented all of the models contained in XSPEC. All of the 
 
 !!! note
 	The long term plan is to have all models written in Julia for improved performance.
+"""
 
+# ╔═╡ 932e65e7-023c-4f47-8a12-05cef4cb328d
+md"""
 Begin by installing SpectralFitting, XSPECModels, and Plots:
 
 ```julia
@@ -3725,6 +3728,7 @@ version = "1.4.1+2"
 # ╟─a2947b42-a36c-4d8e-a4e4-4f9bcbb54126
 # ╟─ab2fc214-e958-4075-9132-49b86a8ccc15
 # ╟─6db17a8f-3c0a-4d91-a6c5-8bb12ce10b9b
+# ╟─932e65e7-023c-4f47-8a12-05cef4cb328d
 # ╠═24ed10e8-aa86-11ef-1455-4944c38e57ec
 # ╠═7b3b8d55-85b7-4ccf-af69-a9709049d832
 # ╠═22008395-3cbf-4a11-ac2e-2a5aa71a3588
