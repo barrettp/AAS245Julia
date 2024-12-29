@@ -25,7 +25,10 @@ using StatsPlots, Turing
 # ╔═╡ ab2fc214-e958-4075-9132-49b86a8ccc15
 md"""
 # X-ray Spectral Analysis Using SpectralFitting
+"""
 
+# ╔═╡ 6db17a8f-3c0a-4d91-a6c5-8bb12ce10b9b
+md"""
 SpectralFitting.jl is an X-ray spectral fitting package like **jaxspec**, **sherpa**, **spex**, and **Xspec**.
 
 This example walkthrough is the SpectralFitting.jl equivalent of the [Walk through XSPEC](https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/manual/node35.html) from the XSPEC manual. We will use the same dataset, available for download from this link to the [data](https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/walkthrough.tar.gz).
@@ -151,14 +154,20 @@ Example
 ≡≡≡≡≡≡≡
 ...
 ```
+"""
 
+# ╔═╡ c3ef9493-40ca-40bb-8660-4fed4e38ba2e
+md"""
 !!! tip
 	It is advised to use the Julia implemented models. This allows various calculations to benefit from automatic differentiation (AD), efficient multi-threading, GPU offloading, and various other useful optimizations.
 
 	AD provides a three times performance improvement over most other spectral fitting applications, such as XSpec and Sherpa. The one exception is jaxspec because JAX also has AD.
 
 	Julia also provides better performance by performming global optimization of models, whereas most other spectal fitting apps only optimize each component of a model.
+"""
 
+# ╔═╡ 2ea069da-86ac-4b74-bd6d-3e642fa17612
+md"""
 We will start by fitting a photoelectric absorption model that acts on a power law model:
 
 ```julia
@@ -173,7 +182,10 @@ model1 = PhotoelectricAbsorption() * PowerLaw()
 md"""
 !!! note
 	Julia does not require the implementation of a sublanguage. Each model is implemented in Julia, so Julia parses the model expressions. In the case of XSpec, special code is required to parse the model expressions, increasing the apps complexity and maintenance, and decreasing *productivity*.
+"""
 
+# ╔═╡ 287273d1-9b82-45ed-aceb-13deb7a51137
+md"""
 If we want to specify paramters of our model at instantiation, we can do that with:
 
 ```julia
@@ -195,9 +207,6 @@ prob = FittingProblem(model1 => data)
 
 # ╔═╡ 6863b72c-cacc-4b4d-b12b-71a81fc97e41
 prob = FittingProblem(model1 => data)
-
-# ╔═╡ 499d2a76-7e2d-4538-b44d-95d0f656548e
-
 
 # ╔═╡ ed1ed1f3-da1a-4af9-8b11-e483103ecdce
 md"""
@@ -299,21 +308,29 @@ update_model!(model1, result1)
 md"""
 !!! note
 	Since fitting and updating a model is often done in tandem, SpectralFitting.jl has both a [fit](https://fjebaker.github.io/SpectralFitting.jl/dev/walkthrough/@ref) and [fit!](https://fjebaker.github.io/SpectralFitting.jl/dev/walkthrough/@ref) method, the latter automatically updates the model parameters after fit.
+"""
 
+# ╔═╡ 5d7f391f-8085-4089-a447-69fc6b30d523
+md"""
 To estimate the goodness of our fit, we can mimic the goodness command from XSPEC. This will use the [simulate](https://fjebaker.github.io/SpectralFitting.jl/dev/walkthrough/@ref) function to simulate spectra for a dataset (here determined by the result), and fit the model to the simulated dataset. The fit statistic for each fit is then appended to an array, which we can use to plot a histogram:
 
 ```julia
+spread = goodness(result1; N = 1000, seed = 42, exposure_time = data.data.spectrum.exposure_time)
+```
+
+```julia
 begin
-	spread = goodness(result1; N = 1000, seed = 42, exposure_time = data.data.spectrum.exposure_time)
 	histogram(spread, ylims = (0, 300), label = "Simulated")
 	vline!([result1.χ2], label = "Best fit")
 end
 ```
 """
 
+# ╔═╡ cdb01ccc-2d6f-4e5e-a4e7-177ca0a0e1aa
+spread = goodness(result1; N = 1000, seed = 42, exposure_time = data.data.spectrum.exposure_time)
+
 # ╔═╡ 10fafc36-9e70-44b9-a77b-f5d0ead58fa9
 begin
-	spread = goodness(result1; N = 1000, seed = 42, exposure_time = data.data.spectrum.exposure_time)
 	histogram(spread, ylims = (0, 300), label = "Simulated")
 	vline!([result1.χ2], label = "Best fit")
 end
@@ -339,28 +356,27 @@ Next we want to calculate the flux in an energy range observed by the detector. 
 We can modify our model by accessing properties from the model card and writing a new expression:
 
 ```julia
-begin
-	calc_flux = XS_CalculateFlux(
+calc_flux = XS_CalculateFlux(
     E_min = FitParam(0.2, frozen = true),
     E_max = FitParam(2.0, frozen = true),
     log10Flux = FitParam(-10.3, lower_limit = -100, upper_limit = 100),
 )
+```
 
+```julia
 flux_model1 = model1.m1 * calc_flux(model1.a1)
-end
 ```
 """
 
-# ╔═╡ 173e94f9-4bd6-4efc-9772-238601d106e9
-begin
-	calc_flux = XS_CalculateFlux(
+# ╔═╡ d2cc6013-ca48-4a32-a2b1-aa7a064f9a48
+calc_flux = XS_CalculateFlux(
     E_min = FitParam(0.2, frozen = true),
     E_max = FitParam(2.0, frozen = true),
     log10Flux = FitParam(-10.3, lower_limit = -100, upper_limit = 100),
 )
 
+# ╔═╡ 173e94f9-4bd6-4efc-9772-238601d106e9
 flux_model1 = model1.m1 * calc_flux(model1.a1)
-end
 
 # ╔═╡ dcd354ab-57de-4a0e-968f-a8c39a76b233
 md"""
@@ -397,9 +413,11 @@ md"""
 Now to fit we can repeat the above procedure, and even overplot the region of flux we integrated:
 
 ```julia
-begin
-	flux_result1 = SpectralFitting.fit(flux_problem, LevenbergMarquadt())
+flux_result1 = SpectralFitting.fit(flux_problem, LevenbergMarquadt())
+```
 
+```julia
+begin
 	plot(data,
     	ylims = (0.001, 2.0),
     	xscale = :log10,
@@ -412,10 +430,11 @@ end
 ```
 """
 
+# ╔═╡ 27d19c95-d102-45c4-b5e8-20766970b4d6
+flux_result1 = SpectralFitting.fit(flux_problem, LevenbergMarquadt());
+
 # ╔═╡ f604ac19-02bf-414d-b831-d8d3cd6b88d0
 begin
-	flux_result1 = SpectralFitting.fit(flux_problem, LevenbergMarquadt())
-
 	plot(data,
     	ylims = (0.001, 2.0),
     	xscale = :log10,
@@ -741,12 +760,18 @@ plot!(bbpl_result2, label="Blackbody+Powerlaw: χ² = $(round(bbpl_result2.χ2))
 # ╔═╡ f4b5ce4d-6b48-4402-9b10-1e91bcd1df7f
 plot!(bbpl_result2, label="Blackbody+Powerlaw: χ² = $(round(bbpl_result2.χ2))")
 
-# ╔═╡ 6ecd81a8-bf93-4980-a4b4-d5a04559131a
+# ╔═╡ 0e0b1dda-0728-428a-aa9d-913ba65233ce
 md"""
 ## Markov Chain Monte Carlo (MCMC)
+"""
 
+# ╔═╡ 6ecd81a8-bf93-4980-a4b4-d5a04559131a
+md"""
 We can use libraries like [Pidgeons.jl](https://pigeons.run/dev/) or [Turing.jl](https://turinglang.org/) to perform Bayesian inference on our paramters. SpectralFitting.jl is designed with BYOO (Bring Your Own Optimizer) in mind, and so makes it relatively easy to get at the core fitting functions to be used with other packages.
+"""
 
+# ╔═╡ c7bef432-ed76-4fdd-9944-7e98d0adf163
+md"""
 Let's use Turing.jl here, which means we'll also want to use StatsPlots.jl to plot our walker chains.
 
 ```julia
@@ -798,17 +823,28 @@ md"""
 A few things to note here: we use the Turing.jl sampling syntax ~ to say that a variable is sampled from a certain type of prior distribution. There are no fixed criteria for what a distribution can be, and we encourage you to consult the Turing.jl documentation to learn how to define your own custom probability distributions. In this case, we will use Gaussians for all our parameters, and for the means and standard deviations use the best fit and estimated errors.
 
 At the moment we haven't explicitly used our model, but f in this case takes the roll of invoking our model, and folding through instrument responses. We call it in much the same way as invokemodel, despite it going the extra step to fold our model. To instantiate this, we can use the SpectralFitting.jl helper functions:
+"""
 
+# ╔═╡ 820bdfb5-a81d-4b63-b09b-f9104f1c6ab5
+md"""
 ```julia
-begin
-	config = FittingConfig(FittingProblem(model => data))
-	mm = mcmc_model(
-    	make_model_domain(ContiguouslyBinned(), data),
-    	make_objective(ContiguouslyBinned(), data),
-    	make_objective_variance(ContiguouslyBinned(), data),
-    	SpectralFitting._f_objective(config),
-	)
-end
+config = FittingConfig(FittingProblem(model => data));
+```
+"""
+
+# ╔═╡ 60c6334f-1109-4c95-b9f0-417bd35a2d8c
+# ╠═╡ show_logs = false
+config = FittingConfig(FittingProblem(model1 => data));
+
+# ╔═╡ d04d209a-e804-491c-9bcd-8929490f39c1
+md"""
+```julia
+mm = mcmc_model(
+	make_model_domain(ContiguouslyBinned(), data),
+	make_objective(ContiguouslyBinned(), data),
+	make_objective_variance(ContiguouslyBinned(), data),
+	SpectralFitting._f_objective(config),
+)
 ```
 
 !!! note
@@ -816,16 +852,13 @@ end
 """
 
 # ╔═╡ 61a0827c-ccd3-459b-a981-4f6406be37d2
-begin
-	config = FittingConfig(FittingProblem(model1 => data))
-		mm = mcmc_model(
+mm = mcmc_model(
     make_model_domain(ContiguouslyBinned(), data),
     make_objective(ContiguouslyBinned(), data),
     make_objective_variance(ContiguouslyBinned(), data),
     # _f_objective returns a function used to evaluate and fold the model through the data
     SpectralFitting._f_objective(config),
-	)
-end
+)
 
 # ╔═╡ cba5de80-bc2e-40e0-b549-abe8ecfd6bb1
 md"""
@@ -851,9 +884,6 @@ plot(chain)
 # ╔═╡ e89f819c-1248-41a1-932b-3600255563a5
 plot(chain)
 
-# ╔═╡ 448bc0e0-2c6b-447a-9eeb-4723113e07e0
-
-
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -861,6 +891,7 @@ CodecZlib = "944b1d66-785c-5afd-91f1-9de20f533193"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 SpectralFitting = "f2c56810-742e-4b72-8bf4-27af3bb81a12"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 Tar = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
@@ -3645,10 +3676,11 @@ version = "1.4.1+2"
 """
 
 # ╔═╡ Cell order:
+# ╟─a2947b42-a36c-4d8e-a4e4-4f9bcbb54126
+# ╟─6db17a8f-3c0a-4d91-a6c5-8bb12ce10b9b
 # ╟─ab2fc214-e958-4075-9132-49b86a8ccc15
 # ╠═24ed10e8-aa86-11ef-1455-4944c38e57ec
 # ╠═7b3b8d55-85b7-4ccf-af69-a9709049d832
-# ╠═90b1a6eb-e101-4e29-a536-10293f8ad6e7
 # ╠═22008395-3cbf-4a11-ac2e-2a5aa71a3588
 # ╟─d06acb32-2dad-491d-8283-5238d2b1c17c
 # ╠═28fd9267-db54-4187-ada1-96e23ad36987
@@ -3659,12 +3691,14 @@ version = "1.4.1+2"
 # ╟─8c74ded3-f798-426f-bd3c-99b3ba63946d
 # ╠═90301284-cd55-40bb-8d7f-2cf83e110fa3
 # ╟─76e44052-c9d9-4bb6-9728-b504468b9424
+# ╟─c3ef9493-40ca-40bb-8660-4fed4e38ba2e
+# ╟─2ea069da-86ac-4b74-bd6d-3e642fa17612
 # ╠═140faeec-7794-476a-9d5b-9fd1a598d981
 # ╟─cd6ac36d-1eb1-43d6-b8b7-b58cc3cbb9c8
+# ╟─287273d1-9b82-45ed-aceb-13deb7a51137
 # ╠═a20eed5d-debf-4a15-a3b0-1c300609919f
 # ╟─dc2d56bf-c022-44ac-a7d0-a981066b797a
 # ╠═6863b72c-cacc-4b4d-b12b-71a81fc97e41
-# ╠═499d2a76-7e2d-4538-b44d-95d0f656548e
 # ╟─ed1ed1f3-da1a-4af9-8b11-e483103ecdce
 # ╠═177d4e11-970f-4f96-8729-45836ec9999f
 # ╟─04de68d6-fda8-4389-abb4-d276ffb78b22
@@ -3676,16 +3710,20 @@ version = "1.4.1+2"
 # ╟─bff64ea1-602b-4b59-bffa-e85f1d765860
 # ╠═c22b426e-4086-44ce-b562-79d7c0b1a1fe
 # ╟─6ad6075a-6119-424b-a5b2-b8ed2dc9fe7f
+# ╟─5d7f391f-8085-4089-a447-69fc6b30d523
+# ╠═cdb01ccc-2d6f-4e5e-a4e7-177ca0a0e1aa
 # ╠═10fafc36-9e70-44b9-a77b-f5d0ead58fa9
 # ╟─936daf32-91c0-4f9a-b37a-a26b27333b58
 # ╠═8b54c69f-9129-45f0-90bf-a91324ff6b01
 # ╟─e2da09ef-0eef-4f5d-bae9-ef139522790d
+# ╠═d2cc6013-ca48-4a32-a2b1-aa7a064f9a48
 # ╠═173e94f9-4bd6-4efc-9772-238601d106e9
 # ╟─dcd354ab-57de-4a0e-968f-a8c39a76b233
 # ╠═bdb48e95-998f-4d19-a4ca-d2a8fca40ac5
 # ╟─617f0e78-b2f8-42fe-98dc-1d1d6d6dbcf5
 # ╠═2abc998c-1cc7-4d4f-b113-6bf653eb5d2c
 # ╟─9986a311-4a98-4a9d-84c8-23f02c7c508d
+# ╠═27d19c95-d102-45c4-b5e8-20766970b4d6
 # ╠═f604ac19-02bf-414d-b831-d8d3cd6b88d0
 # ╟─a222aa7c-ae50-4581-9cda-ea9847a40e1d
 # ╠═f202c548-fb0b-4fa4-997f-c84841fbde0e
@@ -3719,18 +3757,22 @@ version = "1.4.1+2"
 # ╠═643d3ab3-8dfe-478f-96cd-28c7e78cb76d
 # ╟─154cb9ea-44c5-4560-b6eb-2ce84ea2ebd5
 # ╠═f4b5ce4d-6b48-4402-9b10-1e91bcd1df7f
+# ╟─0e0b1dda-0728-428a-aa9d-913ba65233ce
 # ╟─6ecd81a8-bf93-4980-a4b4-d5a04559131a
+# ╟─c7bef432-ed76-4fdd-9944-7e98d0adf163
 # ╠═f6746346-2510-42e9-a551-f0fc3ad13311
 # ╟─6a0d8313-d0e6-4470-9c9a-bf17608e477c
 # ╠═d7933ed7-7c42-4aa5-a141-0b1a5034b75e
 # ╟─f3c798c0-0361-4776-8208-7d9a3b5ffa41
 # ╠═13decdf9-1271-4456-a90e-7d897845f0a7
 # ╟─f68b7bd9-4f01-420e-becd-f57e065b0261
+# ╟─820bdfb5-a81d-4b63-b09b-f9104f1c6ab5
+# ╠═60c6334f-1109-4c95-b9f0-417bd35a2d8c
+# ╟─d04d209a-e804-491c-9bcd-8929490f39c1
 # ╠═61a0827c-ccd3-459b-a981-4f6406be37d2
 # ╟─cba5de80-bc2e-40e0-b549-abe8ecfd6bb1
 # ╠═74b7d927-c28d-4970-9898-2bb4713c58a2
 # ╟─e9ed5191-cdd1-4cb9-9f13-21d996621113
 # ╠═e89f819c-1248-41a1-932b-3600255563a5
-# ╠═448bc0e0-2c6b-447a-9eeb-4723113e07e0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
