@@ -207,7 +207,7 @@ Since we've defined the `+` function on the Point2D type, lots of new behaviour 
 # ╔═╡ 454ff2f3-fbe0-4125-a435-ef44b175c35d
 md"""
 !!! danger "Type Piracy"
-	**Type Piracy** is when you extend a function without at least one argument type that your module "owns". For example, it would be type piracy for Bob to extend Alice's distance_from_origin function with a method that takes two integers.
+	**Type Piracy** is when you extend a function without at least one argument type that your module "owns". For example, it would be type piracy for Bob to extend Alice's `distance_from_origin` function with a method that takes two integers.
 
 	Though not enforced at the language level, type piracy must be avoided to prevent spooky action at a distance, where loading one module changes the behaviour of unrelated functionality in a separate module.
 """
