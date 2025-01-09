@@ -104,7 +104,7 @@ The Sunday content covers advanced Julia programming techniques associated with 
 | 03. Exoplanets | https://github.com/barrettp/AAS245Julia/raw/main/03-exoplanets.jl |
 | 04. Curve fitting | https://github.com/barrettp/AAS245Julia/raw/main/04-curve-fitting.jl |
 | 05. X-Ray Spectroscopy | https://github.com/barrettp/AAS245Julia/raw/main/05-X-ray-spectroscopy.jl |
-| 06. Astronomy Packages |  |
+| 06. Astronomy Packages | https://github.com/barrettp/AAS245Julia/raw/main/06-astro-packages.jl |
 | 07. Calling Python | https://github.com/barrettp/AAS245Julia/raw/main/07-calling-python.jl |
 | 08. Using Macros | https://github.com/barrettp/AAS245Julia/raw/main/08-using-macros.jl |
 | 09. Optimizing Code | https://github.com/barrettp/AAS245Julia/raw/main/09-optimizing-code.jl |
