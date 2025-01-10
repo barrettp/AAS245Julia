@@ -1,17 +1,19 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
+    #! format: off
     quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ 20b9ba30-2685-4535-9244-693f8e653a9a
@@ -394,10 +396,11 @@ Try rotating `img1` by 35 degrees using `imrotate`, and shirnking it using `imre
 # ╔═╡ 0231f3a4-f1d9-41aa-b7bd-4efa12020975
 md"""
 ### FITS Files
-FITS, or the Flexible Image Transport System is one of the most common ways of storing raster data in astronomy. 
-A FITS file consists of one or more header-data units which are an array (2+D) or table combined with metadata.
+FITS, or the Flexible Image Transport System is one of the most common ways of storing raster data in astronomy. A FITS file consists of one or more header-data units which are an array (2+D) or table combined with metadata.
 
-In Julia, FITS files can be accessed using the FITSIO.jl library. A higher level interface is provided by AstroImages.jl
+In Julia, FITS files can be accessed using the FITSIO.jl library. A higher level interface is provided by AstroImages.jl.
+
+A pure Julia version FITS.jl is in development.
 """
 
 # ╔═╡ 5178a7ca-af86-4f46-8a09-335f2a2f75bd
@@ -658,7 +661,9 @@ luminosity_dist(u"Gpc", cosmo, 1.5) # Can convert to appropriate unit
 
 # ╔═╡ 2f54fd13-9b9a-48ee-94cf-603ed043be8c
 md"""
-## Orbits & Ephemerides
+## Astrometry, Orbits, & Ephemerides
+
+Astrometry functions such as precession and nutation are available using ERFA.jl, SOFA.jl, and Astrometry.jl. ERFA.jl and SOFA.jl are wrappers around the ERFA and SOFA C libraries. Astrometry.jl, which is still under development, is a pure Julia implementation. It contains the SOFA submodule which is a pure Julia implementation of the SOFA code.
 
 Ephemerides for Earth and other solar system bodies can be retrieved using [JPLEphemeris.jl](https://github.com/JuliaAstro/JPLEphemeris.jl).
 

@@ -7,12 +7,6 @@ using InteractiveUtils
 # ╔═╡ 1e47e383-b735-4c57-a300-2afe8491b49a
 using PlutoUI; TableOfContents()
 
-# ╔═╡ d1366a55-b4fc-4ddb-b5c2-5f3381c48b49
-# ╠═╡ disabled = true
-#=╠═╡
-html"<button onclick='present()'>present</button>"
-  ╠═╡ =#
-
 # ╔═╡ 09193424-25b9-45ce-840f-f24bbcc46c9d
 md"""
 ## Introduction
@@ -4444,7 +4438,6 @@ version = "1.4.1+2"
 
 # ╔═╡ Cell order:
 # ╟─1e47e383-b735-4c57-a300-2afe8491b49a
-# ╟─d1366a55-b4fc-4ddb-b5c2-5f3381c48b49
 # ╟─09193424-25b9-45ce-840f-f24bbcc46c9d
 # ╟─b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
 # ╟─7f3357bc-4103-4a35-af21-9c86f5a0ec2f
