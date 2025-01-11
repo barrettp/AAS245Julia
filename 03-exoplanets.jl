@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.19.40
 
 using Markdown
 using InteractiveUtils
@@ -8,7 +8,10 @@ using InteractiveUtils
 using PlutoUI; TableOfContents()
 
 # ╔═╡ a480e429-6c46-44b0-a7f3-c1ef8a799a82
-using Octofitter, OctofitterRadialVelocity, Distributions, Pigeons, CairoMakie, PairPlots
+begin
+	ENV["DATADEPS_ALWAYS_ACCEPT"] = true
+	using Octofitter, OctofitterRadialVelocity, Distributions, Pigeons, CairoMakie, PairPlots
+end
 
 # ╔═╡ 3a3fea17-4e47-4192-bde1-a597065115f5
 using LombScargle
