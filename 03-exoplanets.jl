@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
@@ -10,11 +10,8 @@ using PlutoUI; TableOfContents()
 # ╔═╡ a480e429-6c46-44b0-a7f3-c1ef8a799a82
 begin
 	ENV["DATADEPS_ALWAYS_ACCEPT"] = true
-	using Octofitter, OctofitterRadialVelocity, Distributions, Pigeons, CairoMakie, PairPlots
+	using Octofitter, OctofitterRadialVelocity, Distributions, Pigeons, CairoMakie, PairPlots, HypertextLiteral
 end
-
-# ╔═╡ 3a3fea17-4e47-4192-bde1-a597065115f5
-using LombScargle
 
 # ╔═╡ b4e9690c-a8f2-11ef-1087-e50a286f70c4
 md"""
@@ -29,64 +26,102 @@ In this tutorial, we will cover or revisit:
 * Using a Bayesian model comparison to determine the number of planets supported by our data
 """
 
+# ╔═╡ 7fe11ccb-0727-4d36-a407-4658bb8493c6
+html"""<style>
+	main {
+    	max-width: 1000px;
+	}
+"""
+
 # ╔═╡ b60ca992-b3fa-4c13-aa9b-9b4a9e6d3330
 md"""
 # Loading the data
 In this section, we will load RV data from an online database, and plot it.
+
+```julia
+	rv_data = OctofitterRadialVelocity.HARPS_RVBank_rvs("GJ876")
+```
 """
 
 # ╔═╡ dfb9700e-f379-4321-a119-5a4921279695
-rv_data = OctofitterRadialVelocity.HARPS_RVBank_rvs("GJ876")
+
 
 # ╔═╡ 9d9f5b29-e823-4cd3-8ac9-4c9fa8d97b37
 md"""
 We can access each column by name:
+
+```julia
+	rv_data.epoch
+```
 """
 
 # ╔═╡ 8637f7d9-ac5d-40ad-a133-4ebd018cbd03
-rv_data.epoch
+
 
 # ╔═╡ c99186b0-3991-4891-a081-0e34abf2b067
 md"""
 ## Plotting data
 We can plot the data using Makie
+
+```julia
+	let
+		fig = Figure()
+		ax = Axis(fig[1,1], xlabel="epoch [MJD]", ylabel="RV [m/s]")
+		scatter!(ax, rv_data.epoch, rv_data.rv, rv_data.σ_rv)
+		fig
+	end
+```
 """
 
 # ╔═╡ 927b96f2-7e7a-4078-8d39-5ccaa3298dfe
-let
-	fig = Figure()
-	ax = Axis(fig[1,1], xlabel="epoch [MJD]", ylabel="RV [m/s]")
-	scatter!(ax, rv_data.epoch, rv_data.rv, rv_data.σ_rv)
-	fig
-end
+
 
 # ╔═╡ 90c45bf2-9091-4540-a52f-deb95adb3398
 md"""
 To analyse this RV data, we start by creating a periodogram:
 
+```julia
+	using LombScargle
+```
+"""
+
+# ╔═╡ 3a3fea17-4e47-4192-bde1-a597065115f5
+
+
+# ╔═╡ 6af1b553-aa38-4445-9b6f-0636f5caa280
+md"""
+```julia
+	pgram = lombscargle(
+		rv_data.epoch,
+		rv_data.rv,
+		rv_data.σ_rv # typed: \sigma + TAB)
+```
 """
 
 # ╔═╡ f3f64f48-ba56-4890-94ed-b5bc0bbca2a1
-pgram = lombscargle(
-	rv_data.epoch,
-	rv_data.rv,
-	rv_data.σ_rv # typed: \sigma + TAB
-)
+
+
+# ╔═╡ ad2a322c-80f5-4b62-ae89-12b51118b03a
+md"""
+```julia
+	let
+		fig = Figure()
+		per, pow = LombScargle.periodpower(pgram)
+		ax = Axis(
+			fig[1,1],
+			xlabel="period",
+			ylabel="power",
+		)
+		lines!(ax, per, pow, color=:black)
+		xlims!(ax, low=0, high=200)
+		# vlines!(ax, [30,61,123])
+		fig
+	end
+```
+"""
 
 # ╔═╡ 564f9549-b7b3-48c5-88c7-3536adfed9d8
-let
-	fig = Figure()
-	per, pow = LombScargle.periodpower(pgram)
-	ax = Axis(
-		fig[1,1],
-		xlabel="period",
-		ylabel="power",
-	)
-	lines!(ax, per, pow, color=:black)
-	xlims!(ax, low=0, high=200)
-	# vlines!(ax, [30,61,123])
-	fig
-end
+
 
 # ╔═╡ 410771c1-cd2c-4b16-a9a5-bea86ef0fcfd
 md"""
@@ -103,66 +138,103 @@ Create a "radial velocity" object to hold our observations
 # ╔═╡ bc8ede43-3521-4241-8e36-71deac7dd8a2
 
 
+# ╔═╡ 0b198ca4-d431-47fc-8c4f-44321f53c33e
+md"""
+```julia
+	rv_likelihood = MarginalizedStarAbsoluteRVLikelihood(
+		rv_data,
+		instrument_name="HARPS",
+		jitter=:jit1,)
+```
+"""
+
 # ╔═╡ 8575a16e-f3fb-4604-9d96-efd871bb654f
-rv_likelihood = MarginalizedStarAbsoluteRVLikelihood(
-	rv_data,
-	instrument_name="HARPS",
-	jitter=:jit1,
-)
+
 
 # ╔═╡ bb34fff2-4a54-41a5-b351-68620d93eeed
 md"""
 We start by defining a probabilistic model with priors:
+
+```julia
+	@planet b RadialVelocityOrbit begin
+		e = 0.0
+		ω = 0.0
+
+		# We set a prior on period in years
+		P ~ Uniform((61.1057 - 5)/Octofitter.julian_year, (61.1057 + 5)/Octofitter.julian_year)
+		a = cbrt(system.M * b.P^2)
+
+		τ ~ Uniform(0,2pi)
+		tp = b.τ*b.P*365.256360417 + 55000 # reference epoch for τ. Choose an MJD date near your data.
+
+		# minimum planet mass [jupiter masses]. really m*sin(i)
+		mass ~ LogUniform(0.001, 10)
+	end;
+```
 """
 
 # ╔═╡ c0a54835-9c4b-4154-8a95-1eba560c5714
-@planet b RadialVelocityOrbit begin
-	e = 0.0
-	ω = 0.0
 
-	# We set a prior on period in years
-	P ~ Uniform((61.1057 - 5)/Octofitter.julian_year, (61.1057 + 5)/Octofitter.julian_year)
-	a = cbrt(system.M * b.P^2)
 
-	τ ~ Uniform(0,2pi)
-	tp = b.τ*b.P*365.256360417 + 55000 # reference epoch for τ. Choose an MJD date near your data.
+# ╔═╡ 2a6f9aee-ecb1-464d-b15b-ab8bb50d265a
+md"""
+```julia
+	@system GL876_one_planet begin
+		# total mass [solar masses]
+		M ~ truncated(Normal(0.346,0.007),lower=0.1)
 
-	# minimum planet mass [jupiter masses]. really m*sin(i)
-	mass ~ LogUniform(0.001, 10)
-end;
+		jit1 ~ LogUniform(0.1, 100)
+	end rv_likelihood b;
+```
+"""
 
 # ╔═╡ 5e20862a-a040-410d-b33f-2c9904de2d9a
-@system GL876_one_planet begin
-	# total mass [solar masses]
-	M ~ truncated(Normal(0.346,0.007),lower=0.1)
 
-	jit1 ~ LogUniform(0.1, 100)
-end rv_likelihood b;
 
 # ╔═╡ 5be8f2fb-a1b2-40fb-8033-45f8c3db94d4
 md"""
 We now compile our model to efficient machine code, with derivatives
+
+```julia
+	model_one_planet = Octofitter.LogDensityModel(GL876_one_planet)
+```
 """
 
 # ╔═╡ 6cd6d70f-e7eb-46c6-9cf5-3c2cb47c9be3
-model_one_planet = Octofitter.LogDensityModel(GL876_one_planet)
+
 
 # ╔═╡ d8dffb80-674a-42a5-8743-61d9562a957c
 md"""
 We can now sample from the model using Pigeons:
+```julia
+	chain_one_planet,pt_one_planet = octofit_pigeons(model_one_planet,n_rounds=10)
+```
 """
 
 # ╔═╡ 7a09f779-36a3-4683-931f-dd6f88d88c32
-chain_one_planet,pt_one_planet = octofit_pigeons(model_one_planet,n_rounds=10)
+
 
 # ╔═╡ 6618be22-76bd-49ac-a291-2bb39fea6b29
-md"""We can examine the results"""
+md"""
+We can examine the results
+
+```julia
+	display(chain_one_planet)
+```
+"""
 
 # ╔═╡ a6f32590-d6a3-4317-ac56-80614b68775c
-display(chain_one_planet)
+
+
+# ╔═╡ 019ab88b-2310-497e-8783-975722b84d13
+md"""
+```julia
+	Octofitter.rvpostplot(model_one_planet, chain_one_planet, show_summary=true)
+```
+"""
 
 # ╔═╡ b2f496f2-792a-458d-b050-52fb0abeb5a4
-Octofitter.rvpostplot(model_one_planet, chain_one_planet, show_summary=true)
+
 
 # ╔═╡ de444cf7-5fc1-4c41-b06b-39ed43af4bb4
 md"""
@@ -176,43 +248,82 @@ md"""
 ## Two Planet Model
 
 There is still quite a bit of variance in that data. Maybe a second planet can explain it!
+
+```julia
+	@planet c RadialVelocityOrbit begin
+		e ~ Uniform(0, 0.7)
+		ω ~ Uniform(0, 2pi)
+
+		# We set a prior on period in years
+		P ~ Uniform((30 - 5)/Octofitter.julian_year, (30 + 5)/Octofitter.julian_year)
+		a = cbrt(system.M * c.P^2) # note the equals sign.
+
+		τ ~ Uniform(0,2pi)
+		tp = c.τ*c.P*365.256360417 + 55000
+
+		# minimum planet mass [jupiter masses]. really m*sin(i)
+		mass ~ LogUniform(0.001, 10)
+	end;
+```
 """
 
 # ╔═╡ 0a83fb2b-5a65-4d90-ae5e-c8b1f19e2af5
-@planet c RadialVelocityOrbit begin
-	e ~ Uniform(0, 0.7)
-	ω ~ Uniform(0, 2pi)
 
-	# We set a prior on period in years
-	P ~ Uniform((30 - 5)/Octofitter.julian_year, (30 + 5)/Octofitter.julian_year)
-	a = cbrt(system.M * c.P^2) # note the equals sign.
 
-	τ ~ Uniform(0,2pi)
-	tp = c.τ*c.P*365.256360417 + 55000
+# ╔═╡ 74564125-9fba-4970-8e67-860684679158
+md"""
+```julia
+	@system GL876_two_planet begin
+		# total mass [solar masses]
+		M ~ truncated(Normal(0.346,0.007),lower=0.1)
 
-	# minimum planet mass [jupiter masses]. really m*sin(i)
-	mass ~ LogUniform(0.001, 10)
-end;
+		jit1 ~ LogUniform(0.1, 100)
+	end rv_likelihood b c;
+```
+"""
 
 # ╔═╡ fcfb377a-e2b7-4b4a-ab80-fa5dd8cc0c28
-@system GL876_two_planet begin
-	# total mass [solar masses]
-	M ~ truncated(Normal(0.346,0.007),lower=0.1)
 
-	jit1 ~ LogUniform(0.1, 100)
-end rv_likelihood b c;
+
+# ╔═╡ 5d5b1c8f-c903-41fd-b206-18e0cf015c0b
+md"""
+```julia
+	model_two_planet = Octofitter.LogDensityModel(GL876_two_planet)
+```
+"""
 
 # ╔═╡ 3da46010-85cb-401e-8311-e6f5f3b9a651
-model_two_planet = Octofitter.LogDensityModel(GL876_two_planet)
+
+
+# ╔═╡ 8f55419b-b13f-4492-96e0-e342a458927a
+md"""
+```julia
+	chain_two_planet,pt_two_planet = octofit_pigeons(model_two_planet,n_rounds=10)
+```
+"""
 
 # ╔═╡ 691a6191-4a46-4f42-a131-be5546b60a5d
-chain_two_planet,pt_two_planet = octofit_pigeons(model_two_planet,n_rounds=10)
+
+
+# ╔═╡ bb259bd1-b4be-46bf-a97d-b302481d2596
+md"""
+```julia
+	display(chain_one_planet)
+```
+"""
 
 # ╔═╡ af7e02c7-61ba-4df9-bfbf-6c5ed0be44e0
-display(chain_one_planet)
+
+
+# ╔═╡ efba9813-2ec5-4a6a-9e88-5012772069cb
+md"""
+```julia
+	Octofitter.rvpostplot(model_two_planet, chain_two_planet, show_summary=true)
+```
+"""
 
 # ╔═╡ dc6c167d-ef7d-46b8-bdb7-f16312cad088
-Octofitter.rvpostplot(model_two_planet, chain_two_planet, show_summary=true)
+
 
 # ╔═╡ ee5e618f-1cd8-44b3-93fe-f260498514b3
 md"""
@@ -221,20 +332,42 @@ md"""
 Should we prefer the one, or two planet models? We can answer this by performing a model comparison.
 
 We will use the log Bayesian evidence, calculated directly using Pigeons. This is one of the most robust ways to compare Bayesian models, if you are able to calculate it.
+
+```julia
+	stepping_stone(pt_one_planet)
+```
 """
 
 # ╔═╡ b455c009-5a9c-49ba-9a98-89a1df6c3b23
-stepping_stone(pt_one_planet)
+
+
+# ╔═╡ d4446e60-2a6b-4a5c-9260-b351b85b7870
+md"""
+```julia
+	stepping_stone(pt_two_planet)
+```
+"""
 
 # ╔═╡ 4f3191a3-a1ec-44d2-a59d-b5d9199f25a1
-stepping_stone(pt_two_planet)
+
+
+# ╔═╡ ff7b5daf-eb51-4dfb-b7ab-7d25a1dc112b
+md"""
+```julia
+	stepping_stone(pt_two_planet) - stepping_stone(pt_one_planet)
+```
+"""
 
 # ╔═╡ 5164f13d-8b5f-49f0-9a65-cb1dc19e48a1
-stepping_stone(pt_two_planet) - stepping_stone(pt_one_planet)
+
 
 # ╔═╡ 8c843f30-cb14-4af4-984c-6498b98e3af0
 md"""
 This difference is **overwhelming**. The additional complexity of the increased paramters is more than justified by its improved ability to model the data.
+
+```julia
+	octocorner(model_one_planet,chain_one_planet, chain_two_planet,small=true)
+```
 """
 
 # ╔═╡ 2d0eb166-5d71-4ce8-9971-248d270a99ba
@@ -243,7 +376,7 @@ Finally, we can see how adding an extra planet affects the parameters of the fir
 """
 
 # ╔═╡ f5811f7b-b44c-443d-82f5-84368a2fbbeb
-octocorner(model_one_planet,chain_one_planet, chain_two_planet,small=true)
+
 
 # ╔═╡ d198fa32-e492-4df2-80a2-06064be54d2f
 md"""
@@ -252,10 +385,14 @@ We find that adding a second planet does significantly impact the derived parame
 
 
 We can plot the final two planet model parameters in a corner plot, to examine the covariance.
+
+```julia
+	octocorner(model_two_planet, chain_two_planet, small=true)
+```
 """
 
 # ╔═╡ 51c75ea2-b3a4-431a-b51e-f5cbb29b011d
-octocorner(model_two_planet, chain_two_planet, small=true)
+
 
 # ╔═╡ 19b9a635-2db6-48d7-bdf1-270ff66bd86c
 md"""
@@ -264,25 +401,25 @@ md"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
-[compat]
-CairoMakie = "~0.12.18"
-Distributions = "~0.25.115"
-LombScargle = "~1.0.3"
-Octofitter = "~5.2.1"
-OctofitterRadialVelocity = "~5.1.0"
-PairPlots = "~2.10.0"
-Pigeons = "~0.4.8"
-PlutoUI = "~0.7.60"
-
 [deps]
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
-LombScargle = "fc60dff9-86e7-5f2f-a8a0-edeadbb75bd9"
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 Octofitter = "daf3887e-d01a-44a1-9d7e-98f15c5d69c9"
 OctofitterRadialVelocity = "c6a353d9-c9c1-48aa-9c23-64f4679bd07d"
 PairPlots = "43a3c2be-4208-490b-832a-a21dcd55d7da"
 Pigeons = "0eb8d820-af6a-4919-95ae-11206f830c31"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+
+[compat]
+CairoMakie = "~0.12.18"
+Distributions = "~0.25.115"
+HypertextLiteral = "~0.9.5"
+Octofitter = "~5.2.1"
+OctofitterRadialVelocity = "~5.1.0"
+PairPlots = "~2.10.0"
+Pigeons = "~0.4.8"
+PlutoUI = "~0.7.60"
 
 [extras]
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
@@ -292,9 +429,9 @@ ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.1"
+julia_version = "1.11.2"
 manifest_format = "2.0"
-project_hash = "e85874ffcebc758df773e1f7bfd72c2eafb698a2"
+project_hash = "2f6f7f1e08a9c44f62949e4cfce8b438592f9fe9"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "72af59f5b8f09faee36b4ec48e014a79210f2f4f"
@@ -623,12 +760,6 @@ deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jl
 git-tree-sha1 = "009060c9a6168704143100f36ab08f06c2af4642"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.18.2+1"
-
-[[deps.Calculus]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "9cb23bbb1127eefb022b022481466c0f1127d430"
-uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
-version = "0.5.2"
 
 [[deps.ChainRules]]
 deps = ["Adapt", "ChainRulesCore", "Compat", "Distributed", "GPUArraysCore", "IrrationalConstants", "LinearAlgebra", "Random", "RealDot", "SparseArrays", "SparseInverseSubset", "Statistics", "StructArrays", "SuiteSparse"]
@@ -1771,12 +1902,6 @@ git-tree-sha1 = "f02b56007b064fbfddb4c9cd60161b6dd0f40df3"
 uuid = "e6f89c97-d47a-5376-807f-9c37f3926c36"
 version = "1.1.0"
 
-[[deps.LombScargle]]
-deps = ["FFTW", "LinearAlgebra", "Measurements", "Random", "SpecialFunctions", "Statistics"]
-git-tree-sha1 = "d64a0ce7539181136a85fd8fe4f42626387f0f26"
-uuid = "fc60dff9-86e7-5f2f-a8a0-edeadbb75bd9"
-version = "1.0.3"
-
 [[deps.MCMCChains]]
 deps = ["AbstractMCMC", "AxisArrays", "Dates", "Distributions", "IteratorInterfaceExtensions", "KernelDensity", "LinearAlgebra", "MCMCDiagnosticTools", "MLJModelInterface", "NaturalSort", "OrderedCollections", "PrettyTables", "Random", "RecipesBase", "Statistics", "StatsBase", "StatsFuns", "TableTraits", "Tables"]
 git-tree-sha1 = "cd7aee22384792c726e19f2a22dc060b886edded"
@@ -1887,26 +2012,6 @@ version = "1.1.9"
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
 version = "2.28.6+0"
-
-[[deps.Measurements]]
-deps = ["Calculus", "LinearAlgebra", "Printf", "Requires"]
-git-tree-sha1 = "bdcde8ec04ca84aef5b124a17684bf3b302de00e"
-uuid = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
-version = "2.11.0"
-
-    [deps.Measurements.extensions]
-    MeasurementsBaseTypeExt = "BaseType"
-    MeasurementsJunoExt = "Juno"
-    MeasurementsRecipesBaseExt = "RecipesBase"
-    MeasurementsSpecialFunctionsExt = "SpecialFunctions"
-    MeasurementsUnitfulExt = "Unitful"
-
-    [deps.Measurements.weakdeps]
-    BaseType = "7fbed51b-1ef5-4d67-9085-a4a9b26f478c"
-    Juno = "e5e0dc1b-0480-54bc-9374-aad01c23163d"
-    RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
-    SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
-    Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [[deps.Measures]]
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
@@ -3218,6 +3323,7 @@ version = "3.6.0+0"
 # ╟─0837dd0b-64b6-47cb-851f-af90948e8b2b
 # ╟─b4e9690c-a8f2-11ef-1087-e50a286f70c4
 # ╠═a480e429-6c46-44b0-a7f3-c1ef8a799a82
+# ╟─7fe11ccb-0727-4d36-a407-4658bb8493c6
 # ╟─b60ca992-b3fa-4c13-aa9b-9b4a9e6d3330
 # ╠═dfb9700e-f379-4321-a119-5a4921279695
 # ╟─9d9f5b29-e823-4cd3-8ac9-4c9fa8d97b37
@@ -3226,14 +3332,18 @@ version = "3.6.0+0"
 # ╠═927b96f2-7e7a-4078-8d39-5ccaa3298dfe
 # ╟─90c45bf2-9091-4540-a52f-deb95adb3398
 # ╠═3a3fea17-4e47-4192-bde1-a597065115f5
+# ╟─6af1b553-aa38-4445-9b6f-0636f5caa280
 # ╠═f3f64f48-ba56-4890-94ed-b5bc0bbca2a1
+# ╟─ad2a322c-80f5-4b62-ae89-12b51118b03a
 # ╠═564f9549-b7b3-48c5-88c7-3536adfed9d8
 # ╟─410771c1-cd2c-4b16-a9a5-bea86ef0fcfd
 # ╟─c814f151-9dc4-4c19-a515-5592d8487d8d
 # ╠═bc8ede43-3521-4241-8e36-71deac7dd8a2
+# ╟─0b198ca4-d431-47fc-8c4f-44321f53c33e
 # ╠═8575a16e-f3fb-4604-9d96-efd871bb654f
 # ╟─bb34fff2-4a54-41a5-b351-68620d93eeed
 # ╠═c0a54835-9c4b-4154-8a95-1eba560c5714
+# ╟─2a6f9aee-ecb1-464d-b15b-ab8bb50d265a
 # ╠═5e20862a-a040-410d-b33f-2c9904de2d9a
 # ╟─5be8f2fb-a1b2-40fb-8033-45f8c3db94d4
 # ╠═6cd6d70f-e7eb-46c6-9cf5-3c2cb47c9be3
@@ -3241,18 +3351,26 @@ version = "3.6.0+0"
 # ╠═7a09f779-36a3-4683-931f-dd6f88d88c32
 # ╟─6618be22-76bd-49ac-a291-2bb39fea6b29
 # ╠═a6f32590-d6a3-4317-ac56-80614b68775c
+# ╟─019ab88b-2310-497e-8783-975722b84d13
 # ╠═b2f496f2-792a-458d-b050-52fb0abeb5a4
-# ╠═de444cf7-5fc1-4c41-b06b-39ed43af4bb4
+# ╟─de444cf7-5fc1-4c41-b06b-39ed43af4bb4
 # ╟─e2bffc30-47d9-4be3-b557-8eb495399103
 # ╠═0a83fb2b-5a65-4d90-ae5e-c8b1f19e2af5
+# ╟─74564125-9fba-4970-8e67-860684679158
 # ╠═fcfb377a-e2b7-4b4a-ab80-fa5dd8cc0c28
+# ╟─5d5b1c8f-c903-41fd-b206-18e0cf015c0b
 # ╠═3da46010-85cb-401e-8311-e6f5f3b9a651
+# ╟─8f55419b-b13f-4492-96e0-e342a458927a
 # ╠═691a6191-4a46-4f42-a131-be5546b60a5d
+# ╟─bb259bd1-b4be-46bf-a97d-b302481d2596
 # ╠═af7e02c7-61ba-4df9-bfbf-6c5ed0be44e0
+# ╟─efba9813-2ec5-4a6a-9e88-5012772069cb
 # ╠═dc6c167d-ef7d-46b8-bdb7-f16312cad088
 # ╟─ee5e618f-1cd8-44b3-93fe-f260498514b3
 # ╠═b455c009-5a9c-49ba-9a98-89a1df6c3b23
+# ╟─d4446e60-2a6b-4a5c-9260-b351b85b7870
 # ╠═4f3191a3-a1ec-44d2-a59d-b5d9199f25a1
+# ╟─ff7b5daf-eb51-4dfb-b7ab-7d25a1dc112b
 # ╠═5164f13d-8b5f-49f0-9a65-cb1dc19e48a1
 # ╟─8c843f30-cb14-4af4-984c-6498b98e3af0
 # ╟─2d0eb166-5d71-4ce8-9971-248d270a99ba
