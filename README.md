@@ -5,6 +5,8 @@ Pluto notebooks for the two day Julia workshop for the 245th AAS Meeting in Wash
 
 [**Jump to workshop contents**](#workshop-contents)
 
+**Internet: Winter245 / AAS245Winter**
+
 This repository contains material for the AAS Workshop *Julia Programming for Astronomy*
 
 Date: **Saturday-Sunday, January 11-12, 2025, 9:00 am - 5:00 pm**
