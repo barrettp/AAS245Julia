@@ -145,7 +145,7 @@ md"""
 We will start by fitting a photoelectric absorption model that acts on a power law model:
 
 ```julia
-model = PhotoelectricAbsorption() * PowerLaw()
+model1 = PhotoelectricAbsorption() * PowerLaw()
 ```
 """
 
