@@ -49,7 +49,7 @@ jobs:
         run: |
           using Pkg
           Pkg.activate(temp=true)
-          Pkg.add(name="PlutoSliderServer", version="0.3.2-0.3")
+          Pkg.add(name="PlutoSliderServer", version="1")
 
           import PlutoSliderServer
           PlutoSliderServer.github_action(".";
