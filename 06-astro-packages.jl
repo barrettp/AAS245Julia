@@ -316,7 +316,7 @@ For more advanced usages, the [DataFrames.jl](https://dataframes.juliadata.org/s
 # ╔═╡ 3d605975-e4a6-4c2f-9204-b0365169bafa
 md"""
 ### Corner Plots
-(StatsPlots.jl)[https://sefffal.github.io/PairPlots.jl/dev] includes some functions for quick grids of scatter plots, but a more complete package is the dedicated PairPlots.jl
+[StatsPlots.jl](https://sefffal.github.io/PairPlots.jl/dev) includes some functions for quick grids of scatter plots, but a more complete package is the dedicated PairPlots.jl
 
 PairPlots has one function `pairplot` that produces plots similar to those of the Python corner.py
 
@@ -424,7 +424,7 @@ First, we'll download one:
 # ╔═╡ c86ded0d-c9ba-4489-81e8-208103af8389
 # Download a Hubble image of the Eagle nebula
 download(
-    "http://www.astro.uvic.ca/~wthompson/astroimages/fits/656nmos.fits",
+    "https://ds9.si.edu/download/data/656nmos.fits",
     "eagle-656nmos.fits"
 )
 
