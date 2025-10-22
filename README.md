@@ -1,4 +1,6 @@
 # AAS245Julia
+[![Rendered Pluto.jl notebooks](https://img.shields.io/badge/Rendered_Pluto.jl_notebooks-blue)](https://barrettp.github.io/AAS245Julia)
+
 Pluto notebooks for the two day Julia workshop for the 245th AAS Meeting in Washington, DC.
 
 [**Jump to installation instructions**](#installation-instructions)
@@ -92,9 +94,11 @@ In one section, we will demonstrate how you can use Python libraries inside Juli
 
 ## Workshop Contents
 
-The material for each section is stored as a [Pluto notebook](https://plutojl.org/). 
+The material for each section is stored as a [Pluto notebook](https://plutojl.org/).
 
 Copy the link for a given section below and paste it into the "Open a Notebook" box in Pluto.
+
+You can also view the pre-rendered notebooks [here](https://barrettp.github.io/AAS245Julia/).
 
 The Saturday content is an introduction to the Julia language and applies it to a few data analysis topics (notebooks 1-6).
 The Sunday content covers advanced Julia programming techniques associated with high performance computing.
