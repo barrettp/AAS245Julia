@@ -1088,7 +1088,7 @@ There several ways to create and initialize a new array:
 ```julia
 Array{T}(undef, dims...)    # an unitialized dense array
 
-ones(T, dims...)            # an array of zeros
+ones(T, dims...)            # an array of ones
 ```
 
 where `T` signifies the array type, and `dims...` is a list of array dimensions.
